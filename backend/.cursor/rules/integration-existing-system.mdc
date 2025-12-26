@@ -1,0 +1,221 @@
+---
+description: Integration with Existing 6amMart System Components
+alwaysApply: true
+---
+
+# Integration with Existing System
+
+## Reusable Components
+
+### Store Model
+- **Use**: `App\Models\Store` for salon/vendor relationship
+- **Relationship**: `salon_id` = `store_id`
+- **Access**: `$store->beautySalon` (add relationship to Store model)
+- **Scope**: Add `beautySalons()` scope to Store model
+
+### User Model
+- **Use**: `App\Models\User` for customers
+- **Relationship**: `user_id` in bookings
+- **Access**: `$user->beautyBookings` (add relationship to User model)
+
+### Wallet System
+- **Use**: `App\CentralLogics\CustomerLogic::create_wallet_transaction()`
+- **Purpose**: Wallet payments for bookings
+- **Example**:
+  ```php
+  CustomerLogic::create_wallet_transaction(
+      $userId,
+      $amount,
+      'beauty_booking',
+      $bookingId
+  );
+  ```
+
+### Payment Gateways
+- **Use**: Existing payment gateway integration
+- **Traits**: `App\Traits\Payment`
+- **Methods**: `digitalPayment()`, `processPayment()`
+- **Gateways**: All existing gateways (Stripe, PayPal, etc.)
+
+### Chat System
+- **Use**: `App\Models\Conversation` and `App\Models\Message`
+- **Purpose**: Internal chat between customer and salon
+- **Integration**: Link conversations to bookings
+- **Storage**: All messages stored for dispute resolution
+
+### Notifications
+- **Use**: `App\CentralLogics\Helpers::send_push_notif_to_device()`
+- **Purpose**: Firebase push notifications
+- **Format**: Standard notification data structure
+- **Example**:
+  ```php
+  $data = [
+      'title' => translate('booking_confirmed'),
+      'description' => $message,
+      'booking_id' => $bookingId,
+      'type' => 'booking_confirmation',
+  ];
+  Helpers::send_push_notif_to_device($fcmToken, $data);
+  ```
+
+### Translation
+- **Use**: `translate()` helper function
+- **Purpose**: All user-facing strings
+- **Languages**: Persian and English
+- **Example**: `translate('booking_created_successfully')`
+
+### File Upload
+- **Use**: `App\CentralLogics\Helpers::upload()`
+- **Purpose**: Document and image uploads
+- **Format**: `Helpers::upload('path/', 'extension', $file)`
+- **Example**:
+  ```php
+  $logoPath = Helpers::upload('beauty/salons/', 'png', $request->file('logo'));
+  ```
+
+### Zone Scope
+- **Use**: `App\Scopes\ZoneScope`
+- **Purpose**: Zone-based filtering
+- **Apply**: To salon queries
+- **Example**: `BeautySalon::withGlobalScope(ZoneScope::class)->get()`
+
+### Report Filter
+- **Use**: `App\Traits\ReportFilter`
+- **Purpose**: Report filtering (date range, status, etc.)
+- **Apply**: To models that need reporting
+- **Example**: `class BeautyBooking extends Model { use ReportFilter; }`
+
+## Store Model Extension
+
+### Add Relationship
+```php
+// In App\Models\Store
+
+/**
+ * Get the beauty salon for this store
+ * دریافت سالن زیبایی این فروشگاه
+ *
+ * @return HasOne
+ */
+public function beautySalon(): HasOne
+{
+    return $this->hasOne(\Modules\BeautyBooking\Entities\BeautySalon::class, 'store_id', 'id');
+}
+```
+
+### Add Scope
+```php
+// In App\Models\Store
+
+/**
+ * Scope a query to only include stores with beauty salons
+ * محدود کردن کوئری به فروشگاه‌های دارای سالن زیبایی
+ *
+ * @param \Illuminate\Database\Eloquent\Builder $query
+ * @return \Illuminate\Database\Eloquent\Builder
+ */
+public function scopeBeautySalons($query)
+{
+    return $query->whereHas('beautySalon');
+}
+```
+
+## User Model Extension
+
+### Add Relationship
+```php
+// In App\Models\User
+
+/**
+ * Get all beauty bookings for this user
+ * دریافت تمام رزروهای زیبایی این کاربر
+ *
+ * @return HasMany
+ */
+public function beautyBookings(): HasMany
+{
+    return $this->hasMany(\Modules\BeautyBooking\Entities\BeautyBooking::class, 'user_id', 'id');
+}
+```
+
+## Module Registration
+
+### modules_statuses.json
+```json
+{
+    "BeautyBooking": {
+        "status": 1,
+        "is_published": 1
+    }
+}
+```
+
+### Admin Menu
+- **Add**: "Beauty Booking" section to admin menu
+- **Items**: Salons, Categories, Reviews, Reports, Settings
+- **Location**: Follow existing menu structure
+
+### Vendor Menu
+- **Add**: "Beauty Booking" section to vendor menu
+- **Items**: Dashboard, Calendar, Bookings, Services, Staff, Reports
+- **Location**: Follow existing menu structure
+
+## Helper Functions
+
+### Check Module Status
+```php
+if (addon_published_status('BeautyBooking')) {
+    // Module-specific code
+}
+```
+
+### Get Module Path
+```php
+$viewPath = module_path('BeautyBooking', 'Resources/views');
+$configPath = module_path('BeautyBooking', 'Config/config.php');
+```
+
+### Load Module Views
+```php
+return view('beautybooking::vendor.dashboard', compact('data'));
+```
+
+### Module Config
+```php
+$commission = config('beautybooking.commission.default_percentage');
+```
+
+## Integration Patterns
+
+### Reuse Existing Logic
+- **Don't duplicate**: Use existing helpers and services
+- **Extend**: Add to existing models when appropriate
+- **Follow**: Existing patterns and conventions
+
+### Maintain Consistency
+- **Response format**: Use same format as existing APIs
+- **Error handling**: Use same error format
+- **Validation**: Use same validation patterns
+
+## Module Activation
+
+### Commands
+```bash
+# Publish module
+php artisan module:publish BeautyBooking
+
+# Run migrations
+php artisan migrate
+
+# Clear cache
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
+
+### Verification
+- Check module in `modules_statuses.json`
+- Verify routes are loaded
+- Check views are accessible
+- Test API endpoints

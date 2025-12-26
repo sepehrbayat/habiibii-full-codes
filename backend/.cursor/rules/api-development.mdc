@@ -1,0 +1,289 @@
+---
+description: API Development Standards and Patterns
+alwaysApply: true
+---
+
+# API Development
+
+## API Structure
+
+### Route Organization
+- **Customer APIs**: `Routes/api/v1/customer/api.php`
+- **Vendor APIs**: `Routes/api/v1/vendor/api.php`
+- **Prefix**: `/api/v1/beautybooking/`
+- **Middleware**: `auth:api` for authenticated routes
+
+### Controller Location
+- **Customer**: `Http/Controllers/Api/Customer/`
+- **Vendor**: `Http/Controllers/Api/Vendor/`
+
+## API Response Format
+
+### Success Response
+```php
+return response()->json([
+    'message' => translate('booking_created_successfully'),
+    'data' => $booking
+], 200);
+```
+
+### Error Response
+```php
+return response()->json([
+    'errors' => Helpers::error_processor($validator)
+], 403);
+```
+
+### List Response
+```php
+return response()->json([
+    'data' => $bookings,
+    'total' => $bookings->total(),
+    'per_page' => $bookings->perPage(),
+    'current_page' => $bookings->currentPage(),
+], 200);
+```
+
+## HTTP Status Codes
+
+### Standard Codes
+- **200 OK**: Successful GET, PUT, PATCH
+- **201 Created**: Successful POST (resource created)
+- **400 Bad Request**: Invalid request data
+- **401 Unauthorized**: Authentication required
+- **403 Forbidden**: Authorization failed
+- **404 Not Found**: Resource not found
+- **422 Unprocessable Entity**: Validation failed
+- **500 Internal Server Error**: Server error
+
+## API Authentication
+
+### Customer APIs
+- **Middleware**: `auth:api` with `sanctum` guard
+- **Access**: `$request->user()` for authenticated user
+- **Example**:
+  ```php
+  Route::middleware('auth:api')->group(function () {
+      Route::post('/bookings', [BeautyBookingController::class, 'store']);
+  });
+  ```
+
+### Vendor APIs
+- **Middleware**: `auth:api` with vendor guard
+- **Access**: `$request->vendor` for authenticated vendor
+- **Example**:
+  ```php
+  Route::middleware('auth:api')->group(function () {
+      Route::get('/bookings', [BeautyBookingController::class, 'index']);
+  });
+  ```
+
+## API Validation
+
+### Validation Pattern
+```php
+$validator = Validator::make($request->all(), [
+    'salon_id' => 'required|integer|exists:beauty_salons,id',
+    'service_id' => 'required|integer|exists:beauty_services,id',
+    'booking_date' => 'required|date|after:today',
+    'booking_time' => 'required|date_format:H:i',
+    'staff_id' => 'nullable|integer|exists:beauty_staff,id',
+]);
+
+if ($validator->fails()) {
+    return response()->json([
+        'errors' => Helpers::error_processor($validator)
+    ], 403);
+}
+```
+
+### Custom Validation Rules
+- **Create**: Custom rules in `app/Rules/` if needed
+- **Use**: Existing validation rules when possible
+- **Example**:
+  ```php
+  'booking_date' => ['required', 'date', 'after:today', new ValidBookingDate()],
+  ```
+
+## API Endpoints
+
+### Customer Endpoints
+
+#### Search Salons
+```
+GET /api/v1/beautybooking/customer/salons
+Query params: search, category_id, latitude, longitude, radius
+Response: List of salons with ranking
+```
+
+#### Get Salon Details
+```
+GET /api/v1/beautybooking/customer/salons/{id}
+Response: Salon details with services, staff, availability
+```
+
+#### Check Availability
+```
+POST /api/v1/beautybooking/customer/availability
+Body: salon_id, service_id, date, staff_id (optional)
+Response: Available time slots
+```
+
+#### Create Booking
+```
+POST /api/v1/beautybooking/customer/bookings
+Body: salon_id, service_id, staff_id, booking_date, booking_time, payment_method
+Response: Created booking
+```
+
+#### My Bookings
+```
+GET /api/v1/beautybooking/customer/bookings
+Query params: status (upcoming, past, cancelled)
+Response: List of user's bookings
+```
+
+#### Cancel Booking
+```
+PUT /api/v1/beautybooking/customer/bookings/{id}/cancel
+Body: cancellation_reason (optional)
+Response: Updated booking
+```
+
+#### Submit Review
+```
+POST /api/v1/beautybooking/customer/reviews
+Body: booking_id, rating, comment, attachments (optional)
+Response: Created review
+```
+
+### Vendor Endpoints
+
+#### My Bookings
+```
+GET /api/v1/beautybooking/vendor/bookings
+Query params: status, date_from, date_to
+Response: List of salon's bookings
+```
+
+#### Confirm Booking
+```
+PUT /api/v1/beautybooking/vendor/bookings/{id}/confirm
+Response: Updated booking
+```
+
+#### Cancel Booking
+```
+PUT /api/v1/beautybooking/vendor/bookings/{id}/cancel
+Body: cancellation_reason
+Response: Updated booking
+```
+
+#### Calendar Availability
+```
+GET /api/v1/beautybooking/vendor/calendar/availability
+Query params: date, staff_id (optional)
+Response: Available time slots
+```
+
+## Error Handling
+
+### Error Response Format
+```php
+return response()->json([
+    'errors' => [
+        ['code' => 'validation', 'message' => translate('validation_failed')],
+        ['code' => 'booking', 'message' => translate('booking_not_found')]
+    ]
+], 403);
+```
+
+### Using Helpers::error_processor()
+- **Always use**: `Helpers::error_processor($validator)` for validation errors
+- **Format**: Standardized error format
+- **Example**:
+  ```php
+  if ($validator->fails()) {
+      return response()->json([
+          'errors' => Helpers::error_processor($validator)
+      ], 403);
+  }
+  ```
+
+## Pagination
+
+### Paginated Responses
+```php
+$bookings = BeautyBooking::where('user_id', $request->user()->id)
+    ->paginate($request->get('per_page', 15));
+
+return response()->json([
+    'data' => $bookings->items(),
+    'total' => $bookings->total(),
+    'per_page' => $bookings->perPage(),
+    'current_page' => $bookings->currentPage(),
+    'last_page' => $bookings->lastPage(),
+], 200);
+```
+
+## Filtering & Sorting
+
+### Query Parameters
+- **Search**: `?search=keyword`
+- **Filter**: `?status=confirmed&salon_id=1`
+- **Sort**: `?sort_by=booking_date&sort_order=desc`
+- **Date Range**: `?date_from=2024-01-01&date_to=2024-01-31`
+
+### Implementation
+```php
+$bookings = BeautyBooking::query()
+    ->when($request->has('search'), function ($query) use ($request) {
+        $query->where('booking_reference', 'LIKE', '%' . $request->search . '%');
+    })
+    ->when($request->filled('status'), function ($query) use ($request) {
+        $query->where('status', $request->status);
+    })
+    ->when($request->filled('date_from'), function ($query) use ($request) {
+        $query->whereDate('booking_date', '>=', $request->date_from);
+    })
+    ->when($request->filled('sort_by'), function ($query) use ($request) {
+        $query->orderBy($request->sort_by, $request->get('sort_order', 'asc'));
+    })
+    ->paginate($request->get('per_page', 15));
+```
+
+## File Uploads in API
+
+### Image Upload
+```php
+$validator = Validator::make($request->all(), [
+    'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+]);
+
+if ($validator->fails()) {
+    return response()->json(['errors' => Helpers::error_processor($validator)], 403);
+}
+
+$imagePath = Helpers::upload('beauty/reviews/', 'png', $request->file('image'));
+
+return response()->json([
+    'message' => translate('image_uploaded_successfully'),
+    'data' => ['image_path' => $imagePath]
+], 200);
+```
+
+## Rate Limiting
+
+### Apply Rate Limits
+- **Use**: Laravel's rate limiting middleware
+- **Example**: Limit booking creation to 10 per minute per user
+- **Implementation**: Configure in `RouteServiceProvider` or middleware
+
+## API Documentation
+
+### Document All Endpoints
+- **Method**: GET, POST, PUT, DELETE
+- **URL**: Full endpoint path
+- **Parameters**: Request body/query parameters
+- **Response**: Success and error response examples
+- **Authentication**: Required or optional

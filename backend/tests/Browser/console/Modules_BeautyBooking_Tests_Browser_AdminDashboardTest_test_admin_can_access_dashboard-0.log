@@ -1,0 +1,26 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/localhost:3000\/_dusk\/login\/1\/admin - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1766235776276
+    },
+    {
+        "level": "WARNING",
+        "message": "http:\/\/localhost:3000\/_dusk\/login\/1\/admin - <meta name=\"apple-mobile-web-app-capable\" content=\"yes\"> is deprecated. Please include <meta name=\"mobile-web-app-capable\" content=\"yes\">",
+        "source": "other",
+        "timestamp": 1766235777225
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/localhost:3000\/admin\/beautybooking\/dashboard - Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "source": "network",
+        "timestamp": 1766235777462
+    },
+    {
+        "level": "WARNING",
+        "message": "http:\/\/localhost:3000\/admin\/beautybooking\/dashboard - <meta name=\"apple-mobile-web-app-capable\" content=\"yes\"> is deprecated. Please include <meta name=\"mobile-web-app-capable\" content=\"yes\">",
+        "source": "other",
+        "timestamp": 1766235777618
+    }
+]

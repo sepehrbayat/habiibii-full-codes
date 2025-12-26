@@ -1,0 +1,373 @@
+---
+description: Main Rules Index - References all other rule files
+alwaysApply: true
+---
+
+# Beauty Booking Module - Rules Index
+
+This file references all other rule files. See individual rule files for detailed guidelines:
+
+- `code-style-standards.mdc` - PHP/Laravel coding standards
+- `naming-conventions.mdc` - Naming conventions
+- `module-structure.mdc` - Module structure and organization
+- `database-migrations.mdc` - Database and migration rules
+- `models-entities.mdc` - Model and entity rules
+- `controllers.mdc` - Controller development patterns
+- `services.mdc` - Service layer rules
+- `api-development.mdc` - API development standards
+
+## Project Overview
+This is a Laravel-based multivendor marketplace (6amMart) with modular architecture. We're building a new "Beauty & Clinic Booking Platform" module similar to the existing Rental module.
+
+## Code Style & Standards
+
+### PHP/Laravel Standards
+- Follow PSR-12 coding standards
+- Use type hints and return types wherever possible
+- Always use strict types: `declare(strict_types=1);` at the top of PHP files
+- Use meaningful variable and method names
+- Write comprehensive PHPDoc comments for all classes, methods, and properties
+- All comments must be bilingual: Persian (Farsi) and English
+- Example comment format:
+  ```php
+  /**
+   * Create a new booking for the customer
+   * ایجاد رزرو جدید برای مشتری
+   * 
+   * @param int $userId
+   * @param int $salonId
+   * @param array $bookingData
+   * @return BeautyBooking
+   */
+  ```
+
+### Naming Conventions
+- Models: PascalCase (e.g., `BeautySalon`, `BeautyBooking`)
+- Controllers: PascalCase with suffix `Controller` (e.g., `BeautySalonController`)
+- Services: PascalCase with suffix `Service` (e.g., `BeautyBookingService`)
+- Traits: PascalCase (e.g., `BeautyPushNotification`)
+- Database tables: snake_case with `beauty_` prefix (e.g., `beauty_salons`, `beauty_bookings`)
+- Database columns: snake_case
+- Migrations: descriptive names with timestamps (e.g., `2024_01_15_120000_create_beauty_salons_table.php`)
+
+## Module Structure
+
+### Module Location
+- All Beauty Booking module files go in: `Modules/BeautyBooking/`
+- Follow the exact structure of `Modules/Rental/` as reference
+- Module alias: `beautybooking` (lowercase)
+
+### Required Directories
+```
+Modules/BeautyBooking/
+├── Addon/
+│   └── info.php
+├── Config/
+│   └── config.php
+├── Database/
+│   ├── Migrations/
+│   └── Seeders/
+├── Entities/
+├── Http/
+│   └── Controllers/
+│       ├── Api/
+│       │   ├── Customer/
+│       │   └── Vendor/
+│       └── Web/
+│           ├── Admin/
+│           └── Vendor/
+├── Providers/
+│   ├── BeautyBookingServiceProvider.php
+│   └── RouteServiceProvider.php
+├── Routes/
+│   ├── api/
+│   │   └── v1/
+│   │       ├── customer/
+│   │       └── vendor/
+│   └── web/
+│       ├── admin/
+│       └── vendor/
+├── Resources/
+│   └── views/
+│       ├── admin/
+│       └── vendor/
+├── Services/
+├── Traits/
+├── Emails/
+├── Exports/
+└── module.json
+```
+
+## Database & Migrations
+
+### Migration Rules
+- Always use `Schema::create()` for new tables
+- Use `foreignId()` for foreign keys, not `unsignedBigInteger()`
+- Add indexes for frequently queried columns (status, dates, foreign keys)
+- Use JSON columns for flexible data (working_hours, breaks, holidays)
+- Always add `$table->timestamps()` unless explicitly not needed
+- Use `DB::statement('ALTER TABLE table_name AUTO_INCREMENT = 100000;')` for booking tables
+- Add soft deletes where appropriate: `$table->softDeletes();`
+
+### Model Rules
+- Always extend `Illuminate\Database\Eloquent\Model`
+- Use `protected $guarded = ['id'];` instead of `$fillable` when possible
+- Define all `$casts` explicitly (integers, floats, booleans, dates, JSON)
+- Use `protected $appends = []` for computed attributes
+- Always define relationships with proper return types
+- Use scopes for common queries (active, verified, featured, etc.)
+- Example:
+  ```php
+  public function scopeActive($query)
+  {
+      return $query->where('status', 1)
+          ->whereHas('salon', function($q) {
+              $q->where('status', 1);
+          });
+  }
+  ```
+
+## Integration with Existing System
+
+### Reuse Existing Components
+- **Store Model**: Use `App\Models\Store` for salon/vendor relationship (salon_id = store_id)
+- **User Model**: Use `App\Models\User` for customers
+- **Wallet System**: Use `App\CentralLogics\CustomerLogic::create_wallet_transaction()` for wallet payments
+- **Payment Gateways**: Use existing payment gateway integration
+- **Chat System**: Use `App\Models\Conversation` and `App\Models\Message` for internal chat
+- **Notifications**: Use `App\CentralLogics\Helpers::send_push_notif_to_device()` for Firebase notifications
+- **Translation**: Use `translate()` helper function for all user-facing strings
+- **File Upload**: Use `App\CentralLogics\Helpers::upload()` for file uploads
+- **Zone Scope**: Use `App\Scopes\ZoneScope` for zone-based queries
+- **Report Filter**: Use `App\Traits\ReportFilter` for report filtering
+
+### Module Registration
+- Module must be registered in `modules_statuses.json`
+- Add module to admin and vendor menus
+- Module activation: `php artisan module:publish BeautyBooking`
+
+## API Development
+
+### API Response Format
+- Success responses: `response()->json(['message' => translate('...'), 'data' => $data], 200)`
+- Error responses: `response()->json(['errors' => Helpers::error_processor($validator)], 403)`
+- Always use `Helpers::error_processor()` for validation errors
+- Include proper HTTP status codes (200, 201, 400, 401, 403, 404, 500)
+
+### API Authentication
+- Customer APIs: Use `auth:api` middleware with `sanctum` guard
+- Vendor APIs: Use `auth:api` middleware with vendor guard
+- Always validate user permissions before operations
+
+### API Validation
+- Always validate all inputs using `Validator::make()`
+- Return validation errors in standard format
+- Validate file uploads (size, type, dimensions)
+
+## Business Logic
+
+### Booking System
+- Always check availability before creating booking
+- Calculate total amount including: service price + service fee + tax - discount
+- Handle cancellation fees based on cancellation time
+- Update salon/staff calendar after booking confirmation
+- Send notifications for all booking status changes
+
+### Commission Calculation
+- Commission is calculated based on:
+  1. Service category commission settings
+  2. Salon level/type
+  3. Admin-defined commission rules
+- Store commission in `beauty_transactions` table
+- Commission is deducted from salon payout
+
+### Badge System
+- Badges are auto-calculated based on:
+  - **Top Rated**: Rating > 4.5 AND minimum 50 bookings
+  - **Featured**: Active subscription
+  - **Verified**: Manual admin approval
+- Update badges automatically when criteria are met
+- Badges can expire (for Featured subscription)
+
+### Ranking Algorithm
+- Search ranking factors (in order of priority):
+  1. Location (nearest first using Haversine formula)
+  2. Featured/Boost status
+  3. Rating (weighted average)
+  4. Activity in last 30 days (booking count)
+  5. Returning customer rate
+  6. Available time slots (more availability = higher rank)
+- Make ranking weights configurable from admin panel
+
+## Security
+
+### Data Protection
+- Always sanitize user inputs
+- Use parameterized queries (Laravel Query Builder handles this)
+- Validate file uploads (type, size, content)
+- Never expose sensitive data in API responses
+- Use Laravel's built-in CSRF protection for web routes
+
+### Authorization
+- Always check user ownership before allowing modifications
+- Verify vendor has access to their own salon data
+- Admin-only operations must check admin role
+- Use Laravel policies where appropriate
+
+## Error Handling
+
+### Exception Handling
+- Always use try-catch blocks for external operations (file uploads, API calls, payments)
+- Log errors: `info($e->getMessage());` or `Log::error(...)`
+- Return user-friendly error messages
+- Never expose system errors to end users
+
+### Validation
+- Validate all inputs at controller level
+- Use Form Requests for complex validations
+- Return validation errors in consistent format
+
+## Testing Considerations
+
+### Code Quality
+- Write testable code (dependency injection, single responsibility)
+- Use service classes for complex business logic
+- Keep controllers thin (delegate to services)
+
+### Performance
+- Use eager loading (`with()`) to prevent N+1 queries
+- Add database indexes for frequently queried columns
+- Cache expensive calculations (badges, rankings)
+- Use pagination for list endpoints
+
+## Documentation
+
+### Code Comments
+- Every class must have a class-level PHPDoc
+- Every public method must have PHPDoc with @param and @return
+- Complex logic must have inline comments explaining the "why"
+- Use bilingual comments (Persian + English)
+
+### API Documentation
+- Document all API endpoints
+- Include request/response examples
+- Document error codes and messages
+
+## Module-Specific Rules
+
+### Beauty Booking Module
+- Module name: `BeautyBooking`
+- Module alias: `beautybooking`
+- All database tables prefix: `beauty_`
+- All model names prefix: `Beauty`
+- All service names prefix: `Beauty`
+- All controller names prefix: `Beauty`
+
+### Key Features to Implement
+1. Salon registration with document upload + manual admin approval
+2. Staff management with individual working calendars
+3. Service categories with subcategories
+4. Advanced calendar system (working hours, breaks, holidays, manual blocks)
+5. Complete booking flow (category → salon → service → staff/time → payment)
+6. Automatic badge system (Top Rated, Featured, Verified)
+7. Search ranking algorithm (location + rating + activity + featured + returning rate + availability)
+8. 10 revenue models (commission, subscription, ads, service fee, packages, cancellation fee, consultation, cross-selling, retail, gift cards)
+9. Full vendor panel (calendar view, service/staff management, financial reports, badge status, ad purchase)
+10. Customer panel (active/past bookings, gift cards, payment status, rating)
+11. Internal chat + realtime notifications + message storage for dispute resolution
+12. Manual review moderation + monthly Top Rated Salons and Trending Clinics lists
+
+### Revenue Models Implementation
+1. **Variable Commission**: Configurable per service category and salon level (5-20%)
+2. **Monthly/Annual Subscription**: For advanced dashboard and Featured subscription
+3. **Advertising**: Featured Listing, Boost Ads (7/30 days), Homepage Banner, Banner Ads
+4. **Service Fee**: From customer (1-3% of booking amount)
+5. **Multi-Session Packages**: Prepaid packages with discount
+6. **Late Cancellation Fee**: Penalty for late cancellations
+7. **Consultation Service**: Separate pre/post consultation services
+8. **Cross-Selling/Upsell**: Complementary services
+9. **Retail Sales**: Beauty product sales
+10. **Gift Cards & Loyalty Campaigns**: Gift cards and loyalty points
+
+## File Organization
+
+### Controllers
+- Group by functionality (Admin, Vendor, Customer)
+- Keep controllers focused on HTTP concerns
+- Delegate business logic to services
+- Use resource controllers where appropriate
+
+### Services
+- One service per major feature area
+- Services handle all business logic
+- Services can call other services
+- Services return data, not HTTP responses
+
+### Traits
+- Use for reusable code across multiple classes
+- Example: `BeautyPushNotification` trait for notification logic
+- Example: `BeautyBookingLogic` trait for booking calculations
+
+## Git & Version Control
+
+### Commit Messages
+- Use clear, descriptive commit messages
+- Prefix with module name: `[BeautyBooking] Add salon registration`
+- Use present tense: "Add feature" not "Added feature"
+
+### Branching
+- Create feature branches for new features
+- Use descriptive branch names: `beauty-booking/salon-registration`
+
+## Common Patterns
+
+### Check Module Status
+```php
+if (addon_published_status('BeautyBooking')) {
+    // Module-specific code
+}
+```
+
+### Get Module Path
+```php
+module_path('BeautyBooking', 'Resources/views')
+```
+
+### Load Module Views
+```php
+return view('beautybooking::vendor.dashboard');
+```
+
+### Module Config
+```php
+config('beautybooking.some_setting')
+```
+
+## Important Notes
+
+- Always check if Rental module exists before referencing it
+- Follow existing code patterns in the codebase
+- Maintain consistency with existing 6amMart architecture
+- All user-facing strings must use `translate()` helper
+- Support both Persian and English languages
+- Test all features thoroughly before marking as complete
+- Document any deviations from standard patterns
+
+## Code Review Checklist
+
+Before submitting code, ensure:
+- [ ] All comments are bilingual (Persian + English)
+- [ ] All database queries use proper indexes
+- [ ] All API responses follow standard format
+- [ ] All validations are in place
+- [ ] Error handling is comprehensive
+- [ ] Code follows PSR-12 standards
+- [ ] No hardcoded values (use config/constants)
+- [ ] All relationships are properly defined
+- [ ] Scopes are used for common queries
+- [ ] Services handle business logic (not controllers)
+- [ ] File uploads are validated
+- [ ] Notifications are sent for important events
+- [ ] Commission calculations are correct
+- [ ] Badge system updates automatically
+- [ ] Ranking algorithm is configurable

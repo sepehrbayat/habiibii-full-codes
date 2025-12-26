@@ -1,0 +1,10 @@
+
+> sixam-mart@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.7
+   - Environments: .env.local, .env.production
+
+   Linting and checking validity of types ...
+ ⨯ ESLint: Failed to load parser '@typescript-eslint/parser' declared in '.eslintrc.json » eslint-config-next/core-web-vitals » /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/eslint-config-next/index.js#overrides[0]': Cannot find module 'typescript' Require stack: - /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/@typescript-eslint/typescript-estree/dist/convert.js - /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/@typescript-eslint/typescript-estree/dist/ast-converter.js - /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/@typescript-eslint/typescript-estree/dist/parser.js - /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/@typescript-eslint/typescript-estree/dist/index.js - /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/@typescript-eslint/parser/dist/parser.js - /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/@typescript-eslint/parser/dist/index.js - /home/sepehr/Projects/Habiibii-full-codes/frontend/node_modules/@eslint/eslintrc/dist/eslintrc.cjs
+   Creating an optimized production build ...

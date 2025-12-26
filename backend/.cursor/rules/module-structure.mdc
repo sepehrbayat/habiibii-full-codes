@@ -1,0 +1,295 @@
+---
+description: Beauty Booking Module Structure and Organization
+alwaysApply: true
+---
+
+# Module Structure
+
+## Module Location
+
+### Base Path
+- **Module Path**: `Modules/BeautyBooking/`
+- **Module Name**: `BeautyBooking` (PascalCase)
+- **Module Alias**: `beautybooking` (lowercase)
+- **Namespace**: `Modules\BeautyBooking`
+
+### Reference Module
+- Always follow the structure of `Modules/Rental/` as reference
+- Maintain consistency with existing module patterns
+- Reuse patterns and conventions from Rental module
+
+## Directory Structure
+
+### Complete Structure
+```
+Modules/BeautyBooking/
+├── Addon/
+│   └── info.php                          # Addon information and metadata
+├── Config/
+│   └── config.php                        # Module configuration
+├── Database/
+│   ├── Migrations/                       # Database migrations
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_salons_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_staff_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_service_categories_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_services_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_bookings_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_calendar_blocks_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_badges_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_reviews_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_subscriptions_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_packages_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_gift_cards_table.php
+│   │   ├── YYYY_MM_DD_HHMMSS_create_beauty_commission_settings_table.php
+│   │   └── YYYY_MM_DD_HHMMSS_create_beauty_transactions_table.php
+│   └── Seeders/
+│       └── BeautyBookingDatabaseSeeder.php
+├── Entities/                             # Eloquent Models
+│   ├── BeautySalon.php
+│   ├── BeautyStaff.php
+│   ├── BeautyServiceCategory.php
+│   ├── BeautyService.php
+│   ├── BeautyBooking.php
+│   ├── BeautyCalendarBlock.php
+│   ├── BeautyBadge.php
+│   ├── BeautyReview.php
+│   ├── BeautySubscription.php
+│   ├── BeautyPackage.php
+│   ├── BeautyGiftCard.php
+│   ├── BeautyCommissionSetting.php
+│   └── BeautyTransaction.php
+├── Http/
+│   └── Controllers/
+│       ├── Api/
+│       │   ├── Customer/                # Customer API Controllers
+│       │   │   ├── BeautySalonController.php
+│       │   │   ├── BeautyBookingController.php
+│       │   │   ├── BeautyReviewController.php
+│       │   │   └── BeautyGiftCardController.php
+│       │   └── Vendor/                   # Vendor API Controllers
+│       │       ├── BeautyBookingController.php
+│       │       ├── BeautyStaffController.php
+│       │       ├── BeautyServiceController.php
+│       │       └── BeautyCalendarController.php
+│       └── Web/
+│           ├── Admin/                    # Admin Web Controllers
+│           │   ├── BeautySalonController.php
+│           │   ├── BeautyCategoryController.php
+│           │   ├── BeautyReviewController.php
+│           │   ├── BeautyCommissionController.php
+│           │   └── BeautyReportController.php
+│           └── Vendor/                   # Vendor Web Controllers
+│               ├── BeautyDashboardController.php
+│               ├── BeautyStaffController.php
+│               ├── BeautyServiceController.php
+│               ├── BeautyCalendarController.php
+│               ├── BeautyBookingController.php
+│               └── BeautySubscriptionController.php
+├── Providers/
+│   ├── BeautyBookingServiceProvider.php # Main service provider
+│   └── RouteServiceProvider.php         # Route service provider
+├── Routes/
+│   ├── api/
+│   │   └── v1/
+│   │       ├── customer/
+│   │       │   └── api.php              # Customer API routes
+│   │       └── vendor/
+│   │           └── api.php               # Vendor API routes
+│   └── web/
+│       ├── admin/
+│       │   └── admin.php                 # Admin web routes
+│       └── vendor/
+│           └── routes.php                # Vendor web routes
+├── Resources/
+│   └── views/
+│       ├── admin/                       # Admin Blade views
+│       │   ├── salon/
+│       │   │   ├── index.blade.php
+│       │   │   ├── view.blade.php
+│       │   │   └── create.blade.php
+│       │   ├── category/
+│       │   │   └── index.blade.php
+│       │   ├── review/
+│       │   │   └── index.blade.php
+│       │   └── commission/
+│       │       └── index.blade.php
+│       └── vendor/                       # Vendor Blade views
+│           ├── dashboard.blade.php
+│           ├── staff/
+│           │   └── index.blade.php
+│           ├── service/
+│           │   └── index.blade.php
+│           ├── calendar/
+│           │   └── index.blade.php
+│           └── booking/
+│               └── index.blade.php
+├── Services/                            # Business logic services
+│   ├── BeautyBookingService.php
+│   ├── BeautyCalendarService.php
+│   ├── BeautyRankingService.php
+│   ├── BeautyBadgeService.php
+│   ├── BeautyCommissionService.php
+│   └── BeautyRevenueService.php
+├── Traits/                              # Reusable traits
+│   ├── BeautyPushNotification.php
+│   └── BeautyBookingLogic.php
+├── Emails/                              # Email/Mailable classes
+│   ├── BeautySalonRegistration.php
+│   ├── BeautySalonApproval.php
+│   ├── BeautyBookingConfirmation.php
+│   ├── BeautyBookingReminder.php
+│   └── BeautyBookingCancellation.php
+├── Exports/                             # Excel export classes
+│   ├── BeautyBookingExport.php
+│   ├── BeautySalonExport.php
+│   └── BeautyTransactionExport.php
+├── public/                              # Public assets
+│   └── assets/
+│       ├── css/
+│       │   └── beauty-booking.css
+│       └── js/
+│           ├── beauty-calendar.js
+│           └── beauty-booking.js
+├── composer.json                        # Composer dependencies
+├── module.json                          # Module metadata
+├── package.json                         # NPM dependencies
+└── webpack.mix.js                       # Laravel Mix configuration
+```
+
+## File Organization Rules
+
+### Controllers
+- **Group by**: Functionality (Admin, Vendor, Customer)
+- **Separate**: Web controllers from API controllers
+- **Location**: `Http/Controllers/{Web|Api}/{Admin|Vendor|Customer}/`
+- **Naming**: `Beauty{Entity}Controller.php`
+
+### Models/Entities
+- **Location**: `Entities/`
+- **Naming**: `Beauty{EntityName}.php`
+- **One model per file**
+- **Extend**: `Illuminate\Database\Eloquent\Model`
+
+### Services
+- **Location**: `Services/`
+- **Naming**: `Beauty{Feature}Service.php`
+- **Purpose**: Business logic, not HTTP concerns
+- **Return**: Data, not HTTP responses
+
+### Traits
+- **Location**: `Traits/`
+- **Naming**: `Beauty{Feature}.php`
+- **Purpose**: Reusable code across multiple classes
+
+### Migrations
+- **Location**: `Database/Migrations/`
+- **Naming**: `YYYY_MM_DD_HHMMSS_create_beauty_{table}_table.php`
+- **Order**: Create tables in dependency order
+
+### Views
+- **Location**: `Resources/views/{admin|vendor}/`
+- **Naming**: `{section}/{view}.blade.php`
+- **Namespace**: `beautybooking::{section}.{view}`
+
+## Module Registration
+
+### module.json
+```json
+{
+    "name": "BeautyBooking",
+    "alias": "beautybooking",
+    "description": "Beauty & Clinic Booking Platform Module",
+    "keywords": ["beauty", "booking", "salon", "clinic"],
+    "priority": 0,
+    "providers": [
+        "Modules\\BeautyBooking\\Providers\\BeautyBookingServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
+```
+
+### Addon Info (Addon/info.php)
+```php
+<?php return [
+    'software_id' => '56881321',
+    'name' => 'BeautyBooking',
+    'is_published' => 1,
+    'database_migrated' => 0,
+    'purchase_code' => 'null',
+    'username' => 'null',
+    'class_files_updated' => 1,
+];
+```
+
+### Module Activation
+- Register in `modules_statuses.json`
+- Run: `php artisan module:publish BeautyBooking`
+- Add to admin and vendor menus
+
+## Service Provider Structure
+
+### BeautyBookingServiceProvider
+- **Location**: `Providers/BeautyBookingServiceProvider.php`
+- **Responsibilities**:
+  - Register translations
+  - Register config
+  - Register views
+  - Load migrations
+  - Register RouteServiceProvider
+
+### RouteServiceProvider
+- **Location**: `Providers/RouteServiceProvider.php`
+- **Responsibilities**:
+  - Map API routes
+  - Map Web routes (Admin & Vendor)
+  - Define route groups and middleware
+
+## Common Patterns
+
+### Check Module Status
+```php
+if (addon_published_status('BeautyBooking')) {
+    // Module-specific code
+}
+```
+
+### Get Module Path
+```php
+module_path('BeautyBooking', 'Resources/views')
+```
+
+### Load Module Views
+```php
+return view('beautybooking::vendor.dashboard');
+```
+
+### Module Config
+```php
+config('beautybooking.some_setting')
+```
+
+### Module Helper
+```php
+// Check if module is active
+if (addon_published_status('BeautyBooking')) {
+    // Module is active
+}
+```
+
+## Integration Points
+
+### Store Model Extension
+- Add relationship: `beautySalon()` to `App\Models\Store`
+- Add scope: `beautySalons()` for filtering
+
+### Menu Integration
+- Add to admin menu: "Beauty Booking" section
+- Add to vendor menu: "Beauty Booking" section
+- Use existing menu structure
+
+### Route Integration
+- Module routes are auto-loaded via RouteServiceProvider
+- No need to modify main route files
+- Routes are namespaced: `beautybooking.*`

@@ -1,0 +1,417 @@
+---
+description: Eloquent Models and Entities Rules
+alwaysApply: true
+---
+
+# Models & Entities
+
+## Model Naming
+
+### Class Names
+- **Format**: `Beauty{EntityName}` (PascalCase)
+- **Location**: `Modules/BeautyBooking/Entities/`
+- **File Name**: Must match class name exactly
+- **Examples**:
+  - `BeautySalon.php` → class `BeautySalon`
+  - `BeautyBooking.php` → class `BeautyBooking`
+  - `BeautyStaff.php` → class `BeautyStaff`
+
+## Model Structure
+
+### Base Class
+- **Always extend**: `Illuminate\Database\Eloquent\Model`
+- **Use traits**: `HasFactory`, `SoftDeletes`, `ReportFilter` as needed
+- **Example**:
+  ```php
+  use Illuminate\Database\Eloquent\Model;
+  use Illuminate\Database\Eloquent\Factories\HasFactory;
+  use Illuminate\Database\Eloquent\SoftDeletes;
+  use App\Traits\ReportFilter;
+
+  class BeautySalon extends Model
+  {
+      use HasFactory, SoftDeletes, ReportFilter;
+  }
+  ```
+
+### Table Name
+- **Property**: `protected $table = 'beauty_salons';`
+- **Default**: Laravel auto-generates from class name (BeautySalon → beauty_salons)
+- **Only specify**: If table name doesn't follow convention
+
+### Primary Key
+- **Default**: `id` (auto-incrementing bigInteger)
+- **Custom**: Only if needed, use `protected $primaryKey = 'custom_id';`
+- **Non-incrementing**: `public $incrementing = false;` if using UUIDs
+
+### Mass Assignment
+
+#### Guarded (Preferred)
+- **Use**: `protected $guarded = ['id'];`
+- **Reason**: More secure, only guards specific fields
+- **Example**:
+  ```php
+  protected $guarded = ['id', 'created_at', 'updated_at'];
+  ```
+
+#### Fillable (Alternative)
+- **Use**: `protected $fillable = [...];` only when needed
+- **Less preferred**: More verbose, need to list all fields
+
+### Casts
+- **Always define**: All casts explicitly
+- **Types**: integer, float, boolean, array, json, date, datetime, timestamp
+- **Example**:
+  ```php
+  protected $casts = [
+      'salon_id' => 'integer',
+      'user_id' => 'integer',
+      'service_id' => 'integer',
+      'staff_id' => 'integer',
+      'total_amount' => 'float',
+      'commission_amount' => 'float',
+      'service_fee' => 'float',
+      'is_verified' => 'boolean',
+      'is_featured' => 'boolean',
+      'status' => 'integer',
+      'payment_status' => 'string',
+      'booking_date' => 'date',
+      'booking_time' => 'datetime',
+      'working_hours' => 'json',
+      'breaks' => 'json',
+      'holidays' => 'json',
+      'documents' => 'json',
+      'created_at' => 'datetime',
+      'updated_at' => 'datetime',
+  ];
+  ```
+
+### Appends
+- **Use**: `protected $appends = []` for computed attributes
+- **Accessors**: Create accessor methods for computed values
+- **Example**:
+  ```php
+  protected $appends = ['full_name', 'thumbnail_url', 'badges_list'];
+  
+  public function getFullNameAttribute(): string
+  {
+      return "{$this->f_name} {$this->l_name}";
+  }
+  
+  public function getThumbnailUrlAttribute(): string
+  {
+      return $this->thumbnail ? asset("storage/{$this->thumbnail}") : asset('images/placeholder.png');
+  }
+  ```
+
+### Hidden
+- **Use**: `protected $hidden = []` to hide sensitive fields from JSON
+- **Example**:
+  ```php
+  protected $hidden = ['password', 'remember_token', 'verification_notes'];
+  ```
+
+## Relationships
+
+### Relationship Types
+- **belongsTo**: Many-to-one (e.g., Booking belongs to Salon)
+- **hasMany**: One-to-many (e.g., Salon has many Bookings)
+- **hasOne**: One-to-one (e.g., Salon has one Badge)
+- **belongsToMany**: Many-to-many (e.g., Service belongs to many Staff)
+- **morphMany**: Polymorphic (e.g., Review can belong to Salon or Service)
+
+### Relationship Naming
+- **Format**: Descriptive method names
+- **Examples**:
+  - `salon()`, `user()`, `service()`, `staff()`
+  - `bookings()`, `reviews()`, `badges()`
+  - `serviceCategories()`, `calendarBlocks()`
+
+### Relationship Definition
+- **Always specify**: Return type in PHPDoc
+- **Use**: Proper foreign key and local key
+- **Example**:
+  ```php
+  /**
+   * Get the salon that owns the booking
+   * دریافت سالنی که رزرو متعلق به آن است
+   *
+   * @return BelongsTo
+   */
+  public function salon(): BelongsTo
+  {
+      return $this->belongsTo(BeautySalon::class, 'salon_id', 'id');
+  }
+  
+  /**
+   * Get all bookings for this salon
+   * دریافت تمام رزروهای این سالن
+   *
+   * @return HasMany
+   */
+  public function bookings(): HasMany
+  {
+      return $this->hasMany(BeautyBooking::class, 'salon_id', 'id');
+  }
+  ```
+
+### Eager Loading
+- **Always use**: `with()` to prevent N+1 queries
+- **Example**:
+  ```php
+  $bookings = BeautyBooking::with(['salon', 'service', 'staff', 'user'])->get();
+  ```
+
+## Scopes
+
+### Scope Naming
+- **Format**: `scope{Name}` (method name without `scope` prefix)
+- **Usage**: `->active()`, `->verified()`, `->featured()`
+- **Example**:
+  ```php
+  /**
+   * Scope a query to only include active salons
+   * محدود کردن کوئری به سالن‌های فعال
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeActive($query)
+  {
+      return $query->where('status', 1)
+          ->whereHas('store', function($q) {
+              $q->where('status', 1)->where('active', 1);
+          });
+  }
+  
+  /**
+   * Scope a query to only include verified salons
+   * محدود کردن کوئری به سالن‌های تأیید شده
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeVerified($query)
+  {
+      return $query->where('is_verified', true)
+          ->where('verification_status', 1);
+  }
+  
+  /**
+   * Scope a query to only include featured salons
+   * محدود کردن کوئری به سالن‌های ویژه
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeFeatured($query)
+  {
+      return $query->where('is_featured', true)
+          ->whereHas('subscriptions', function($q) {
+              $q->where('status', 'active')
+                ->where('end_date', '>', now());
+          });
+  }
+  ```
+
+### Common Scopes
+- `active()` - Active records
+- `verified()` - Verified records
+- `featured()` - Featured records
+- `upcoming()` - Future bookings
+- `past()` - Past bookings
+- `byStatus($status)` - Filter by status
+- `bySalon($salonId)` - Filter by salon
+
+## Accessors & Mutators
+
+### Accessors
+- **Format**: `get{AttributeName}Attribute()`
+- **Purpose**: Transform attribute when accessing
+- **Example**:
+  ```php
+  public function getWorkingHoursAttribute($value)
+  {
+      if (is_string($value)) {
+          return json_decode($value, true);
+      }
+      return $value;
+  }
+  
+  public function getStatusTextAttribute(): string
+  {
+      return match($this->status) {
+          0 => 'Inactive',
+          1 => 'Active',
+          2 => 'Suspended',
+          default => 'Unknown'
+      };
+  }
+  ```
+
+### Mutators
+- **Format**: `set{AttributeName}Attribute()`
+- **Purpose**: Transform attribute before saving
+- **Example**:
+  ```php
+  public function setWorkingHoursAttribute($value)
+  {
+      $this->attributes['working_hours'] = is_array($value) 
+          ? json_encode($value) 
+          : $value;
+  }
+  ```
+
+## Model Methods
+
+### Business Logic Methods
+- **Location**: In model or service class
+- **Naming**: Descriptive action verbs
+- **Examples**:
+  ```php
+  /**
+   * Check if booking can be cancelled
+   * بررسی امکان لغو رزرو
+   *
+   * @return bool
+   */
+  public function canCancel(): bool
+  {
+      if ($this->status !== 'confirmed') {
+          return false;
+      }
+      
+      if ($this->booking_date < now()->addHours(24)) {
+          return false; // Cannot cancel within 24 hours
+      }
+      
+      return true;
+  }
+  
+  /**
+   * Calculate cancellation fee
+   * محاسبه هزینه لغو
+   *
+   * @return float
+   */
+  public function calculateCancellationFee(): float
+  {
+      if (!$this->canCancel()) {
+          return $this->total_amount; // Full amount if cancelled late
+      }
+      
+      $hoursUntilBooking = now()->diffInHours($this->booking_date);
+      
+      if ($hoursUntilBooking < 24) {
+          return $this->total_amount * 0.5; // 50% fee
+      }
+      
+      return 0; // No fee if cancelled early
+  }
+  ```
+
+## Model Example Template
+
+### Complete Model Example
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\BeautyBooking\Entities;
+
+use App\Models\Store;
+use App\Models\User;
+use App\Scopes\ZoneScope;
+use App\Traits\ReportFilter;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+/**
+ * Beauty Salon Model
+ * مدل سالن زیبایی
+ *
+ * @property int $id
+ * @property int $store_id
+ * @property string $business_type
+ * @property string|null $license_number
+ * @property bool $is_verified
+ * @property bool $is_featured
+ * @property float $avg_rating
+ * @property int $total_bookings
+ */
+class BeautySalon extends Model
+{
+    use HasFactory, SoftDeletes, ReportFilter;
+
+    protected $guarded = ['id'];
+    
+    protected $casts = [
+        'store_id' => 'integer',
+        'zone_id' => 'integer',
+        'is_verified' => 'boolean',
+        'is_featured' => 'boolean',
+        'verification_status' => 'integer',
+        'avg_rating' => 'float',
+        'total_bookings' => 'integer',
+        'total_reviews' => 'integer',
+        'working_hours' => 'json',
+        'holidays' => 'json',
+        'documents' => 'json',
+        'license_expiry' => 'date',
+    ];
+    
+    protected $appends = ['badges_list', 'verification_status_text'];
+    
+    /**
+     * Get the store that owns this salon
+     * دریافت فروشگاهی که این سالن متعلق به آن است
+     *
+     * @return BelongsTo
+     */
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'store_id', 'id');
+    }
+    
+    /**
+     * Get all bookings for this salon
+     * دریافت تمام رزروهای این سالن
+     *
+     * @return HasMany
+     */
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(BeautyBooking::class, 'salon_id', 'id');
+    }
+    
+    /**
+     * Scope a query to only include active salons
+     * محدود کردن کوئری به سالن‌های فعال
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1)
+            ->whereHas('store', function($q) {
+                $q->where('status', 1)->where('active', 1);
+            });
+    }
+    
+    /**
+     * Get badges list
+     * دریافت لیست نشان‌ها
+     *
+     * @return array
+     */
+    public function getBadgesListAttribute(): array
+    {
+        return $this->badges()->active()->pluck('badge_type')->toArray();
+    }
+}
+```

@@ -1,0 +1,243 @@
+---
+description: PHP/Laravel Code Style Standards and Best Practices
+alwaysApply: true
+---
+
+# Code Style & Standards
+
+## PHP Standards
+
+### Strict Types
+- **ALWAYS** use `declare(strict_types=1);` at the top of every PHP file
+- This enforces type safety and prevents implicit type conversions
+
+### Type Hints & Return Types
+- Use type hints for all method parameters
+- Use return types for all methods (void, string, int, array, object, etc.)
+- Use nullable types (`?string`, `?int`) when values can be null
+- Example:
+  ```php
+  public function createBooking(int $userId, int $salonId, array $bookingData): BeautyBooking
+  {
+      // implementation
+  }
+  ```
+
+### PSR-12 Compliance
+- Follow PSR-12 coding standard strictly
+- Use 4 spaces for indentation (no tabs)
+- Opening braces on the same line for classes and methods
+- Opening braces on new line for control structures
+- One blank line between methods
+- No trailing whitespace
+
+### Code Comments
+
+#### Bilingual Comments (Persian + English)
+- **ALL** comments must be bilingual: Persian (Farsi) first, then English
+- Class-level comments: Describe the class purpose in both languages
+- Method comments: Describe what the method does in both languages
+- Inline comments: Explain complex logic in both languages
+
+#### PHPDoc Standards
+- Every class must have a class-level PHPDoc block
+- Every public method must have PHPDoc with:
+  - Description (bilingual)
+  - `@param` for each parameter with type and description
+  - `@return` with type and description
+  - `@throws` if method throws exceptions
+
+#### Comment Format Example
+```php
+/**
+ * Create a new booking for the customer
+ * ایجاد رزرو جدید برای مشتری
+ * 
+ * @param int $userId The ID of the user making the booking
+ * @param int $salonId The ID of the salon
+ * @param array $bookingData Booking details including service, staff, date, time
+ * @return BeautyBooking The created booking instance
+ * @throws \Exception If booking cannot be created
+ */
+public function createBooking(int $userId, int $salonId, array $bookingData): BeautyBooking
+{
+    // Check availability before creating booking
+    // بررسی دسترسی‌پذیری قبل از ایجاد رزرو
+    if (!$this->isTimeSlotAvailable($salonId, $bookingData['date'], $bookingData['time'])) {
+        throw new \Exception('Time slot is not available');
+    }
+    
+    // Create booking
+    // ایجاد رزرو
+    return BeautyBooking::create([...]);
+}
+```
+
+## Laravel-Specific Standards
+
+### Namespace Organization
+- Use proper namespace structure: `Modules\BeautyBooking\{Type}\{Name}`
+- Controllers: `Modules\BeautyBooking\Http\Controllers\{Web|Api}\{Admin|Vendor|Customer}\{Name}Controller`
+- Models: `Modules\BeautyBooking\Entities\{Name}`
+- Services: `Modules\BeautyBooking\Services\{Name}Service`
+- Traits: `Modules\BeautyBooking\Traits\{Name}`
+
+### Use Statements
+- Group use statements logically:
+  1. Framework classes (Illuminate, Carbon, etc.)
+  2. Application classes (App\Models, App\CentralLogics, etc.)
+  3. Module classes (Modules\BeautyBooking\Entities, etc.)
+  4. Third-party packages
+- Alphabetically order within each group
+- One blank line between groups
+
+### Dependency Injection
+- Use constructor injection for dependencies
+- Type-hint all dependencies
+- Use property promotion when appropriate (PHP 8.0+)
+- Example:
+  ```php
+  public function __construct(
+      private BeautyBookingService $bookingService,
+      private BeautyCalendarService $calendarService,
+      private Helpers $helpers
+  ) {}
+  ```
+
+### Method Organization
+- Order methods logically:
+  1. Constructor
+  2. Public methods (CRUD operations)
+  3. Protected methods (helper methods)
+  4. Private methods (internal logic)
+- Group related methods together
+
+### Variable Naming
+- Use descriptive, meaningful names
+- Use camelCase for variables and methods
+- Use PascalCase for classes
+- Use UPPER_SNAKE_CASE for constants
+- Avoid abbreviations unless widely understood
+- Example:
+  ```php
+  // Good
+  $bookingDate = Carbon::now();
+  $isAvailable = $this->checkAvailability();
+  
+  // Bad
+  $bd = Carbon::now();
+  $avail = $this->check();
+  ```
+
+### Array & Collection Usage
+- Prefer collections over arrays when working with Laravel
+- Use array syntax for simple key-value pairs
+- Use collection methods for complex operations
+- Example:
+  ```php
+  // Good
+  $bookings = BeautyBooking::where('status', 'confirmed')
+      ->get()
+      ->filter(fn($booking) => $booking->isUpcoming())
+      ->map(fn($booking) => $booking->toArray());
+  
+  // Bad
+  $bookings = [];
+  foreach (BeautyBooking::where('status', 'confirmed')->get() as $booking) {
+      if ($booking->isUpcoming()) {
+          $bookings[] = $booking->toArray();
+      }
+  }
+  ```
+
+## Code Quality Rules
+
+### Single Responsibility Principle
+- Each class should have one reason to change
+- Methods should do one thing and do it well
+- Split large methods into smaller, focused methods
+
+### DRY (Don't Repeat Yourself)
+- Extract common logic into methods or traits
+- Reuse existing helpers and utilities
+- Avoid code duplication
+
+### Magic Numbers/Strings
+- Never use magic numbers or strings
+- Define constants or use config values
+- Example:
+  ```php
+  // Bad
+  if ($rating > 4.5 && $bookingsCount >= 50) {
+      // ...
+  }
+  
+  // Good
+  const MIN_RATING_FOR_TOP_RATED = 4.5;
+  const MIN_BOOKINGS_FOR_TOP_RATED = 50;
+  
+  if ($rating > self::MIN_RATING_FOR_TOP_RATED && $bookingsCount >= self::MIN_BOOKINGS_FOR_TOP_RATED) {
+      // ...
+  }
+  ```
+
+### Early Returns
+- Use early returns to reduce nesting
+- Improve code readability
+- Example:
+  ```php
+  // Good
+  public function canCancel(BeautyBooking $booking): bool
+  {
+      if ($booking->status !== 'confirmed') {
+          return false;
+      }
+      
+      if ($booking->isPast()) {
+          return false;
+      }
+      
+      return true;
+  }
+  
+  // Bad
+  public function canCancel(BeautyBooking $booking): bool
+  {
+      if ($booking->status === 'confirmed') {
+          if (!$booking->isPast()) {
+              return true;
+          }
+      }
+      return false;
+  }
+  ```
+
+## Formatting Rules
+
+### Line Length
+- Maximum 120 characters per line
+- Break long lines logically
+- Align continuation lines properly
+
+### Spacing
+- One space after keywords (if, foreach, etc.)
+- No space after function names
+- One space around operators
+- No space before semicolons
+- Example:
+  ```php
+  // Good
+  if ($condition) {
+      $result = $a + $b;
+  }
+  
+  // Bad
+  if($condition){
+      $result=$a+$b;
+  }
+  ```
+
+### Blank Lines
+- One blank line between methods
+- One blank line between logical sections within methods
+- Two blank lines between class-level sections (properties, methods)

@@ -1,0 +1,251 @@
+---
+description: Controller Development Rules and Patterns
+alwaysApply: true
+---
+
+# Controllers
+
+## Controller Organization
+
+### Directory Structure
+- **Web Controllers**: `Http/Controllers/Web/{Admin|Vendor}/`
+- **API Controllers**: `Http/Controllers/Api/{Customer|Vendor}/`
+- **Naming**: `Beauty{Entity}Controller.php`
+
+### Controller Types
+
+#### Admin Controllers
+- **Location**: `Http/Controllers/Web/Admin/`
+- **Purpose**: Admin panel management
+- **Examples**: `BeautySalonController`, `BeautyCategoryController`, `BeautyReviewController`
+
+#### Vendor Controllers
+- **Location**: `Http/Controllers/Web/Vendor/`
+- **Purpose**: Vendor panel management
+- **Examples**: `BeautyDashboardController`, `BeautyStaffController`, `BeautyCalendarController`
+
+#### Customer API Controllers
+- **Location**: `Http/Controllers/Api/Customer/`
+- **Purpose**: Customer mobile app API
+- **Examples**: `BeautySalonController`, `BeautyBookingController`
+
+#### Vendor API Controllers
+- **Location**: `Http/Controllers/Api/Vendor/`
+- **Purpose**: Vendor mobile app API
+- **Examples**: `BeautyBookingController`, `BeautyCalendarController`
+
+## Controller Structure
+
+### Base Controller
+- **Extend**: `Illuminate\Routing\Controller` or `App\Http\Controllers\Controller`
+- **Use traits**: As needed (e.g., `FileManagerTrait`)
+- **Dependency injection**: Use constructor injection
+
+### Constructor Pattern
+```php
+public function __construct(
+    private BeautyBookingService $bookingService,
+    private BeautyCalendarService $calendarService,
+    private Helpers $helpers,
+    private BeautyBooking $booking
+) {}
+```
+
+## Controller Responsibilities
+
+### Thin Controllers
+- **Do**: Handle HTTP requests/responses, validation, authorization
+- **Don't**: Business logic (delegate to services)
+- **Pattern**: Controller → Service → Model
+
+### Method Organization
+1. **Index methods**: List resources
+2. **Show methods**: Display single resource
+3. **Create methods**: Show creation form (Web only)
+4. **Store methods**: Save new resource
+5. **Edit methods**: Show edit form (Web only)
+6. **Update methods**: Update existing resource
+7. **Destroy methods**: Delete resource
+
+## Web Controllers
+
+### Response Types
+- **Views**: `return view('beautybooking::admin.salon.index', compact('salons'));`
+- **Redirects**: `return redirect()->route('beautybooking.salon.index')->with('success', '...');`
+- **JSON**: `return response()->json(['data' => $data], 200);`
+
+### Validation
+- **Use**: `Validator::make()` or Form Requests
+- **Return**: Redirect back with errors if validation fails
+- **Example**:
+  ```php
+  $validator = Validator::make($request->all(), [
+      'name' => 'required|string|max:255',
+      'email' => 'required|email|unique:beauty_salons',
+  ]);
+  
+  if ($validator->fails()) {
+      return back()->withErrors($validator)->withInput();
+  }
+  ```
+
+### Flash Messages
+- **Use**: Toastr for notifications
+- **Example**: `Toastr::success(translate('messages.salon_created_successfully'));`
+
+## API Controllers
+
+### Response Format
+- **Success**: `response()->json(['message' => translate('...'), 'data' => $data], 200)`
+- **Error**: `response()->json(['errors' => Helpers::error_processor($validator)], 403)`
+- **Always use**: `Helpers::error_processor()` for validation errors
+
+### HTTP Status Codes
+- **200**: Success
+- **201**: Created
+- **400**: Bad Request
+- **401**: Unauthorized
+- **403**: Forbidden
+- **404**: Not Found
+- **500**: Server Error
+
+### Authentication
+- **Customer APIs**: `auth:api` middleware with `sanctum` guard
+- **Vendor APIs**: `auth:api` middleware with vendor guard
+- **Always check**: User permissions before operations
+
+### Validation Pattern
+```php
+$validator = Validator::make($request->all(), [
+    'salon_id' => 'required|integer|exists:beauty_salons,id',
+    'service_id' => 'required|integer|exists:beauty_services,id',
+    'booking_date' => 'required|date|after:today',
+    'booking_time' => 'required|date_format:H:i',
+]);
+
+if ($validator->fails()) {
+    return response()->json([
+        'errors' => Helpers::error_processor($validator)
+    ], 403);
+}
+```
+
+## Common Controller Patterns
+
+### Index Method (List)
+```php
+public function index(Request $request): Renderable
+{
+    $salons = $this->salon
+        ->when($request->has('search'), function ($query) use ($request) {
+            $keys = explode(' ', $request['search']);
+            foreach ($keys as $key) {
+                $query->orWhere('name', 'LIKE', '%' . $key . '%');
+            }
+        })
+        ->when($request->filled('status'), function ($query) use ($request) {
+            $query->where('status', $request->input('status'));
+        })
+        ->latest()
+        ->paginate(config('default_pagination'));
+    
+    return view('beautybooking::admin.salon.index', compact('salons'));
+}
+```
+
+### Store Method (Create)
+```php
+public function store(Request $request): RedirectResponse
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'store_id' => 'required|integer|exists:stores,id',
+    ]);
+    
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
+    }
+    
+    $salon = $this->salonService->create($request->all());
+    
+    Toastr::success(translate('messages.salon_created_successfully'));
+    return redirect()->route('beautybooking.salon.index');
+}
+```
+
+### Update Method
+```php
+public function update(Request $request, int $id): RedirectResponse
+{
+    $salon = $this->salon->findOrFail($id);
+    
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+    ]);
+    
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
+    }
+    
+    $this->salonService->update($salon, $request->all());
+    
+    Toastr::success(translate('messages.salon_updated_successfully'));
+    return redirect()->route('beautybooking.salon.index');
+}
+```
+
+### Destroy Method
+```php
+public function destroy(int $id): RedirectResponse
+{
+    $salon = $this->salon->findOrFail($id);
+    
+    // Check if salon has bookings
+    if ($salon->bookings()->count() > 0) {
+        Toastr::error(translate('messages.cannot_delete_salon_with_bookings'));
+        return back();
+    }
+    
+    $salon->delete();
+    
+    Toastr::success(translate('messages.salon_deleted_successfully'));
+    return redirect()->route('beautybooking.salon.index');
+}
+```
+
+## Error Handling
+
+### Try-Catch Blocks
+- **Use**: For external operations (file uploads, API calls, payments)
+- **Log**: Errors using `info()` or `Log::error()`
+- **Return**: User-friendly error messages
+
+### Example
+```php
+try {
+    $booking = $this->bookingService->create($request->all());
+    return response()->json(['message' => translate('booking_created'), 'data' => $booking], 201);
+} catch (\Exception $e) {
+    info($e->getMessage());
+    return response()->json([
+        'errors' => [['code' => 'booking', 'message' => translate('booking_creation_failed')]]
+    ], 500);
+}
+```
+
+## Authorization
+
+### Check Permissions
+- **Admin**: Check admin role
+- **Vendor**: Check vendor owns the resource
+- **Customer**: Check customer owns the resource
+
+### Example
+```php
+// Check vendor owns salon
+if ($salon->store->vendor_id !== $request->vendor->id) {
+    return response()->json([
+        'errors' => [['code' => 'unauthorized', 'message' => translate('unauthorized')]]
+    ], 403);
+}
+```
