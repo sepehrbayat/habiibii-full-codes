@@ -1,0 +1,5 @@
+{
+  "summary": "Verified script placement in customer dashboard views. The beauty-confirmation.js script tags are correctly placed BEFORE @endsection directives in both booking-detail.blade.php (line 116 before line 117) and bookings.blade.php (line 88 before line 89), meaning they are properly within the @section('content') block and will render correctly in the HTML output. The scripts are correctly positioned and should work as expected.",
+  "current_status": "Script placement verified and confirmed correct. Both files have the script tags properly placed within the @section('content') block before @endsection, ensuring they will be rendered in the HTML output. Confirmation dialogs should work correctly on customer dashboard pages."
+}
+

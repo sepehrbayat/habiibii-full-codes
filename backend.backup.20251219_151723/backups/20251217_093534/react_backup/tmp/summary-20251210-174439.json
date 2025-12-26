@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed booking schedule validation by lifting the selected date to the parent BookingForm, ensuring the AvailabilityCalendar resets date/time when salon/service/staff changes, and using the shared dayjs date for validation; no lints remaining.",
+  "current_status": "Beauty booking flow updated; date selection now controlled and validated in BookingForm while availability checks remain functional."
+}
+

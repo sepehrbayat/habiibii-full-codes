@@ -1,0 +1,5 @@
+{
+  "summary": "Updated admin staff calendar events to parse booking start datetime safely using a new helper, preventing invalid strings from Carbon date casts. Attempted automated code review but the tool reported it was not in a git repo.",
+  "current_status": "BeautyBooking module changes verified; staff calendar datetime parsing fixed, other areas aligned with requirements."
+}
+

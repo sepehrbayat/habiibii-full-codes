@@ -1,0 +1,233 @@
+---
+description: Naming Conventions for Beauty Booking Module
+alwaysApply: true
+---
+
+# Naming Conventions
+
+## Module Naming
+
+### Module Name
+- **Module Name**: `BeautyBooking` (PascalCase)
+- **Module Alias**: `beautybooking` (lowercase, no spaces)
+- **Namespace**: `Modules\BeautyBooking`
+
+## Class Naming
+
+### Models/Entities
+- **Format**: `Beauty{EntityName}` (PascalCase)
+- **Location**: `Modules/BeautyBooking/Entities/`
+- **Examples**:
+  - `BeautySalon`
+  - `BeautyBooking`
+  - `BeautyStaff`
+  - `BeautyService`
+  - `BeautyServiceCategory`
+  - `BeautyReview`
+  - `BeautyBadge`
+  - `BeautyTransaction`
+
+### Controllers
+- **Format**: `Beauty{EntityName}Controller` (PascalCase)
+- **Location**: `Modules/BeautyBooking/Http/Controllers/{Web|Api}/{Admin|Vendor|Customer}/`
+- **Examples**:
+  - `BeautySalonController`
+  - `BeautyBookingController`
+  - `BeautyStaffController`
+  - `BeautyServiceController`
+  - `BeautyCalendarController`
+
+### Services
+- **Format**: `Beauty{FeatureName}Service` (PascalCase)
+- **Location**: `Modules/BeautyBooking/Services/`
+- **Examples**:
+  - `BeautyBookingService`
+  - `BeautyCalendarService`
+  - `BeautyRankingService`
+  - `BeautyBadgeService`
+  - `BeautyCommissionService`
+  - `BeautyRevenueService`
+
+### Traits
+- **Format**: `Beauty{FeatureName}` (PascalCase)
+- **Location**: `Modules/BeautyBooking/Traits/`
+- **Examples**:
+  - `BeautyPushNotification`
+  - `BeautyBookingLogic`
+  - `BeautyCalendarHelper`
+
+### Exports
+- **Format**: `Beauty{EntityName}Export` (PascalCase)
+- **Location**: `Modules/BeautyBooking/Exports/`
+- **Examples**:
+  - `BeautyBookingExport`
+  - `BeautySalonExport`
+  - `BeautyTransactionExport`
+
+### Emails/Mailables
+- **Format**: `Beauty{EventName}` (PascalCase)
+- **Location**: `Modules/BeautyBooking/Emails/`
+- **Examples**:
+  - `BeautySalonRegistration`
+  - `BeautySalonApproval`
+  - `BeautyBookingConfirmation`
+  - `BeautyBookingReminder`
+  - `BeautyBookingCancellation`
+
+## Database Naming
+
+### Tables
+- **Format**: `beauty_{entity_name}` (snake_case, plural)
+- **Prefix**: All tables must start with `beauty_`
+- **Examples**:
+  - `beauty_salons`
+  - `beauty_bookings`
+  - `beauty_staff`
+  - `beauty_services`
+  - `beauty_service_categories`
+  - `beauty_reviews`
+  - `beauty_badges`
+  - `beauty_transactions`
+  - `beauty_calendar_blocks`
+  - `beauty_subscriptions`
+  - `beauty_packages`
+  - `beauty_gift_cards`
+  - `beauty_commission_settings`
+
+### Columns
+- **Format**: `snake_case`
+- **Foreign Keys**: `{entity}_id` (e.g., `salon_id`, `user_id`, `service_id`)
+- **Timestamps**: Use Laravel defaults (`created_at`, `updated_at`, `deleted_at`)
+- **Status Columns**: `status` (integer: 0=inactive, 1=active)
+- **Boolean Columns**: Use descriptive names (e.g., `is_verified`, `is_featured`, `is_active`)
+- **JSON Columns**: Use descriptive names (e.g., `working_hours`, `breaks`, `holidays`, `documents`)
+
+### Indexes
+- **Format**: `idx_{table}_{column(s)}`
+- **Examples**:
+  - `idx_beauty_bookings_salon_id`
+  - `idx_beauty_bookings_status`
+  - `idx_beauty_bookings_booking_date`
+
+### Migrations
+- **Format**: `YYYY_MM_DD_HHMMSS_create_beauty_{table_name}_table.php`
+- **Examples**:
+  - `2024_01_15_120000_create_beauty_salons_table.php`
+  - `2024_01_15_120001_create_beauty_bookings_table.php`
+  - `2024_01_15_120002_create_beauty_staff_table.php`
+
+## Variable & Method Naming
+
+### Variables
+- **Format**: `camelCase`
+- **Descriptive**: Use clear, descriptive names
+- **Examples**:
+  - `$bookingDate`
+  - `$salonId`
+  - `$isAvailable`
+  - `$totalAmount`
+  - `$commissionPercentage`
+
+### Methods
+- **Format**: `camelCase`
+- **Verbs**: Use action verbs for methods that perform actions
+- **Examples**:
+  - `createBooking()`
+  - `checkAvailability()`
+  - `calculateCommission()`
+  - `updateBadge()`
+  - `sendNotification()`
+
+### Constants
+- **Format**: `UPPER_SNAKE_CASE`
+- **Location**: Define in class or config file
+- **Examples**:
+  - `MIN_RATING_FOR_TOP_RATED = 4.5`
+  - `MIN_BOOKINGS_FOR_TOP_RATED = 50`
+  - `DEFAULT_COMMISSION_PERCENTAGE = 10`
+
+### Scopes
+- **Format**: `scope{Name}` (method name without `scope` prefix)
+- **Examples**:
+  - `scopeActive()` → `->active()`
+  - `scopeVerified()` → `->verified()`
+  - `scopeFeatured()` → `->featured()`
+  - `scopeUpcoming()` → `->upcoming()`
+
+## Route Naming
+
+### Web Routes (Admin/Vendor)
+- **Format**: `beautybooking.{resource}.{action}`
+- **Examples**:
+  - `beautybooking.salon.index`
+  - `beautybooking.salon.create`
+  - `beautybooking.salon.store`
+  - `beautybooking.booking.show`
+  - `beautybooking.calendar.index`
+
+### API Routes
+- **Format**: `api/v1/beautybooking/{resource}/{action}`
+- **Customer**: `api/v1/beautybooking/customer/{resource}`
+- **Vendor**: `api/v1/beautybooking/vendor/{resource}`
+- **Examples**:
+  - `POST /api/v1/beautybooking/customer/bookings`
+  - `GET /api/v1/beautybooking/customer/salons`
+  - `PUT /api/v1/beautybooking/vendor/bookings/{id}/confirm`
+
+## View Naming
+
+### Blade Templates
+- **Format**: `{module}::{section}.{view}`
+- **Location**: `Modules/BeautyBooking/Resources/views/{section}/{view}.blade.php`
+- **Examples**:
+  - `beautybooking::admin.salon.index`
+  - `beautybooking::admin.salon.view`
+  - `beautybooking::vendor.dashboard`
+  - `beautybooking::vendor.calendar.index`
+  - `beautybooking::vendor.booking.index`
+
+## Config Naming
+
+### Config Keys
+- **Format**: `beautybooking.{section}.{key}`
+- **Examples**:
+  - `beautybooking.commission.default_percentage`
+  - `beautybooking.badge.min_rating`
+  - `beautybooking.ranking.location_weight`
+
+## File Naming
+
+### PHP Files
+- **Format**: Match class name exactly
+- **Examples**:
+  - `BeautySalon.php` → class `BeautySalon`
+  - `BeautyBookingService.php` → class `BeautyBookingService`
+
+### JavaScript Files
+- **Format**: `kebab-case.js`
+- **Examples**:
+  - `beauty-calendar.js`
+  - `beauty-booking.js`
+  - `beauty-calendar-helper.js`
+
+### CSS Files
+- **Format**: `kebab-case.css`
+- **Examples**:
+  - `beauty-booking.css`
+  - `beauty-calendar.css`
+
+## Naming Best Practices
+
+### Do's
+- ✅ Use descriptive, self-documenting names
+- ✅ Use consistent naming patterns
+- ✅ Follow Laravel conventions
+- ✅ Use abbreviations only when widely understood
+- ✅ Use plural for collections, singular for single items
+
+### Don'ts
+- ❌ Use single-letter variable names (except in loops)
+- ❌ Use abbreviations that aren't clear
+- ❌ Mix naming conventions
+- ❌ Use reserved keywords
+- ❌ Use Hungarian notation

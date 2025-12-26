@@ -1,0 +1,5 @@
+{
+  "summary": "Resolved all recent DB errors by adding missing columns/tables: items.price/discount, banners.created_by, users.cm_firebase_token, orders.user_id; created discounts, coupons, store_schedule tables; migrations applied and DevTestFixtureSeeder updated (price/discount/cm_firebase_token). Reran migrations and seeding, restarted artisan serve; /api/v1/config returns 200.",
+  "current_status": "Database fully migrated with new columns/tables; server running on 0.0.0.0:8000; no new SQLSTATE errors observed after fixes."
+}
+

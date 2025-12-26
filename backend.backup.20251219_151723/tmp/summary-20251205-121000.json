@@ -1,0 +1,4 @@
+{
+  "summary": "Migrated phpunit.xml to current schema using vendor/bin/phpunit --migrate-configuration; reran VendorApiTest and all 44 tests pass with zero deprecations.",
+  "current_status": "VendorApi tests clean (44 tests, 189 assertions); phpunit.xml updated, no remaining deprecation warnings." 
+}

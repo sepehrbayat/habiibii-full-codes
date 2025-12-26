@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed gift card seeding to use Arr::random for reliable amount selection and updated booking reminder command to use a datetime window with COALESCE of booking_date_time or booking_date/booking_time. Kluster auto-review could not run (tool reported repo not detected).",
+  "current_status": "Seeder and reminder command corrected; ready to rerun reminders and seeders. Pending successful kluster review when tool access to git is available."
+}
+

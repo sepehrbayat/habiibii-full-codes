@@ -1,0 +1,4 @@
+{
+  "summary": "مشکل Error Code -300 بررسی شد. مشکل اصلی از Laravel API بود که خطای 500 می‌داد به دلیل نبودن جدول currencies در دیتابیس. Migrations اجرا شد. همچنین CORS config به‌روزرسانی شد. React App در حال اجرا است اما نیاز به اجرای migrations کامل دارد.",
+  "current_status": "مشکل Laravel API: جدول currencies وجود ندارد. Migrations در حال اجرا است. پس از اجرای کامل migrations، API باید کار کند و React App می‌تواند config را دریافت کند."
+}

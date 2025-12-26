@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed Beauty module not showing in admin module switch. The issue was that the module query was filtering modules by zone association, but the Beauty module had no zones assigned. Fixed by: (1) Associating Beauty module with all existing zones in database, (2) Setting Beauty module all_zone_service field to 1, (3) Updated module query to include modules with all_zone_service=1 OR modules associated with admin's zone. This ensures Beauty module shows for all admins regardless of zone assignment. Verified both modules (Demo and Beauty) now appear in module switch.",
+  "current_status": "Beauty module now appears in admin module switch. Module is associated with all zones and has all_zone_service=1. Query updated to show modules with all_zone_service=1 or zone association. Both Demo and Beauty modules are visible. User should refresh browser to see changes."
+}

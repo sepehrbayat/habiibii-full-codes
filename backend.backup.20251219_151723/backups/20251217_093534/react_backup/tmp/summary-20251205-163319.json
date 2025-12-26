@@ -1,0 +1,5 @@
+{
+  "summary": "Adjusted onSingleErrorResponse to assign unique toast ids per error when multiple errors are returned, preventing earlier errors from being overwritten by react-hot-toast.",
+  "current_status": "All beauty module alignment fixes remain in place; error toast handling now shows all messages."
+}
+

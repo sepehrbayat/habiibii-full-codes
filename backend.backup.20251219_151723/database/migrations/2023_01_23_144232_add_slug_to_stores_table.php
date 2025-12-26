@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddSlugToStoresTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('stores')) {
+            Schema::table('stores', function (Blueprint $table) {
+                if (!Schema::hasColumn('stores', 'slug')) {
+                    $table->string('slug')->nullable();
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable('stores')) {
+            Schema::table('stores', function (Blueprint $table) {
+                if (Schema::hasColumn('stores', 'slug')) {
+                    $table->dropColumn('slug');
+                }
+            });
+        }
+    }
+}

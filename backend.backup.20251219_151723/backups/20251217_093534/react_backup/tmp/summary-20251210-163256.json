@@ -1,0 +1,3 @@
+{
+  "summary": "Cleaned React warnings: filtered custom props off DOM for SearchLocationTextField and AppBarStyle; fixed MUI alpha calls in SubscribeImage to 0.1; defaulted Subscribe email value to empty string. Pending backend 500/403 remain outside frontend scope.",
+  "current_status": "Frontend warnings reduced; backend errors still present if server responses fail."}

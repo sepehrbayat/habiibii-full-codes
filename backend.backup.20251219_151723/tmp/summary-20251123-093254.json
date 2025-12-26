@@ -1,0 +1,5 @@
+{
+  "summary": "Created a comprehensive Persian prompt for Cursor AI to detect all bugs in the BeautyBooking module. The prompt includes detailed instructions for code review, database checks, API validation, business logic review, observer/event handling, service layer review, test coverage analysis, and integration point verification. The prompt will guide Cursor to create a prioritized bug report with solutions.",
+  "current_status": "Bug detection prompt created and ready for use. The prompt file is located at tmp/cursor-bug-detection-prompt.md and provides comprehensive instructions for identifying and categorizing all bugs in the BeautyBooking module."
+}
+

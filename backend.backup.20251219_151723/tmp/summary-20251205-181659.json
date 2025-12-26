@@ -1,0 +1,4 @@
+{
+  "summary": "Attempted Beauty module tests: artisan test blocked by Collision 7.x requirement; phpunit module run failed due to missing Laravel\\\\Dusk\\\\TestCase; feature tests hit strict_types placement error in VendorApiAuthenticationTest.php; unit tests failed because base tables like order_transactions are absent during migrations.",
+  "current_status": "No tests completed; environment needs Collision 7.x (or run phpunit without Collision), Dusk dependency or exclusion of browser tests, strict_types header fix, and base schema seeded before rerun."
+}

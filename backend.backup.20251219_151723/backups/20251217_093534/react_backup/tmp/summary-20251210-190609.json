@@ -1,0 +1,5 @@
+{
+  "summary": "Resolved React key warning in transaction shimmer by keying each mapped fragment with the index and removing undefined keys on children.",
+  "current_status": "TransactionHistoryMobile shimmer renders without key warnings; dev server still running in background."
+}
+

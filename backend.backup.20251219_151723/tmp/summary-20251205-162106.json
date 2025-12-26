@@ -1,0 +1,4 @@
+{
+  "summary": "Removed unreachable duplicate HMAC secret validation in Paymob callback; first validation already returns on failure.",
+  "current_status": "Dead code pruned in PaymobController; no lints; Graphiti KB updated (sync warned)."
+}

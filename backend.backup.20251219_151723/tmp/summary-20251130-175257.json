@@ -1,0 +1,1 @@
+{"summary": "Fixed database error: Added login_remember_token column to users table via migration. The column was missing but required by LoginController::login_attemp() method for customer authentication. Migration executed successfully.", "current_status": "Database migration completed. Customer login should now work without SQL errors."}

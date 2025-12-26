@@ -1,0 +1,5 @@
+{
+  "summary": "Restarted backend on port 9001 to avoid conflicts; admin login reachable via http://127.0.0.1:9001/login/admin. Frontend assets remain served via Mix watch output.",
+  "current_status": "Backend running on 127.0.0.1:9001; frontend assets compiled via npm run watch."
+}
+

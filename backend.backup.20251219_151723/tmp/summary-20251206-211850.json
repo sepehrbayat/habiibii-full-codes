@@ -1,0 +1,5 @@
+{
+  "summary": "Added BeautyBooking smoke tests (salon, service, staff, calendar block) to both PHPUnit and Pest files. Ran full phpunit and full pest suites against existing DB; all 16 tests (74 assertions) passed. Kluster code review tool still failing because git repo not detected in this environment.",
+  "current_status": "All requested tests green; new smoke coverage in place. Awaiting git-detection fix to run kluster review; working tree has many pre-existing modified files unrelated to this work."
+}
+

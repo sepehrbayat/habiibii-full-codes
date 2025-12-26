@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed class_exists() autoloading issue in User and Store model relationships. Changed autoload parameter from false to true in class_exists() checks for BeautyBooking relationships. This ensures Laravel's autoloader can load the classes when the module is published but the classes haven't been loaded yet. Previously, using autoload=false would cause the relationship to return empty results even when the module was published and the class would be auto-loadable.",
+  "current_status": "Fixed autoloading issue in beautyBookings() relationship in User model and beautySalon() relationship in Store model. Relationships now correctly allow Laravel to autoload classes when the module is published."
+}

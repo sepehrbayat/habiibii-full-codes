@@ -1,0 +1,3 @@
+{
+  "summary": "Restarted the Laravel dev server; port 8000 was busy so artisan automatically bound to 8001 and is running in background.",
+  "current_status": "Local server is up via php artisan serve on http://127.0.0.1:8001."}

@@ -1,0 +1,5 @@
+{
+  "summary": "Updated the Beauty Booking Flutter customer integration doc with base URL/auth guidance, error and pagination format, rate-limit notes, endpoint map, and Dio code samples; attempted kluster_code_review_auto but the command is not available; Graphiti helper updated (sync warning).",
+  "current_status": "BeautyBooking docs refreshed for Flutter client; backend code unchanged; kluster auto-review tooling missing on this host."
+}
+

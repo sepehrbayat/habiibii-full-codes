@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed 403 Forbidden error for wish-list API. Problem: React app was sending header as 'zoneid' (lowercase) but backend expects 'zoneId' (capital I). Also backend expects zoneId as JSON array string like '[1]'. Solution: Modified /var/www/6ammart-react/src/api-manage/MainApi.js to: 1) Change header name from zoneid to zoneId, 2) Add logic to convert zoneId to JSON array format (handles '1' -> '[1]', '1,2,3' -> '[1,2,3]', etc.). React app restarted via PM2. Backup created at MainApi.js.bak.",
+  "current_status": "✅ FIXED: Wish-list API should now work correctly. Header zoneId (capital I) is now sent with proper JSON array format. React app restarted and running. Users need to refresh browser to get updated JavaScript."
+}
+

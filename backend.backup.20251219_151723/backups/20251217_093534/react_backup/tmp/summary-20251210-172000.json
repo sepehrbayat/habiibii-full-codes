@@ -1,0 +1,5 @@
+{
+  "summary": "Added a safe fallback for profile avatar in ModuleWiseNav to avoid constructing /null/null image URLs when profile info is missing, defaulting to fav_icon_full_url or favicon. Remaining 500s from beautybooking API are backend-side.",
+  "current_status": "Avatar null/null requests prevented; backend 500s still pending server investigation."
+}
+

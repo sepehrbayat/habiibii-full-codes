@@ -1,0 +1,4 @@
+{
+  "summary": "Added proper 401 error handling in BookingForm component to redirect users to login page when they try to create a booking without being authenticated. The error handler now checks for 401 status and redirects to /login with a return URL.",
+  "current_status": "Beauty Booking module testing in progress. Fixed 401 errors for public endpoints (service suggestions, availability check). Added authentication error handling for booking creation. Users will now be redirected to login when trying to create booking without authentication."
+}

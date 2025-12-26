@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed parse error in _header.blade.php by consolidating two nested @php blocks into one. The issue was having two separate @php blocks (one for shouldShow logic and one for dashboardRoute logic) nested inside a @foreach loop, which was causing Blade compilation issues. Consolidated both logic blocks into a single @php block (lines 234-247) that calculates both $shouldShow and $dashboardRoute variables. This simplifies the structure and prevents the 'unexpected token endforeach' parse error. Cleared view and config cache.",
+  "current_status": "Parse error fixed by consolidating @php blocks. Server responding with HTTP 302 (redirect, likely to login). View and config cache cleared. The admin panel should now load without parse errors when properly authenticated."
+}

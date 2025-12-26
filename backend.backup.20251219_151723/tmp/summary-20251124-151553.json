@@ -1,0 +1,3 @@
+{
+  "summary": "Clarified that admin authentication lives under /login/{tab}, so /backoffice/login/admin 404s; advised to use /login/admin then you’ll be redirected into /backoffice after auth. Noted the theme.min.js error stems from loading the 404 page without its dependencies.",
+  "current_status": "App running at 127.0.0.1:8001 with DB ready; admin login reachable via /login/admin."}

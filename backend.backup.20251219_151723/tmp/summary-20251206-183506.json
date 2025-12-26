@@ -1,0 +1,5 @@
+{
+  "summary": "Removed duplicate loyalty campaign creations in test_cannot_redeem_with_insufficient_points, keeping a single campaign so the assertion uses the intended fixture; no other changes.",
+  "current_status": "Tests unchanged otherwise; backend code unaffected."
+}
+

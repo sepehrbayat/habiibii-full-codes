@@ -1,0 +1,4 @@
+{
+  "summary": "Attempted to run VendorApiTest on existing DB using DatabaseTransactions. Added HasFactory to Vendor and used existing Store HasFactory. Created storages and translations tables (new migrations) and ran them. Guarded multiple legacy migrations. Tests now fail due to missing beauty_salons table/related schema, causing FK/observer queries during Store creation.",
+  "current_status": "Vendor API tests still failing: beauty_salons table (and likely other BeautyBooking base tables) are absent. Need full module schema or base create migrations for BeautyBooking tables to proceed." 
+}

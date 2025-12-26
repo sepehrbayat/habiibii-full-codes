@@ -1,0 +1,3 @@
+{
+  "summary": "Added migration to restore missing orders columns (delivery_man_id/module/zone/schedule timestamps) and ran migrate to fix dashboard QueryException.",
+  "current_status": "orders table now has core scheduling and assignment columns; app server still on 127.0.0.1:9001; further missing fields may still exist in orders or other tables."}

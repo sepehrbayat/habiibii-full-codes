@@ -1,0 +1,4 @@
+{
+  "summary": "Updated Beauty alignment docs: backend contract expectations (subscription, working_hours, holidays) and React fixes (plan mapping, purchase payload, registration working_hours, holidays remove, working_hours normalization).",
+  "current_status": "Docs updated; code review tool failed due to git detection; graphiti KB updated but sync reported an error."
+}

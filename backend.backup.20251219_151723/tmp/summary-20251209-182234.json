@@ -1,0 +1,3 @@
+{
+  "summary": "Guarded admin footer against missing BusinessSetting records; now uses optional() with fallbacks to avoid null value errors.",
+  "current_status": "Footer renders even if business_name/footer_text settings are absent; other schema fixes already applied earlier."}

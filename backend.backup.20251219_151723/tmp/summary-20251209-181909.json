@@ -1,0 +1,3 @@
+{
+  "summary": "Added core fields to order_transactions (order_id, module_id, zone_id, order_amount, admin_commission, status) via migration 2025_12_09_152500 and ran migrate to fix 1054 on order_amount.",
+  "current_status": "order_transactions now has needed columns; dashboard commission/overview queries should work. Monitoring for further missing columns."}

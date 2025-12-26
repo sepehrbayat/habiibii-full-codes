@@ -1,0 +1,5 @@
+{
+  "summary": "Expanded beauty_bookings.payment_status enum in one step to include refund-related statuses and corrected down() to revert to the original three values, preventing MODIFY failures due to missing intermediate statuses. Kluster auto-review still could not run (repo not detected).",
+  "current_status": "Migration updated for payment_status enum; ready for migration run. Pending kluster verification when tool can access git."
+}
+

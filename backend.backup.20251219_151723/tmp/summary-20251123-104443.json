@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed discount calculation inconsistency bug. The issue was that service fee and tax were calculated on totalBasePrice (base + additional services), but discounts were calculated only on basePrice (base service only). This created an inconsistency where customers with package discounts were potentially undercharged. Fixed by: 1) Modified calculateDiscount() to accept totalBasePrice as a parameter instead of recalculating basePrice internally, 2) Updated calculateCouponDiscount() and calculatePackageDiscount() to use totalBasePrice, 3) Updated discount cap check to use totalBasePrice. Also fixed a void return type issue in trackPackageUsage() method. All changes maintain consistency with how fees and taxes are calculated.",
+  "current_status": "Discount calculation bug fixed. All discounts (coupons and packages) now correctly apply to totalBasePrice (base + additional services), ensuring consistency with service fee and tax calculations. The fix ensures customers are charged correctly and discounts are applied fairly across the entire booking amount including additional services."
+}
+

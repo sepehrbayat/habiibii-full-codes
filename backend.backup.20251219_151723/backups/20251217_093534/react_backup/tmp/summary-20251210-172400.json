@@ -1,0 +1,5 @@
+{
+  "summary": "Booking form now loads salons list (useGetSalons with limit 50) and populates the Salon select; selecting a salon no longer leaves the dropdown empty. Also clears service/staff on salon change. This should show seeded salons.",
+  "current_status": "Salon selection UI fixed; backend 500s on beauty APIs still outstanding."
+}
+

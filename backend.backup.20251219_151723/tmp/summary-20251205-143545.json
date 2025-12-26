@@ -1,0 +1,4 @@
+{
+  "summary": "Added missing BeautyBooking factories and DB tables (storages, translations, business_settings, product_id on retail orders, status on badges). Ran module migrations. Switched vendor auth in tests to vendor.auth_token. Adjusted factories to match schema. Routes still returning 404/401 for vendor API tests; route discovery hindered (route:list triggers Gateways constructor). Tests currently fail due to 404 responses.",
+  "current_status": "Vendor API tests still failing (404). Need to confirm vendor API route prefixes/availability and possibly bypass problematic route:list; verify vendor.api middleware auth_token logic and ensure routes are loaded." 
+}

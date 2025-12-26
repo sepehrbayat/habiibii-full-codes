@@ -1,0 +1,5 @@
+{
+  "summary": "Made time selection usable: AvailabilityCalendar now resets time when date changes, passes dayjs to parent, and highlights selected slot. BookingForm passes selectedTime and clears booking_time when date changes. This fixes unselectable slots and prevents advancing without a chosen time.",
+  "current_status": "Booking UI now records and shows selected time; backend 500s remain server-side."
+}
+

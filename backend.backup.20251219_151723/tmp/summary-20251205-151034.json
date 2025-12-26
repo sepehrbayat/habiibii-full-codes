@@ -1,0 +1,4 @@
+{
+  "summary": "Updated vendor tests: service delete now asserts soft delete; holidays use future dates; salon registration test now uses vendor auth_token/store_id; booking complete uses past datetime; category image accessor returns placeholder URL. Partial subset passes; salon registration still 500 (registration failure), full suite not rerun yet after latest tweaks.",
+  "current_status": "Need full VendorApiTest rerun; remaining known failures include salon registration 500 and earlier finance/badge/package/giftcard/loyalty 404s and service delete/availability fixes to verify." 
+}

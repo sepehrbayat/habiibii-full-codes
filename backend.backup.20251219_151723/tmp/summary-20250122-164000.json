@@ -1,0 +1,4 @@
+{
+  "summary": "رفع 3 باگ: ✅ Bug 1: Routes برای staff.update و service.update از POST به PUT تغییر یافت. ✅ Bug 2: Indexing در dashboard_data method یکسان شد - همه موارد از 0-based indexing استفاده می‌کنند (this_year, this_month, default از 1-based به 0-based تغییر یافت). ✅ Bug 3: فایل‌های conversations.blade.php و disbursement.blade.php از @extends حذف شدند و به partial تبدیل شدند. CSS و JavaScript به view اصلی منتقل شدند.",
+  "current_status": "Fixed 3 bugs: ✅ Bug 1: Routes changed from POST to PUT for staff.update and service.update. ✅ Bug 2: Fixed inconsistent array indexing in dashboard_data - all use 0-based indexing now. ✅ Bug 3: Removed @extends from conversations and disbursement views, converted to partials. CSS/JS moved to main view."
+}

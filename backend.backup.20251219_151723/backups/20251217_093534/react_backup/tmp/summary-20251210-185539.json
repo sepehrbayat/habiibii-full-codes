@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed consultation profile tab crash by gating the query until a salon_id exists. ConsultationList now shows a prompt to select a salon instead of calling the API without salon_id.",
+  "current_status": "Consultation list no longer throws; awaiting salon_id selection. Dev server still running in background."
+}
+

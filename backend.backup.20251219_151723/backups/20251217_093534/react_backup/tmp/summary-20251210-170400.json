@@ -1,0 +1,5 @@
+{
+  "summary": "Audited Beauty routes post module selector. Fixed Quick Actions button to use existing /beauty/booking/create path and added missing /beauty/notifications page wiring the existing BeautyNotifications component so navbar links resolve.",
+  "current_status": "Beauty routing aligns with existing pages; login flow and module selector changes remain in place."
+}
+

@@ -1,0 +1,14 @@
+{
+    "name": "BeautyBooking",
+    "alias": "beautybooking",
+    "description": "Beauty & Clinic Booking Platform Module",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BeautyBooking\\Providers\\BeautyBookingServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
+

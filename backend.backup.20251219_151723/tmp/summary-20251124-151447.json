@@ -1,0 +1,3 @@
+{
+  "summary": "Explained that RouteServiceProvider maps admin panel under /backoffice so hitting /admin returns 404; guided user to visit /backoffice/login (admin_login_url slug) after importing DB and creating admin user.",
+  "current_status": "Server running on 127.0.0.1:8001; DB ready; admin panel accessible via /backoffice; beauty module login pending bug hunt once proper URL is used."}

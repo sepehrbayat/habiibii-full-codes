@@ -1,0 +1,54 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        if (Schema::hasTable('withdraw_requests')) {
+            Schema::table('withdraw_requests', function (Blueprint $table) {
+                if (!Schema::hasColumn('withdraw_requests', 'delivery_man_id')) {
+                    $table->foreignId('delivery_man_id')->nullable();
+                }
+                if (!Schema::hasColumn('withdraw_requests', 'withdrawal_method_id')) {
+                    $table->foreignId('withdrawal_method_id')->nullable();
+                }
+                if (!Schema::hasColumn('withdraw_requests', 'withdrawal_method_fields')) {
+                    $table->json('withdrawal_method_fields')->nullable();
+                }
+                if (Schema::hasColumn('withdraw_requests', 'vendor_id')) {
+                    $table->foreignId('vendor_id')->nullable()->change();
+                }
+                if (!Schema::hasColumn('withdraw_requests', 'type')) {
+                    $table->string('type', 20)->default('manual');
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        if (Schema::hasTable('withdraw_requests')) {
+            Schema::table('withdraw_requests', function (Blueprint $table) {
+                $drops = [];
+                foreach (['delivery_man_id', 'withdrawal_method_fields', 'withdrawal_method_id', 'type'] as $col) {
+                    if (Schema::hasColumn('withdraw_requests', $col)) {
+                        $drops[] = $col;
+                    }
+                }
+                if ($drops) {
+                    $table->dropColumn($drops);
+                }
+            });
+        }
+    }
+};

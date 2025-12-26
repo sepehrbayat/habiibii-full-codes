@@ -1,0 +1,187 @@
+/**
+ * Beauty Booking CSS
+ * استایل‌های ماژول رزرو زیبایی
+ *
+ * Module-specific styles for beauty booking
+ * استایل‌های مخصوص ماژول رزرو زیبایی
+ */
+
+/* Calendar Styles */
+.beauty-calendar-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#calendar {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.fc-event {
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.fc-event:hover {
+    opacity: 0.8;
+}
+
+/* Booking Form Styles */
+.booking-form {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.booking-form .form-group {
+    margin-bottom: 20px;
+}
+
+.booking-form label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.booking-form .required {
+    color: #dc3545;
+}
+
+/* Time Slot Selector */
+.time-slot-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.time-slot-button {
+    padding: 10px;
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.time-slot-button:hover {
+    border-color: #007bff;
+    background: #e7f3ff;
+}
+
+.time-slot-button.selected {
+    border-color: #007bff;
+    background: #007bff;
+    color: #fff;
+}
+
+.time-slot-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f8f9fa;
+}
+
+/* Service Card Styles */
+.service-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.3s;
+}
+
+.service-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.service-card h4 {
+    margin-bottom: 10px;
+}
+
+.service-card .service-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.service-card .service-duration {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Salon Card Styles */
+.salon-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.salon-card .salon-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.salon-card .badge-list {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+/* Staff Avatar Styles */
+.staff-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Calendar Tooltip */
+.calendar-tooltip {
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Booking Status Badges */
+.booking-status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.booking-status-badge.pending {
+    background: #ffc107;
+    color: #000;
+}
+
+.booking-status-badge.confirmed {
+    background: #28a745;
+    color: #fff;
+}
+
+.booking-status-badge.completed {
+    background: #007bff;
+    color: #fff;
+}
+
+.booking-status-badge.cancelled {
+    background: #dc3545;
+    color: #fff;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .time-slot-selector {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .booking-form {
+        padding: 15px;
+    }
+}
+

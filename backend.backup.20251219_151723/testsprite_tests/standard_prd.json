@@ -1,0 +1,255 @@
+{
+  "meta": {
+    "project": "6amMart Laravel - Beauty Booking Module",
+    "date": "2025-11-19",
+    "prepared_by": "Software Development Manager"
+  },
+  "product_overview": "The 6amMart Laravel Beauty Booking Module is a comprehensive beauty service reservation system designed for salons and clinics. It features salon and staff management, an advanced calendar with availability and booking lifecycle management, intelligent salon search with ranking and badges, multiple revenue models, customer and vendor portals, real-time notifications, and integration with retail and loyalty systems. The module supports full API coverage for mobile and web clients and provides a rich administrative experience for managing the entire booking ecosystem effectively.",
+  "core_goals": [
+    "Provide complete lifecycle management of beauty bookings from creation to completion including cancellations and no-shows.",
+    "Enable advanced calendar management for staff including working hours, holidays, breaks, and manual blocks.",
+    "Offer a powerful search and ranking engine for salons based on multiple criteria such as location, rating, activity, featured status, and availability.",
+    "Implement an automatic badge system to highlight top-rated, featured and verified salons.",
+    "Support multiple revenue models including commissions, subscriptions, advertisements, service fees, packages, cancellation fees, consultation services, cross-selling, retail sales, and gift cards.",
+    "Enable comprehensive management portals for administrators, vendors, and customers with role-based permissions.",
+    "Provide RESTful APIs for customer and vendor functionalities suitable for integration with web and mobile applications.",
+    "Ensure scalability and performance with caching, rate limiting, and optimized queries.",
+    "Deliver rich reporting and analytics to track financial performance, loyalty campaigns, and service popularity.",
+    "Facilitate seamless integration with Flutter mobile apps and support real-time communication features like internal chat and notifications."
+  ],
+  "key_features": [
+    "Salon and clinic management with approval workflow and document verification.",
+    "Service categories with support for subcategories and detailed service definitions including pricing and durations.",
+    "Staff management with individual calendars and scheduling.",
+    "Advanced calendar system supporting working hours, holidays, breaks, and manual calendar blocks.",
+    "Comprehensive booking lifecycle management including creating, confirming, cancelling, completing, and marking no-shows.",
+    "Dynamic availability checking considering multiple constraints in real time.",
+    "Search and ranking algorithm based on location, rating, activity, featured status, returning customer rate, and availability.",
+    "Automatic badge system awarding Top Rated, Featured, and Verified badges based on criteria and subscriptions.",
+    "Multiple revenue streams including variable commissions, subscription plans, advertising, service fees, cancellation fees, consultation charges, cross-selling, retail product sales, gift cards, and loyalty campaigns.",
+    "Customer and vendor dashboards with booking management, wallet, gift cards, loyalty points, consultations, reviews, retail orders, and notifications.",
+    "Internal chat integration and real-time notifications for booking status, reminders, and promotions.",
+    "Multi-session packages and loyalty points earning and redemption system.",
+    "Retail product catalog and order management.",
+    "Robust API layer with comprehensive endpoints supporting public access, authenticated customer, and vendor operations.",
+    "Admin portal with detailed reporting, commission configuration, subscription management, and review moderation.",
+    "Full support for payment methods including online, wallet, and cash on arrival.",
+    "Flutter integration guidelines for API client creation, state management, UI flows, and push notifications."
+  ],
+  "user_flow_summary": [
+    "Customer searches salons by category, location, rating, and other filters using a powerful search and ranking system.",
+    "Customer selects a service category, views salon details, and chooses a specific service and staff member from available options.",
+    "Customer checks availability on selected date/time and proceeds to a multi-step booking wizard including payment method selection and booking confirmation.",
+    "Vendor receives booking notifications, manages bookings via a calendar and booking management interface, confirming or cancelling appointments as needed.",
+    "Vendor manages staff schedules, services, packages, gift cards, retail inventory, loyalty campaigns, and financial transactions through the vendor portal.",
+    "Admin approves or rejects salon registrations based on business documentation and compliance checks.",
+    "Admin configures commission models, subscription plans, review moderation, and generates reports related to finances, loyalty, and salon performance.",
+    "Customers can view, edit, or cancel their bookings, redeem gift cards, track loyalty points, and submit reviews subject to moderation.",
+    "Real-time notifications update all roles on status changes, promotions, and reminders, enhancing engagement and operational efficiency."
+  ],
+  "validation_criteria": [
+    "All API endpoints must pass defined contract tests including authentication, authorization, validation, and response structure.",
+    "Booking lifecycle must handle edge cases including availability conflicts, cancellation timing rules, and fee calculations accurately.",
+    "Search and ranking results must respect configured algorithm weights and cache invalidation rules.",
+    "Badge assignment logic should automatically update badges based on defined criteria and subscription status.",
+    "Revenue models must calculate commissions, fees, and subscription earnings correctly with audited financial reports.",
+    "Administrative actions such as salon approval, commission configuration, and review moderation require proper permission enforcement and audit logging.",
+    "Frontend views (admin, vendor, customer) must be responsive, fully functional, and pass UI/UX acceptance criteria including multi-step wizards and dashboards.",
+    "Real-time notifications and internal chat features must deliver timely and accurate messages with retry mechanisms.",
+    "Module must be deployable with zero downtime migration steps, proper caching configuration, and monitoring hooks for performance and errors.",
+    "Comprehensive test coverage including feature tests, unit tests, browser tests, and security checks must be maintained with 100% pass rate before production release."
+  ],
+  "code_summary": {
+    "project_name": "6amMart Laravel - Beauty Booking Module",
+    "tech_stack": {
+      "backend": {
+        "framework": "Laravel 10",
+        "language": "PHP 8.2",
+        "database": "MySQL/MariaDB",
+        "authentication": "Laravel Passport (API), Sanctum",
+        "module_system": "nwidart/laravel-modules"
+      },
+      "frontend": {
+        "views": "Blade Templates",
+        "javascript": "Vanilla JS, jQuery",
+        "css": "Custom CSS"
+      },
+      "testing": {
+        "framework": "PHPUnit",
+        "browser_tests": "Laravel Dusk"
+      }
+    },
+    "module_structure": {
+      "name": "BeautyBooking",
+      "alias": "beautybooking",
+      "base_path": "Modules/BeautyBooking",
+      "type": "backend_api",
+      "architecture": "modular_laravel"
+    },
+    "main_features": [
+      "Salon/Clinic Management",
+      "Service Categories & Services",
+      "Staff Management with Individual Calendars",
+      "Advanced Calendar System (working hours, holidays, breaks, manual blocks)",
+      "Complete Booking Lifecycle (create, confirm, cancel, complete, no-show)",
+      "Availability Checking",
+      "Search & Ranking Algorithm (location, rating, activity, featured, returning rate, availability)",
+      "Automatic Badge System (Top Rated, Featured, Verified)",
+      "Review & Rating System with Moderation",
+      "10 Revenue Models (Commission, Subscription, Ads, Service Fee, Packages, Cancellation Fee, Consultation, Cross-Selling, Retail, Gift Cards)",
+      "Loyalty Points & Campaigns",
+      "Gift Cards",
+      "Multi-Session Packages",
+      "Retail Product Sales",
+      "Internal Chat Integration",
+      "Real-time Notifications",
+      "Financial Reports & Analytics"
+    ],
+    "api_endpoints": {
+      "customer": {
+        "public": [
+          "GET /api/v1/beautybooking/salons/search",
+          "GET /api/v1/beautybooking/salons/{id}",
+          "GET /api/v1/beautybooking/salons/category-list",
+          "GET /api/v1/beautybooking/salons/popular",
+          "GET /api/v1/beautybooking/salons/top-rated",
+          "GET /api/v1/beautybooking/salons/monthly-top-rated",
+          "GET /api/v1/beautybooking/salons/trending-clinics",
+          "GET /api/v1/beautybooking/reviews/{salon_id}"
+        ],
+        "authenticated": [
+          "POST /api/v1/beautybooking/bookings",
+          "GET /api/v1/beautybooking/bookings",
+          "GET /api/v1/beautybooking/bookings/{id}",
+          "PUT /api/v1/beautybooking/bookings/{id}/cancel",
+          "POST /api/v1/beautybooking/bookings/check-availability",
+          "POST /api/v1/beautybooking/reviews",
+          "GET /api/v1/beautybooking/gift-cards",
+          "POST /api/v1/beautybooking/gift-cards/redeem",
+          "GET /api/v1/beautybooking/loyalty/points",
+          "GET /api/v1/beautybooking/loyalty/campaigns",
+          "GET /api/v1/beautybooking/packages",
+          "POST /api/v1/beautybooking/packages/{id}/purchase",
+          "GET /api/v1/beautybooking/consultations",
+          "POST /api/v1/beautybooking/consultations",
+          "GET /api/v1/beautybooking/retail/products",
+          "POST /api/v1/beautybooking/retail/orders"
+        ]
+      },
+      "vendor": {
+        "authenticated": [
+          "GET /api/v1/beautybooking/bookings/list/{all}",
+          "GET /api/v1/beautybooking/bookings/details",
+          "PUT /api/v1/beautybooking/bookings/confirm",
+          "PUT /api/v1/beautybooking/bookings/complete",
+          "PUT /api/v1/beautybooking/bookings/mark-paid",
+          "PUT /api/v1/beautybooking/bookings/cancel",
+          "GET /api/v1/beautybooking/staff/list",
+          "POST /api/v1/beautybooking/staff",
+          "PUT /api/v1/beautybooking/staff/{id}",
+          "DELETE /api/v1/beautybooking/staff/{id}",
+          "GET /api/v1/beautybooking/services/list",
+          "POST /api/v1/beautybooking/services",
+          "PUT /api/v1/beautybooking/services/{id}",
+          "DELETE /api/v1/beautybooking/services/{id}",
+          "GET /api/v1/beautybooking/calendar/availability",
+          "POST /api/v1/beautybooking/calendar/blocks",
+          "GET /api/v1/beautybooking/finance/transactions",
+          "GET /api/v1/beautybooking/finance/revenue",
+          "GET /api/v1/beautybooking/subscriptions",
+          "POST /api/v1/beautybooking/subscriptions/purchase",
+          "GET /api/v1/beautybooking/badges",
+          "GET /api/v1/beautybooking/packages",
+          "POST /api/v1/beautybooking/packages",
+          "GET /api/v1/beautybooking/gift-cards",
+          "POST /api/v1/beautybooking/gift-cards",
+          "GET /api/v1/beautybooking/loyalty/campaigns",
+          "POST /api/v1/beautybooking/loyalty/campaigns",
+          "GET /api/v1/beautybooking/retail/products",
+          "POST /api/v1/beautybooking/retail/products"
+        ]
+      }
+    },
+    "controllers": {
+      "customer_api": 9,
+      "vendor_api": 12,
+      "admin_web": 15,
+      "vendor_web": 15,
+      "customer_web": 3
+    },
+    "services": [
+      "BeautyBookingService",
+      "BeautyCalendarService",
+      "BeautyRankingService",
+      "BeautyBadgeService",
+      "BeautyCommissionService",
+      "BeautyRevenueService",
+      "BeautySalonService",
+      "BeautyLoyaltyService",
+      "BeautyRetailService",
+      "BeautyCrossSellingService"
+    ],
+    "entities": [
+      "BeautySalon",
+      "BeautyStaff",
+      "BeautyService",
+      "BeautyServiceCategory",
+      "BeautyBooking",
+      "BeautyCalendarBlock",
+      "BeautyReview",
+      "BeautyBadge",
+      "BeautySubscription",
+      "BeautyPackage",
+      "BeautyGiftCard",
+      "BeautyTransaction",
+      "BeautyRetailProduct",
+      "BeautyRetailOrder",
+      "BeautyLoyaltyCampaign",
+      "BeautyLoyaltyPoint",
+      "BeautyCommissionSetting",
+      "BeautyServiceRelation",
+      "BeautyMonthlyReport",
+      "BeautyPackageUsage"
+    ],
+    "authentication": {
+      "customer": "Laravel Passport (Bearer token)",
+      "vendor": "Laravel Passport (Bearer token with vendor guard)",
+      "middleware": [
+        "auth:api",
+        "vendor.api"
+      ]
+    },
+    "database": {
+      "tables_prefix": "beauty_",
+      "total_tables": 20,
+      "migrations": 38
+    },
+    "business_logic": {
+      "booking_flow": "Category → Salon → Service → Staff/Time → Payment → Confirmation",
+      "availability_checking": "Working hours, holidays, breaks, existing bookings, calendar blocks",
+      "price_calculation": "Base price + Service fee + Tax - Discount",
+      "cancellation_fees": "Time-based (0%, 50%, 100%)",
+      "commission_calculation": "Variable by service category and salon level (5-20%)",
+      "badge_system": "Automatic evaluation based on rating, bookings, cancellation rate",
+      "ranking_algorithm": "Multi-factor scoring (location, featured, rating, activity, returning rate, availability)"
+    },
+    "revenue_models": [
+      "Variable Commission (5-20%)",
+      "Monthly/Annual Subscription",
+      "Advertising (Featured, Boost, Banners)",
+      "Service Fee (1-3% from customer)",
+      "Multi-Session Packages",
+      "Late Cancellation Fee",
+      "Consultation Service",
+      "Cross-Selling/Upsell",
+      "Retail Sales",
+      "Gift Cards & Loyalty Campaigns"
+    ],
+    "testing_coverage": {
+      "feature_tests": 13,
+      "unit_tests": 6,
+      "browser_tests": 2,
+      "api_contract_tests": 1
+    }
+  }
+}

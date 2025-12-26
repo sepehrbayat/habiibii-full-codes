@@ -1,0 +1,5 @@
+{
+  "summary": "Implemented post-login module selection flow: added dedicated /module-select page, redirected login success and authenticated /login visits to the selector, and routed Beauty module picks directly to /beauty while keeping tokens intact.",
+  "current_status": "Module selection flow implemented and ready for manual verification (login -> module select -> beauty/home routing)."
+}
+

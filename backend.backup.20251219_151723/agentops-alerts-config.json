@@ -1,0 +1,191 @@
+{
+  "name": "BeautyBooking Module Alerts",
+  "description": "AgentOps alert configuration for BeautyBooking module monitoring",
+  "alerts": [
+    {
+      "name": "Booking Creation Errors",
+      "description": "Alert when booking creation fails",
+      "condition": {
+        "operation": "beauty.booking.create",
+        "status": "error",
+        "severity": "high"
+      },
+      "threshold": {
+        "count": 1,
+        "time_window": "5m"
+      },
+      "notification": {
+        "channels": ["email", "slack"],
+        "message": "Booking creation failed in BeautyBooking module"
+      }
+    },
+    {
+      "name": "Slow Booking Creation",
+      "description": "Alert when booking creation takes too long",
+      "condition": {
+        "operation": "beauty.booking.create",
+        "duration_ms": ">1000"
+      },
+      "threshold": {
+        "count": 5,
+        "time_window": "10m"
+      },
+      "notification": {
+        "channels": ["email"],
+        "message": "Booking creation is slow (>1s) - performance issue detected"
+      }
+    },
+    {
+      "name": "Duplicate Commission Transactions",
+      "description": "Alert when duplicate commission transactions are detected",
+      "condition": {
+        "operation": "beauty.booking.updatePaymentStatus",
+        "attributes": {
+          "duplicate_transaction": true
+        }
+      },
+      "threshold": {
+        "count": 1,
+        "time_window": "1m"
+      },
+      "notification": {
+        "channels": ["email", "slack", "pagerduty"],
+        "message": "CRITICAL: Duplicate commission transaction detected - financial integrity issue"
+      }
+    },
+    {
+      "name": "Calendar Availability Check Failures",
+      "description": "Alert when calendar availability checks fail frequently",
+      "condition": {
+        "operation": "beauty.calendar.isTimeSlotAvailable",
+        "status": "error"
+      },
+      "threshold": {
+        "count": 10,
+        "time_window": "5m"
+      },
+      "notification": {
+        "channels": ["email"],
+        "message": "High rate of calendar availability check failures"
+      }
+    },
+    {
+      "name": "Badge Calculation Errors",
+      "description": "Alert when badge calculation fails",
+      "condition": {
+        "operation": "beauty.badge.calculateAndAssignBadges",
+        "status": "error"
+      },
+      "threshold": {
+        "count": 3,
+        "time_window": "10m"
+      },
+      "notification": {
+        "channels": ["email"],
+        "message": "Badge calculation errors detected"
+      }
+    },
+    {
+      "name": "Payment Status Update Failures",
+      "description": "Alert when payment status updates fail",
+      "condition": {
+        "operation": "beauty.booking.updatePaymentStatus",
+        "status": "error"
+      },
+      "threshold": {
+        "count": 5,
+        "time_window": "5m"
+      },
+      "notification": {
+        "channels": ["email", "slack"],
+        "message": "Payment status update failures detected"
+      }
+    },
+    {
+      "name": "Database Transaction Failures",
+      "description": "Alert when database transactions fail in booking operations",
+      "condition": {
+        "operation": [
+          "beauty.booking.create",
+          "beauty.booking.updatePaymentStatus",
+          "beauty.booking.updateBookingStatus"
+        ],
+        "error_type": "database",
+        "status": "error"
+      },
+      "threshold": {
+        "count": 3,
+        "time_window": "5m"
+      },
+      "notification": {
+        "channels": ["email", "pagerduty"],
+        "message": "CRITICAL: Database transaction failures in booking operations"
+      }
+    },
+    {
+      "name": "High Error Rate",
+      "description": "Alert when overall error rate exceeds threshold",
+      "condition": {
+        "service": "hooshex",
+        "error_rate_percent": ">5"
+      },
+      "threshold": {
+        "time_window": "15m"
+      },
+      "notification": {
+        "channels": ["email", "slack"],
+        "message": "High error rate detected in BeautyBooking module (>5%)"
+      }
+    }
+  ],
+  "monitoring": {
+    "service_name": "hooshex",
+    "module": "BeautyBooking",
+    "operations": [
+      "beauty.booking.create",
+      "beauty.booking.updatePaymentStatus",
+      "beauty.booking.updateBookingStatus",
+      "beauty.booking.cancelBooking",
+      "beauty.calendar.isTimeSlotAvailable",
+      "beauty.calendar.getAvailableTimeSlots",
+      "beauty.badge.calculateAndAssignBadges",
+      "beauty.commission.calculateCommission",
+      "beauty.revenue.recordCommission"
+    ],
+    "key_attributes": [
+      "beauty.booking.user_id",
+      "beauty.booking.salon_id",
+      "beauty.booking.service_id",
+      "beauty.booking.staff_id",
+      "beauty.booking.status",
+      "beauty.booking.payment_status"
+    ]
+  },
+  "setup_instructions": {
+    "agentops_dashboard": [
+      "1. Log in to AgentOps dashboard",
+      "2. Navigate to Alerts section",
+      "3. Create new alert rules based on this configuration",
+      "4. Configure notification channels (email, Slack, PagerDuty)",
+      "5. Test alerts to ensure they work correctly"
+    ],
+    "api_setup": [
+      "1. Use AgentOps API to create alert rules",
+      "2. POST to /api/v1/alerts with this configuration",
+      "3. Verify alerts are active in dashboard"
+    ],
+    "mcp_tools": [
+      "1. Use AgentOps MCP tools to query traces",
+      "2. Set up monitoring scripts to check trace status",
+      "3. Create automated alert triggers based on trace analysis"
+    ]
+  },
+  "notes": [
+    "All alerts are configured for production monitoring",
+    "Adjust thresholds based on actual traffic patterns",
+    "Test alerts in staging environment before production",
+    "Review alert frequency to avoid alert fatigue",
+    "Update notification channels based on team preferences"
+  ]
+}
+

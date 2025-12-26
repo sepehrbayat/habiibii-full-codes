@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed dashboard summary 500: removed expires_at filter from activePackages query to avoid missing-column error; lints clean.",
+  "current_status": "Beauty dashboard summary endpoint no longer queries non-existent expires_at column; service should return successfully now."
+}
+

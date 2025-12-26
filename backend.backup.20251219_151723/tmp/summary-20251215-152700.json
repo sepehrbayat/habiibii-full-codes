@@ -1,0 +1,5 @@
+{
+  "summary": "API routing fully fixed - all /api/* endpoints correctly route to Laravel and return JSON responses (200 OK). Root URL still has redirect issue (308 to /index.html). Final Apache configuration uses RewriteRule with [PT,L] flags to exclude /api from proxying, allowing Laravel's .htaccess to handle API routes. All API endpoints tested and working: /api/v1/config returns JSON, /api/v1/auth/login returns validation errors (confirming Laravel is processing requests). Root URL redirect needs further investigation - may be from Laravel's .htaccess or Apache DirectoryIndex behavior.",
+  "current_status": "API endpoints fully functional (200 OK, JSON responses from Laravel). Root URL redirecting to /index.html (308 Permanent Redirect) instead of serving React app. Need to investigate source of redirect - could be from Laravel .htaccess or Apache configuration."
+}
+

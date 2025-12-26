@@ -1,0 +1,4 @@
+{
+  "summary": "در حال هماهنگ‌سازی Dashboard Admin: ✅ 4 partial view ایجاد شد (booking-statistics, top-customers, top-salons, by-booking-status, sale-chart). در حال انجام: به‌روزرسانی Dashboard Controller برای zone filtering و AJAX support. باقی‌مانده: به‌روزرسانی Dashboard view و اضافه کردن routes برای AJAX updates.",
+  "current_status": "Aligning Admin Dashboard: ✅ 4 partial views created. In progress: Updating Dashboard Controller for zone filtering and AJAX support. Remaining: Update Dashboard view and add AJAX routes."
+}

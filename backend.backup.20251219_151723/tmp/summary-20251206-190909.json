@@ -1,0 +1,4 @@
+{
+  "summary": "Provided next steps: start dev server with dusk env then run php artisan dusk --without-tty Modules/BeautyBooking/Tests/Browser; browser tests still need UI selectors/texts implemented (Pending Verification, @book-now-button). No further changes made.",
+  "current_status": "Dusk setup present; browser tests failing due to missing UI elements."
+}

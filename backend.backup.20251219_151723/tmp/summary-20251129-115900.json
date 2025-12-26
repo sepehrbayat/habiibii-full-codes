@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed two bugs in BeautyBookingTestDataSeeder: 1) getOrCreateZones() now correctly checks if zone count is less than 3 (not just empty) and creates missing zones to ensure exactly 3 zones exist. 2) Booking reference generation now uses a persistent counter that increments across all salons, preventing duplicate references when multiple bookings are created in quick succession. The base ID is fetched once before the loop, and a counter increments for each booking to ensure unique references.",
+  "current_status": "Both bugs fixed and verified. Zone creation logic now ensures 3 zones exist regardless of initial state. Booking reference generation uses counter-based approach to prevent duplicates across all salon loops."
+}
+

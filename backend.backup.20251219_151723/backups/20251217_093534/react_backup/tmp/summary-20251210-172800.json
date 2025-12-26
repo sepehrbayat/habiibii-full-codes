@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed BookingForm ReferenceError by declaring formData state before using it in useGetSalonDetails and added selectedSalonId helper. Hooks now run in correct order, preventing 'Cannot access formData before initialization' and preserving salon list loading.",
+  "current_status": "BookingForm renders without reference error; backend 500s remain server-side."
+}
+

@@ -1,0 +1,48 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        if (Schema::hasTable('reviews')) {
+            Schema::table('reviews', function (Blueprint $table) {
+                if (!Schema::hasColumn('reviews', 'store_id')) {
+                    $table->foreignId('store_id')->nullable();
+                }
+                if (!Schema::hasColumn('reviews', 'reply')) {
+                    $table->text('reply')->nullable();
+                }
+                if (!Schema::hasColumn('reviews', 'review_id')) {
+                    $table->string('review_id', 100)->nullable();
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        if (Schema::hasTable('reviews')) {
+            Schema::table('reviews', function (Blueprint $table) {
+                $drops = [];
+                foreach (['store_id', 'reply', 'review_id'] as $col) {
+                    if (Schema::hasColumn('reviews', $col)) {
+                        $drops[] = $col;
+                    }
+                }
+                if ($drops) {
+                    $table->dropColumn($drops);
+                }
+            });
+        }
+    }
+};

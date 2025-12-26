@@ -1,0 +1,5 @@
+{
+  "summary": "Consultation tab now provides a salon selector fed by the salons API; it auto-selects the first salon (or query param) and prevents API calls until a salon is chosen. If no salons exist, a clear message is shown instead of an error.",
+  "current_status": "Consultation list usable with salon dropdown; dev server still running in background."
+}
+

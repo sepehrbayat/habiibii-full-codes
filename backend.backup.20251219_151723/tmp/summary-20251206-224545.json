@@ -1,0 +1,5 @@
+{
+  "summary": "Extended BeautyBooking smoke tests to cover packages, gift cards, subscriptions, and loyalty via direct model creation; updated README with test commands and .gitignore to ignore storage artefacts; all tests (PHPUnit/Pest) passing (19 tests, 80 assertions). Pushed commit 44a5238 to branch beauty-tests-green. Kluster code review still fails because the tool cannot detect a git repo.",
+  "current_status": "Branch beauty-tests-green updated and tests green; pending kluster review (git detection issue)."
+}
+

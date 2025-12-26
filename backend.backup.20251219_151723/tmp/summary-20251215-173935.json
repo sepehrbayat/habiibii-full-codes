@@ -1,0 +1,4 @@
+{
+  "summary": "Created comprehensive deployment fix prompt document (CURSOR_AI_DEPLOYMENT_FIX_PROMPT.md) that documents all critical issues: uninitialized properties in payment gateway controllers causing Laravel routes to fail, Apache configuration incorrectly routing /api requests to React instead of Laravel, MySQL service status, and React app connectivity. The prompt includes detailed fix patterns, verification steps, and complete workflow for resolving all deployment issues.",
+  "current_status": "Deployment partially working - Laravel API endpoints returning 404 because requests are routed to React app. Multiple payment gateway controllers have uninitialized property errors preventing routes from loading. Apache configuration needs correction to properly route /api/* to Laravel. Comprehensive fix guide created for systematic resolution."
+}

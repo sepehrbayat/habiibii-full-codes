@@ -1,0 +1,3 @@
+{
+  "summary": "Gated beauty notification queries so they only fire when both token and zoneId are present (SecondNavbar). This prevents calls with missing zoneId that caused 403/500 noise.",
+  "current_status": "Frontend notifications now guarded by token && zoneId; backend 500s still backend-side."}

@@ -1,0 +1,5 @@
+{
+  "summary": "بررسی کامل یکپارچه‌سازی ماژول BeautyBooking انجام شد. مشکل اصلی شناسایی شده (عدم پشتیبانی از انواع تراکنش wallet برای package, gift card, retail order) رفع شد. تمام اتصالات دو طرفه (خارج به داخل و داخل به خارج) بررسی و تأیید شدند. سیستم‌های پرداخت، فاکتور، disbursement، wallet، dashboard، و coupon همگی هماهنگ هستند.",
+  "current_status": "ماژول BeautyBooking به طور کامل با سیستم اصلی 6amMart یکپارچه شده است. تمام اتصالات بررسی و تأیید شدند. مشکل wallet transaction types رفع شد. گزارش جامع در BEAUTY_MODULE_INTEGRATION_ANALYSIS_COMPLETE.md ایجاد شد."
+}
+

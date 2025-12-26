@@ -1,0 +1,4 @@
+{
+  "summary": "Clarified SSH port 22 can accept multiple concurrent sessions; only one service listens but multiple clients allowed. Limits governed by sshd MaxSessions/MaxStartups and resource constraints.",
+  "current_status": "Server setup ongoing; SSH access unaffected by multiple users on port 22; deployment of Laravel/React still in progress." 
+}

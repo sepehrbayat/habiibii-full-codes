@@ -1,0 +1,5 @@
+{
+  "summary": "Hardened chat InfoCard against null data by guarding last_message.sender_id; unread badge now computes safely without crashing when sender_id is missing.",
+  "current_status": "Chat list no longer throws when sender_id is null; dev server remains running in background."
+}
+

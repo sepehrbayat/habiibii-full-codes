@@ -1,0 +1,3 @@
+{
+  "summary": "Added header hover dropdown for notifications. Bell now shows unread badge, mark-all-read on click, and hover popover with recent notifications; clicking an item marks it read and deep-links to the booking when available. Extended NavBarIcon to support hover handlers. Lints clean.",
+  "current_status": "Header notifications fully integrated with backend; frontend tasks complete."}

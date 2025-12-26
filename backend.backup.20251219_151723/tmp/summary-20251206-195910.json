@@ -1,0 +1,4 @@
+{
+  "summary": "Guided how to point the Flutter app at the local Laravel backend, covering starting the API locally, choosing the correct base URL per emulator/device (localhost/10.0.2.2/LAN IP), setting the base URL in the Flutter config, auth token usage, and optional ngrok for physical devices; no code changes made.",
+  "current_status": "Backend already working; guidance provided to connect Flutter client locally; no new changes to repo." 
+}

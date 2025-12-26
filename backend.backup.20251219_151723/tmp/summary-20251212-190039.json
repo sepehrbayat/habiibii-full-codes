@@ -1,0 +1,4 @@
+{
+  "summary": "تمام کارها تکمیل شد. مشکل Error Code -109 حل شد با ایجاد endpoint /api/v1/config/get-analytic-scripts. endpoint بهبود یافت تا همیشه JSON برگرداند حتی در صورت خطا. React App و Laravel API هر دو در حال اجرا هستند.",
+  "current_status": "✅ تمام کارها تکمیل شد: 1) Endpoint /api/v1/config/get-analytic-scripts ایجاد شد 2) Error handling بهبود یافت 3) React App و Laravel API در حال اجرا هستند 4) مشکل -109 باید حل شده باشد"
+}

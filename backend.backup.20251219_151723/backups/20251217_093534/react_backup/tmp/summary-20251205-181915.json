@@ -1,0 +1,3 @@
+{
+  "summary": "Fixed beauty module lint issues: added missing deps in AvailabilityCalendar useEffect and wrapped PackageList grid/pagination in a fragment to resolve parse error. Scoped lint on those files now passes with no warnings/errors.",
+  "current_status": "Beauty module files lint clean. Global lint still has many pre-existing warnings outside beauty scope."}

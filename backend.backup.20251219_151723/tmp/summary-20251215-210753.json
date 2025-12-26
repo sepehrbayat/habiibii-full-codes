@@ -1,0 +1,4 @@
+{
+  "summary": "Created comprehensive Cursor AI prompt (CURSOR_AI_PROMPT.md) to fix all Beauty Booking module import errors. The prompt includes: server connection details (193.162.129.214, root, password H161t5dzCG), complete list of 24 hooks that need conversion from export default to export const, step-by-step instructions, verification commands, and expected outcomes. All previous import fixes in components are documented. The prompt is ready for Cursor AI to connect to server and fix remaining import errors.",
+  "current_status": "All component imports have been fixed to use named imports. 24 hook files still use export default and need to be converted to export const. Comprehensive prompt document created for Cursor AI to complete the remaining fixes on the server."
+}

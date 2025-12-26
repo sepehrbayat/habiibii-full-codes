@@ -1,0 +1,3 @@
+{
+  "summary": "Explained that clicking the user login icon opens an empty modal because the project lacks a customer login page/modal wiring; only vendor login exists. Suggested routing the icon to a real login page or wiring existing SignInForm into that modal.",
+  "current_status": "React dev server running on :3000; backend not started; user login UI still missing content."}

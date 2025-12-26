@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed two critical bugs: (1) Resolved zone_id filtering inconsistency in dashboard() method by explicitly passing zone_id to dashboard_data() to ensure consistent filtering between booking statistics and top customers/salons queries. (2) Eliminated N+1 query problem in salon list page by adding withCount() eager loading for booking counts by status in the controller and updating the view to use pre-loaded counts instead of executing 5 queries per salon in the loop.",
+  "current_status": "Both dashboard filtering consistency and salon list N+1 query issues have been resolved. Dashboard now maintains consistent zone context, and salon list page performance is significantly improved by eager loading booking counts."
+}

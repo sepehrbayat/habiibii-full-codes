@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddDeliveryInstructionColToOrdersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('orders') && !Schema::hasColumn('orders', 'delivery_instruction')) {
+            Schema::table('orders', function (Blueprint $table) {
+                $table->text('delivery_instruction')->nullable();
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable('orders') && Schema::hasColumn('orders', 'delivery_instruction')) {
+            Schema::table('orders', function (Blueprint $table) {
+                $table->dropColumn('delivery_instruction');
+            });
+        }
+    }
+}

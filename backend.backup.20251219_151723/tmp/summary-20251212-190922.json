@@ -1,0 +1,4 @@
+{
+  "summary": "React App rebuild شد با error handling بهتر برای analytics endpoint. حالا اگر endpoint HTML برگرداند، خطا handle می‌شود و app crash نمی‌کند. React App در حال اجرا است و باید مشکل -109 حل شده باشد.",
+  "current_status": "✅ React App rebuild شد با error handling بهتر. App در حال اجرا است. اگر هنوز خطا می‌دهد، باید endpoint را بررسی کنیم که چرا HTML برمی‌گرداند."
+}

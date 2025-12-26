@@ -1,0 +1,4 @@
+{
+  "summary": "AvailabilityCalendar now clears cached checkedDates when salonId or serviceId changes, ensuring fresh availability fetches after context switches. Lint for the file passes.",
+  "current_status": "Beauty availability cache reset implemented; scoped lint clean."
+}

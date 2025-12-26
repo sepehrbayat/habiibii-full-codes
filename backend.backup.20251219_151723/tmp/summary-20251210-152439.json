@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed two reported bugs: (1) dashboard active_packages now correctly counts distinct package_ids using distinct()->count(), avoiding inflated counts; (2) booking conversation sendMessage stores sender_id as the corresponding UserInfo id to align with Message::sender() relationship. No lints.",
+  "current_status": "Backend updated; active package counts correct; conversation messages now reference UserInfo sender ids. No lint issues."
+}
+

@@ -1,0 +1,3 @@
+{
+  "summary": "Confirmed user login page posts to Laravel endpoint /api/v1/auth/login via MainApi using NEXT_PUBLIC_BASE_URL; vendor login uses /api/v1/auth/seller/login. Backend not running here so DB connectivity not verified.",
+  "current_status": "Frontend wired to Laravel auth endpoints; ensure NEXT_PUBLIC_BASE_URL points to backend and server/db are running."}

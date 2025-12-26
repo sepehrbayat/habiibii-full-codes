@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed two critical issues: 1) 404 error when selecting beauty module - Updated module switching logic in _header.blade.php to check for beauty module type and use route('admin.beautybooking.dashboard') when BeautyBooking is published, similar to how rental module is handled. 2) Firebase error - Added conditional Firebase initialization that only initializes if projectId and apiKey are configured. Wrapped messaging.onMessage() and startFCM() calls with checks to prevent errors when Firebase is not configured. Both fixes prevent errors and allow proper module switching.",
+  "current_status": "Both issues fixed. Module switching now correctly routes to admin.beautybooking.dashboard for beauty module. Firebase only initializes when properly configured, preventing 'Missing App configuration value: projectId' errors. The app should now work correctly when selecting beauty module and when Firebase credentials are not configured."
+}

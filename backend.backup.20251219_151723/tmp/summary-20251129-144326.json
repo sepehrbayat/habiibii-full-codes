@@ -1,0 +1,5 @@
+{
+  "summary": "چهار باگ بررسی و رفع شدند: 1) ZoneScope::apply() - متد void است و نیازی به return ندارد (درست است) 2) Nested transactions در createBooking - DB::transaction به سطح بالا منتقل شد 3) Null check برای $store در VendorController - چک null و early return اضافه شد 4) $new_confirmed_order در rental branch - مقداردهی اولیه اضافه شد.",
+  "current_status": "تمام باگ‌های شناسایی شده رفع شدند. کد اکنون از نظر ساختاری صحیح است و تمام edge cases مدیریت می‌شوند."
+}
+

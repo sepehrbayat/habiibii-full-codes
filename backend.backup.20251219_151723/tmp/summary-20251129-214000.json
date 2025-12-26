@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed Beauty module visibility in admin module section. Updated module index view to explicitly check BeautyBooking addon published status, similar to how Rental module is checked. Verified both modules exist in database and should be displayed. Cleared all caches to ensure changes take effect.",
+  "current_status": "Fixed Beauty module visibility by adding explicit addon published status check in module index view. Both modules (grocery and beauty) are in database and should now be visible. All caches cleared. User should refresh browser to see Beauty module in the list."
+}
+

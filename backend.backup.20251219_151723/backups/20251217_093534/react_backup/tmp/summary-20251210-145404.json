@@ -1,0 +1,3 @@
+{
+  "summary": "Prepared backend implementation prompt (English) describing needed endpoints/validations: notifications list+mark-read, dashboard stats totals, conversation POST with file, enforce 24h rules for cancel/reschedule with fees, availability validation, ensure pagination and top-rated/loyalty endpoints return expected fields.",
+  "current_status": "Frontend tasks done; awaiting backend updates per provided prompt."}

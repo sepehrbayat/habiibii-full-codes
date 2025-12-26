@@ -1,0 +1,4 @@
+{
+  "summary": "Answered that there is no customer-facing login page; only vendor login exists at /beauty/vendor/login (header seller link points to BASE_URL/login/seller; sign-in components are used via modals).",
+  "current_status": "React dev server running on :3000; backend still not started; auth pages unchanged."
+}

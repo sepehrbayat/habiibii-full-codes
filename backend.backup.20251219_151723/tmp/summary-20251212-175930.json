@@ -1,0 +1,4 @@
+{
+  "summary": "مشکل Error Code -109 حل شد. مشکل اصلی از نبودن endpoint /api/v1/config/get-analytic-scripts بود که React App در _document.js سعی می‌کرد از آن استفاده کند. endpoint جدید ایجاد شد و route اضافه شد. حالا React App می‌تواند analytics config را دریافت کند.",
+  "current_status": "مشکل حل شد. endpoint /api/v1/config/get-analytic-scripts ایجاد شد. React App باید حالا بتواند analytics config را دریافت کند و خطای -109 نباید رخ دهد."
+}

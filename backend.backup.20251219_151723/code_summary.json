@@ -1,0 +1,191 @@
+{
+  "project_name": "6amMart Laravel - Beauty Booking Module",
+  "tech_stack": {
+    "backend": {
+      "framework": "Laravel 10",
+      "language": "PHP 8.2",
+      "database": "MySQL/MariaDB",
+      "authentication": "Laravel Passport (API), Sanctum",
+      "module_system": "nwidart/laravel-modules"
+    },
+    "frontend": {
+      "views": "Blade Templates",
+      "javascript": "Vanilla JS, jQuery",
+      "css": "Custom CSS"
+    },
+    "testing": {
+      "framework": "PHPUnit",
+      "browser_tests": "Laravel Dusk"
+    }
+  },
+  "module_structure": {
+    "name": "BeautyBooking",
+    "alias": "beautybooking",
+    "base_path": "Modules/BeautyBooking",
+    "type": "backend_api",
+    "architecture": "modular_laravel"
+  },
+  "main_features": [
+    "Salon/Clinic Management",
+    "Service Categories & Services",
+    "Staff Management with Individual Calendars",
+    "Advanced Calendar System (working hours, holidays, breaks, manual blocks)",
+    "Complete Booking Lifecycle (create, confirm, cancel, complete, no-show)",
+    "Availability Checking",
+    "Search & Ranking Algorithm (location, rating, activity, featured, returning rate, availability)",
+    "Automatic Badge System (Top Rated, Featured, Verified)",
+    "Review & Rating System with Moderation",
+    "10 Revenue Models (Commission, Subscription, Ads, Service Fee, Packages, Cancellation Fee, Consultation, Cross-Selling, Retail, Gift Cards)",
+    "Loyalty Points & Campaigns",
+    "Gift Cards",
+    "Multi-Session Packages",
+    "Retail Product Sales",
+    "Internal Chat Integration",
+    "Real-time Notifications",
+    "Financial Reports & Analytics"
+  ],
+  "api_endpoints": {
+    "customer": {
+      "public": [
+        "GET /api/v1/beautybooking/salons/search",
+        "GET /api/v1/beautybooking/salons/{id}",
+        "GET /api/v1/beautybooking/salons/category-list",
+        "GET /api/v1/beautybooking/salons/popular",
+        "GET /api/v1/beautybooking/salons/top-rated",
+        "GET /api/v1/beautybooking/salons/monthly-top-rated",
+        "GET /api/v1/beautybooking/salons/trending-clinics",
+        "GET /api/v1/beautybooking/reviews/{salon_id}"
+      ],
+      "authenticated": [
+        "POST /api/v1/beautybooking/bookings",
+        "GET /api/v1/beautybooking/bookings",
+        "GET /api/v1/beautybooking/bookings/{id}",
+        "PUT /api/v1/beautybooking/bookings/{id}/cancel",
+        "POST /api/v1/beautybooking/bookings/check-availability",
+        "POST /api/v1/beautybooking/reviews",
+        "GET /api/v1/beautybooking/gift-cards",
+        "POST /api/v1/beautybooking/gift-cards/redeem",
+        "GET /api/v1/beautybooking/loyalty/points",
+        "GET /api/v1/beautybooking/loyalty/campaigns",
+        "GET /api/v1/beautybooking/packages",
+        "POST /api/v1/beautybooking/packages/{id}/purchase",
+        "GET /api/v1/beautybooking/consultations",
+        "POST /api/v1/beautybooking/consultations",
+        "GET /api/v1/beautybooking/retail/products",
+        "POST /api/v1/beautybooking/retail/orders"
+      ]
+    },
+    "vendor": {
+      "authenticated": [
+        "GET /api/v1/beautybooking/bookings/list/{all}",
+        "GET /api/v1/beautybooking/bookings/details",
+        "PUT /api/v1/beautybooking/bookings/confirm",
+        "PUT /api/v1/beautybooking/bookings/complete",
+        "PUT /api/v1/beautybooking/bookings/mark-paid",
+        "PUT /api/v1/beautybooking/bookings/cancel",
+        "GET /api/v1/beautybooking/staff/list",
+        "POST /api/v1/beautybooking/staff",
+        "PUT /api/v1/beautybooking/staff/{id}",
+        "DELETE /api/v1/beautybooking/staff/{id}",
+        "GET /api/v1/beautybooking/services/list",
+        "POST /api/v1/beautybooking/services",
+        "PUT /api/v1/beautybooking/services/{id}",
+        "DELETE /api/v1/beautybooking/services/{id}",
+        "GET /api/v1/beautybooking/calendar/availability",
+        "POST /api/v1/beautybooking/calendar/blocks",
+        "GET /api/v1/beautybooking/finance/transactions",
+        "GET /api/v1/beautybooking/finance/revenue",
+        "GET /api/v1/beautybooking/subscriptions",
+        "POST /api/v1/beautybooking/subscriptions/purchase",
+        "GET /api/v1/beautybooking/badges",
+        "GET /api/v1/beautybooking/packages",
+        "POST /api/v1/beautybooking/packages",
+        "GET /api/v1/beautybooking/gift-cards",
+        "POST /api/v1/beautybooking/gift-cards",
+        "GET /api/v1/beautybooking/loyalty/campaigns",
+        "POST /api/v1/beautybooking/loyalty/campaigns",
+        "GET /api/v1/beautybooking/retail/products",
+        "POST /api/v1/beautybooking/retail/products"
+      ]
+    }
+  },
+  "controllers": {
+    "customer_api": 9,
+    "vendor_api": 12,
+    "admin_web": 15,
+    "vendor_web": 15,
+    "customer_web": 3
+  },
+  "services": [
+    "BeautyBookingService",
+    "BeautyCalendarService",
+    "BeautyRankingService",
+    "BeautyBadgeService",
+    "BeautyCommissionService",
+    "BeautyRevenueService",
+    "BeautySalonService",
+    "BeautyLoyaltyService",
+    "BeautyRetailService",
+    "BeautyCrossSellingService"
+  ],
+  "entities": [
+    "BeautySalon",
+    "BeautyStaff",
+    "BeautyService",
+    "BeautyServiceCategory",
+    "BeautyBooking",
+    "BeautyCalendarBlock",
+    "BeautyReview",
+    "BeautyBadge",
+    "BeautySubscription",
+    "BeautyPackage",
+    "BeautyGiftCard",
+    "BeautyTransaction",
+    "BeautyRetailProduct",
+    "BeautyRetailOrder",
+    "BeautyLoyaltyCampaign",
+    "BeautyLoyaltyPoint",
+    "BeautyCommissionSetting",
+    "BeautyServiceRelation",
+    "BeautyMonthlyReport",
+    "BeautyPackageUsage"
+  ],
+  "authentication": {
+    "customer": "Laravel Passport (Bearer token)",
+    "vendor": "Laravel Passport (Bearer token with vendor guard)",
+    "middleware": ["auth:api", "vendor.api"]
+  },
+  "database": {
+    "tables_prefix": "beauty_",
+    "total_tables": 20,
+    "migrations": 38
+  },
+  "business_logic": {
+    "booking_flow": "Category → Salon → Service → Staff/Time → Payment → Confirmation",
+    "availability_checking": "Working hours, holidays, breaks, existing bookings, calendar blocks",
+    "price_calculation": "Base price + Service fee + Tax - Discount",
+    "cancellation_fees": "Time-based (0%, 50%, 100%)",
+    "commission_calculation": "Variable by service category and salon level (5-20%)",
+    "badge_system": "Automatic evaluation based on rating, bookings, cancellation rate",
+    "ranking_algorithm": "Multi-factor scoring (location, featured, rating, activity, returning rate, availability)"
+  },
+  "revenue_models": [
+    "Variable Commission (5-20%)",
+    "Monthly/Annual Subscription",
+    "Advertising (Featured, Boost, Banners)",
+    "Service Fee (1-3% from customer)",
+    "Multi-Session Packages",
+    "Late Cancellation Fee",
+    "Consultation Service",
+    "Cross-Selling/Upsell",
+    "Retail Sales",
+    "Gift Cards & Loyalty Campaigns"
+  ],
+  "testing_coverage": {
+    "feature_tests": 13,
+    "unit_tests": 6,
+    "browser_tests": 2,
+    "api_contract_tests": 1
+  }
+}
+

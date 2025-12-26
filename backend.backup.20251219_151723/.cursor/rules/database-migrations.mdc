@@ -1,0 +1,273 @@
+---
+description: Database Migration Rules and Standards
+alwaysApply: true
+---
+
+# Database & Migrations
+
+## Migration File Naming
+
+### Format
+- **Pattern**: `YYYY_MM_DD_HHMMSS_create_beauty_{table_name}_table.php`
+- **Example**: `2024_01_15_120000_create_beauty_salons_table.php`
+- **Timestamp**: Use actual date/time when creating migration
+- **Description**: Must clearly describe what the migration does
+
+### Migration Class Naming
+- **Format**: `CreateBeauty{TableName}Table`
+- **Example**: `CreateBeautySalonsTable`
+- **Extend**: `Illuminate\Database\Migrations\Migration`
+
+## Table Creation Rules
+
+### Schema Creation
+- **Always use**: `Schema::create()` for new tables
+- **Never use**: `Schema::table()` for initial table creation
+- **Check existence**: Use `Schema::hasTable()` if needed
+
+### Table Naming
+- **Format**: `beauty_{entity_name}` (snake_case, plural)
+- **Prefix**: All tables MUST start with `beauty_`
+- **Examples**:
+  - `beauty_salons`
+  - `beauty_bookings`
+  - `beauty_staff`
+  - `beauty_services`
+  - `beauty_service_categories`
+
+### Primary Key
+- **Always use**: `$table->id()` (creates `id` as bigInteger unsigned, auto-increment, primary key)
+- **Never use**: `$table->increments()` or manual primary keys
+
+### Foreign Keys
+- **Always use**: `$table->foreignId('{entity}_id')` instead of `unsignedBigInteger()`
+- **Add constraint**: Use `->constrained()` or `->references('id')->on('table')`
+- **On delete**: Specify `->onDelete('cascade')` or `->onDelete('set null')` when appropriate
+- **Example**:
+  ```php
+  $table->foreignId('salon_id')
+      ->constrained('beauty_salons')
+      ->onDelete('cascade');
+  ```
+
+### Timestamps
+- **Always add**: `$table->timestamps()` unless explicitly not needed
+- **Soft deletes**: Use `$table->softDeletes()` where appropriate (bookings, reviews, etc.)
+
+### Indexes
+- **Add indexes for**:
+  - Foreign keys (automatic with `foreignId()`)
+  - Status columns (frequently queried)
+  - Date columns (for date range queries)
+  - Composite indexes for common query patterns
+- **Format**: `$table->index(['column1', 'column2'], 'idx_name')`
+- **Examples**:
+  ```php
+  $table->index('status', 'idx_beauty_bookings_status');
+  $table->index(['salon_id', 'booking_date'], 'idx_beauty_bookings_salon_date');
+  $table->index(['status', 'booking_date'], 'idx_beauty_bookings_status_date');
+  ```
+
+### JSON Columns
+- **Use for**: Flexible data structures
+- **Examples**:
+  - `working_hours` (JSON)
+  - `breaks` (JSON)
+  - `holidays` (JSON)
+  - `documents` (JSON array of file paths)
+  - `specializations` (JSON array)
+- **Definition**: `$table->json('column_name')`
+
+### Enum Columns
+- **Use for**: Fixed set of values
+- **Format**: `$table->enum('column_name', ['value1', 'value2', 'value3'])`
+- **Examples**:
+  ```php
+  $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])
+      ->default('pending');
+  $table->enum('payment_status', ['paid', 'unpaid', 'partially_paid'])
+      ->default('unpaid');
+  $table->enum('badge_type', ['top_rated', 'featured', 'verified']);
+  ```
+
+### Decimal/Float Columns
+- **Use**: `$table->decimal('column_name', 23, 8)` for monetary values
+- **Precision**: 23 total digits, 8 decimal places
+- **Examples**:
+  - `trip_amount`, `commission_amount`, `service_fee`, `total_amount`
+- **Reason**: High precision for financial calculations
+
+### Boolean Columns
+- **Use**: `$table->boolean('column_name')->default(false)`
+- **Naming**: Use descriptive names (e.g., `is_verified`, `is_featured`, `is_active`)
+- **Avoid**: Generic names like `flag` or `status` for booleans
+
+### Text Columns
+- **Use**: `$table->text('column_name')` for long text
+- **Use**: `$table->string('column_name', length)` for short text
+- **Default length**: 255 for strings (can be omitted)
+
+### Date/DateTime Columns
+- **Use**: `$table->date('column_name')` for dates only
+- **Use**: `$table->dateTime('column_name')` for date and time
+- **Use**: `$table->timestamp('column_name')` for timestamps
+- **Nullable**: Add `->nullable()` when value can be null
+
+### Auto Increment Starting Point
+- **For booking tables**: Set auto increment to start from 100000
+- **Example**:
+  ```php
+  DB::statement('ALTER TABLE beauty_bookings AUTO_INCREMENT = 100000;');
+  ```
+- **Reason**: Makes booking IDs more professional (e.g., #100001 instead of #1)
+
+## Migration Structure Template
+
+### Standard Migration Template
+```php
+<?php
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateBeautySalonsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     * اجرای migration
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('beauty_salons', function (Blueprint $table) {
+            $table->id();
+            
+            // Foreign keys
+            $table->foreignId('store_id')
+                ->constrained('stores')
+                ->onDelete('cascade');
+            $table->foreignId('zone_id')
+                ->nullable()
+                ->constrained('zones')
+                ->onDelete('set null');
+            
+            // Business fields
+            $table->string('business_type', 50)->default('salon'); // salon or clinic
+            $table->string('license_number', 100)->nullable();
+            $table->date('license_expiry')->nullable();
+            $table->json('documents')->nullable(); // Array of document file paths
+            
+            // Status and verification
+            $table->tinyInteger('verification_status')->default(0); // 0=pending, 1=approved, 2=rejected
+            $table->text('verification_notes')->nullable();
+            $table->boolean('is_verified')->default(false);
+            $table->boolean('is_featured')->default(false);
+            
+            // Business hours and calendar
+            $table->json('working_hours')->nullable();
+            $table->json('holidays')->nullable();
+            
+            // Statistics
+            $table->decimal('avg_rating', 3, 2)->default(0.00);
+            $table->integer('total_bookings')->default(0);
+            $table->integer('total_reviews')->default(0);
+            
+            // Timestamps
+            $table->timestamps();
+            $table->softDeletes();
+            
+            // Indexes
+            $table->index('verification_status', 'idx_beauty_salons_verification_status');
+            $table->index('is_verified', 'idx_beauty_salons_is_verified');
+            $table->index('is_featured', 'idx_beauty_salons_is_featured');
+            $table->index('avg_rating', 'idx_beauty_salons_avg_rating');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     * برگشت migration
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('beauty_salons');
+    }
+}
+```
+
+## Migration Best Practices
+
+### Do's
+- ✅ Always define foreign key constraints
+- ✅ Add indexes for frequently queried columns
+- ✅ Use appropriate column types (decimal for money, json for flexible data)
+- ✅ Set default values where appropriate
+- ✅ Add nullable() for optional fields
+- ✅ Use enums for fixed value sets
+- ✅ Add comments explaining complex fields
+- ✅ Test migrations both up() and down()
+
+### Don'ts
+- ❌ Don't use `unsignedBigInteger()` for foreign keys (use `foreignId()`)
+- ❌ Don't forget indexes on status and date columns
+- ❌ Don't use `float` for monetary values (use `decimal`)
+- ❌ Don't create tables without proper foreign key constraints
+- ❌ Don't forget to handle cascading deletes
+- ❌ Don't create migrations without testing rollback
+
+## Common Migration Patterns
+
+### Pivot Tables
+```php
+Schema::create('beauty_service_staff', function (Blueprint $table) {
+    $table->id();
+    $table->foreignId('service_id')->constrained('beauty_services')->onDelete('cascade');
+    $table->foreignId('staff_id')->constrained('beauty_staff')->onDelete('cascade');
+    $table->timestamps();
+    
+    // Unique constraint
+    $table->unique(['service_id', 'staff_id'], 'unique_service_staff');
+});
+```
+
+### Polymorphic Relations
+```php
+$table->morphs('reviewable'); // Creates reviewable_id and reviewable_type
+// Or manually:
+$table->unsignedBigInteger('reviewable_id');
+$table->string('reviewable_type');
+$table->index(['reviewable_id', 'reviewable_type']);
+```
+
+### Soft Deletes
+```php
+$table->softDeletes(); // Creates deleted_at timestamp column
+// In model: use SoftDeletes trait
+```
+
+## Migration Order
+
+### Dependency Order
+1. Base tables (no foreign keys to other beauty tables)
+   - `beauty_service_categories`
+   - `beauty_salons`
+2. Dependent tables
+   - `beauty_staff` (depends on salons)
+   - `beauty_services` (depends on categories and salons)
+   - `beauty_calendar_blocks` (depends on salons and staff)
+3. Transaction tables
+   - `beauty_bookings` (depends on salons, services, staff, users)
+   - `beauty_transactions` (depends on bookings)
+4. Supporting tables
+   - `beauty_reviews` (depends on bookings)
+   - `beauty_badges` (depends on salons)
+   - `beauty_subscriptions` (depends on salons)
+   - `beauty_packages` (depends on salons and services)
+   - `beauty_gift_cards` (depends on salons)
+5. Configuration tables
+   - `beauty_commission_settings` (can be created anytime)

@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{\"/beauty\":[],\"/\":[],\"/profile\":[],\"/home\":[],\"/beauty/bookings/[id]\":[]},\"app\":{},\"appUsingSizeAdjust\":false,\"pagesUsingSizeAdjust\":false}"

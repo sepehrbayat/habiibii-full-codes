@@ -1,0 +1,3 @@
+{
+  "summary": "Fixed getWebConfig to return empty array fallback when BusinessSetting missing, preventing TypeError in BeautyCategoryController list view.",
+  "current_status": "admin beauty category list should load; further missing settings will now return [] instead of null."}

@@ -1,0 +1,4 @@
+{
+  "summary": "Ran VendorApiTest with --dont-report-useless-tests (still 1 PHPUnit deprecation). Reran with deprecation display; identified schema warning: phpunit.xml uses deprecated schema, needs --migrate-configuration. No code changes made.",
+  "current_status": "VendorApi tests pass (44/189). Remaining issue: phpunit.xml schema deprecation warning; migrate config to silence." 
+}

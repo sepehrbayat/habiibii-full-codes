@@ -1,0 +1,5 @@
+{
+  "summary": "Set up .env.local to target http://localhost:8000 and launched the Next.js dev server on http://localhost:3000 for testing.",
+  "current_status": "Frontend dev server is running (terminal 5) using backend base URL http://localhost:8000."
+}
+

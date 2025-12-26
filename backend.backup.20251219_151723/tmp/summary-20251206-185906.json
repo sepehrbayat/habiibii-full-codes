@@ -1,0 +1,4 @@
+{
+  "summary": "Beauty module tests run. Browser suite blocked by missing Laravel\\Dusk\\TestCase. Feature+Unit suites pass (135 tests, 2 skipped unstable flows). No code changes; kluster review not needed.",
+  "current_status": "Beauty module Feature/Unit tests clean; Browser tests pending until Dusk dependency available or browser tests skipped."
+}

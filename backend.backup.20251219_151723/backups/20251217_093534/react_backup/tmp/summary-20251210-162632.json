@@ -1,0 +1,3 @@
+{
+  "summary": "Reviewed runtime console logs: frontend hitting backend correctly; sign-in uses /api/v1/auth/login via NEXT_PUBLIC_BASE_URL. Remaining issues are backend 500s (beautybooking/notifications) and 403 wishlist call, plus frontend warnings: deprecated ref access (React 19), custom props leaking to DOM (isSmall, searchHeight, isLanding, isXSmall, scrolling), alpha() called with 10 in SubscribeImage, null image src 404, and subscribe input value null. Backend must handle 500/403; frontend needs prop filtering, alpha range fix, and safe fallbacks.",
+  "current_status": "Login route wired; backend returns 500/403 on some calls; multiple React warnings remain to clean up."}

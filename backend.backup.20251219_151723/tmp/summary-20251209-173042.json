@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed auto-renew wallet deduction to use the vendor’s StoreWallet balance instead of a non-existent wallet_balance field. The command now locks and validates the wallet, checks available balance, and deducts by reducing total_earning safely inside a transaction. Kluster auto-review not run (tool still reports repo not detected).",
+  "current_status": "Auto-renew wallet logic corrected to use StoreWallet; pending kluster verification when tool has repo access."
+}
+

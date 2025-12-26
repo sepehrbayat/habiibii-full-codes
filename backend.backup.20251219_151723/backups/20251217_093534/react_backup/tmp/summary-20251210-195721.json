@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed issue where ModuleSelection modal showed 'A module must be selected to continue' even when user was already in beauty module. Updated MobileTopMenu and SideDrawer to read selectedModule from both Redux store and localStorage, ensuring the current module is properly detected. Modified ModuleSelection to show a different message when a module is already selected ('Select a different module or continue with the current one') instead of the error message.",
+  "current_status": "ModuleSelection now correctly detects when a module is already selected by checking both Redux store and localStorage. When a module is selected, it shows a helpful message instead of the error message. Users in beauty module can now switch modules without seeing the 'must be selected' error."
+}
+

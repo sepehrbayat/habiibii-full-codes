@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed all @php() directives that were causing Blade code to display as text in the admin dashboard. The root cause was that single-line @php() syntax cannot handle multi-line code with closures. Converted 4 problematic @php() directives to proper @php ... @endphp blocks: (1) Line 151: message count query with closure, (2) Lines 162-163: language selector variables, (3) Line 195: module find query, (4) Line 212: modules query with closure (already fixed earlier). All Blade directives now compile correctly and the view renders without showing raw Blade code. Cleared all caches.",
+  "current_status": "All @php() directives fixed. View compiles correctly. No Blade directives in rendered output. Server running on port 8000. User should do a hard browser refresh (Ctrl+Shift+R) to see the properly rendered view without raw Blade code."
+}

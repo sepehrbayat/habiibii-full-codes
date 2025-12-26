@@ -1,0 +1,3 @@
+{
+  "summary": "Resolved duplicate 401 toasts: onSingleErrorResponse now short-circuits to handleTokenExpire for 401, skipping beauty error toasts to avoid double messaging.",
+  "current_status": "Error handling clarified; no lints after change."}

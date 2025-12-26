@@ -1,0 +1,4 @@
+{
+  "summary": "Frontend dev server running; observed console noise: backend at :8000 unreachable; multiple DOM prop warnings (scrolling, isSmall/searchHeight/searchHeight/isLanding/isXSmall/TransitionProps etc); MUI alpha() called with 10 causing out-of-range errors in SubscribeImage; subscribe input value null warning; image src null/undefined 404; firebase messaging permission blocked.",
+  "current_status": "React dev server up on :3000; backend not started; console warnings/errors need cleanup."
+}

@@ -1,0 +1,5 @@
+{
+  "summary": "در حال ایجاد صفحات مفقود برای ماژول BeautyBooking. صفحات disbursement و conversations برای Salon Details ایجاد شدند و به header و controller اضافه شدند. مسیرهای Staff و Service در Admin اضافه شدند. در حال ایجاد کنترلرها و صفحات Admin برای Staff و Service.",
+  "current_status": "در حال کار روی ایجاد کنترلرهای Admin برای Staff و Service و سپس ایجاد صفحات view مرتبط"
+}
+

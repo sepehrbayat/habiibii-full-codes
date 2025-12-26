@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed service suggestions 500 by casting salon_id to int before calling BeautyCrossSellingService (type mismatch was causing TypeError). Lints are clean.",
+  "current_status": "Service suggestions endpoint should now respond without 500; dashboard fixes remain in place."
+}
+

@@ -1,0 +1,5 @@
+{
+  "summary": "Will execute plan: add purchaser_id to beauty_gift_cards; align loyalty campaign tests/factories to is_active; enforce unique user emails in VendorApiTest; seed availability for BookingFlowTest; rerun Beauty module tests.",
+  "current_status": "Plan approved, execution not yet started."
+}
+

@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed function nesting issue: sub_success() and sub_fail() were incorrectly nested inside the if (!function_exists('config_settings')) block. This meant if config_settings already existed, these payment hook functions would never be defined. Moved both functions outside the config_settings block with their own separate if (!function_exists(...)) checks at the same nesting level, ensuring they are always defined when needed regardless of config_settings existence.",
+  "current_status": "Function nesting issue fixed. sub_success() and sub_fail() are now at the correct nesting level and will be defined independently of config_settings. No linter errors."
+}
+

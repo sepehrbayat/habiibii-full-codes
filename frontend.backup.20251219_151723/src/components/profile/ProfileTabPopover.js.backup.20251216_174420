@@ -1,0 +1,187 @@
+import React, { useState } from "react";
+import { alpha, IconButton, MenuItem, MenuList, Popover } from "@mui/material";
+import { menuData } from "../header/second-navbar/account-popover/menuData";
+import { useSelector } from "react-redux";
+import { t } from "i18next";
+import { Stack, styled } from "@mui/system";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import { useRouter } from "next/router";
+// import CustomDialogConfirm from "../../../custom-dialog/confirm/CustomDialogConfirm";
+import CustomDialogConfirm from "../custom-dialog/confirm/CustomDialogConfirm";
+import CustomModal from "../modal";
+import DeleteAccount from "../user-information/DeleteAccount";
+import { getToken } from "helper-functions/getToken"; // Add missing import
+
+const StyledMenuItem = styled(MenuItem)(({ theme, page, menu }) => ({
+  backgroundColor:
+    page === menu?.name && alpha(theme.palette.footer.inputButton, 0.1),
+  minHeight: "30px",
+  height: "38px",
+  lineHeight: "30px",
+  borderRadius: "5px",
+  fontSize: "12px",
+  "&:hover": {
+    backgroundColor: (theme) => theme.palette.primary.semiLight,
+  },
+}));
+
+const ProfileTabPopover = (props) => {
+  const { 
+    deleteUserHandler,
+    isLoadingDelete,
+    accountDeleteStatus,
+    setAccountDeleteStatus, 
+    anchorEl, 
+    onClose, 
+    open, 
+    page, 
+    ...other 
+  } = props;
+  const { configData } = useSelector((state) => state.configData);
+  const [openModal, setOpenModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const router = useRouter();
+  const userToken = getToken(); // Get token once and reuse
+
+  const handleClose = () => {
+    setDeleteModal(false);
+    setAccountDeleteStatus(true);
+  };
+
+  const handleOpenDeleteModal = () => {
+    onClose();
+    setOpenModal(false);
+    setDeleteModal(true);
+  };
+
+  const handleClick = (item) => {
+    router.push({
+      pathname: "/profile",
+      query: {
+        page: item?.name,
+      },
+    });
+    onClose();
+  };
+
+  // Check if anchor element exists and is mounted in DOM
+  // بررسی اینکه آیا المان anchor وجود دارد و در DOM mount شده است
+  const isAnchorElValid = (el) => {
+    if (!el) return false;
+    try {
+      // Check if element is connected to DOM
+      // بررسی اینکه آیا المان به DOM متصل است
+      if (typeof el.isConnected !== "undefined") {
+        return el.isConnected !== false;
+      }
+      // Fallback: check if element is in document
+      // Fallback: بررسی اینکه آیا المان در document است
+      return document.body.contains(el);
+    } catch (error) {
+      // Silently handle error - don't render error object
+      // مدیریت خاموش خطا - object خطا را render نکن
+      return false;
+    }
+  };
+
+  // Only render Popover if anchorEl is valid
+  // فقط رندر Popover اگر anchorEl معتبر باشد
+  const isValidAnchor = anchorEl && isAnchorElValid(anchorEl);
+  const shouldOpen = open && isValidAnchor;
+
+  return (
+    <>
+      {isValidAnchor && (
+        <Popover
+          disableScrollLock={true}
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          onClose={onClose}
+          open={shouldOpen}
+          PaperProps={{
+            sx: {
+              width: 235,
+              top: "56px !important",
+              left: "157px !important",
+              borderRadius: "0px",
+            },
+          }}
+          transitionDuration={2}
+          // Remove onError - MUI Popover doesn't support it
+          // حذف onError - MUI Popover از آن پشتیبانی نمی‌کند
+          {...other}
+        >
+          <Stack paddingRight="10px" alignItems="flex-end">
+            <IconButton onClick={onClose}>
+              <CloseRoundedIcon sx={{ width: "15px", height: "15px" }} />
+            </IconButton>
+          </Stack>
+          <MenuList
+            sx={{
+              paddingInlineStart: "15px",
+              paddingInlineEnd: "24px",
+              paddingBottom: "50px",
+            }}
+          >
+            {menuData?.map((menu, index) => {
+              if (
+                (configData?.customer_wallet_status === 0 && menu?.id === 4) ||
+                (configData?.loyalty_point_status === 0 && menu?.id === 5) ||
+                (configData?.ref_earning_status === 0 && menu?.id === 6)
+              ) {
+                return null;
+              } else {
+                // Ensure menu.name is a string before using replace
+                // اطمینان از اینکه menu.name یک string است قبل از استفاده از replace
+                const menuName = menu?.name || "";
+                const displayName = typeof menuName === "string" 
+                  ? menuName.replace("-", " ") 
+                  : String(menuName);
+                
+                return (
+                  <StyledMenuItem
+                    key={index}
+                    sx={{ textTransform: "capitalize" }}
+                    page={page}
+                    menu={menu}
+                    onClick={() => handleClick(menu)}
+                  >
+                    {t(displayName)}
+                  </StyledMenuItem>
+                );
+              }
+            })}
+            {/* Use userToken variable instead of calling getToken() in JSX */}
+            {/* استفاده از متغیر userToken به جای فراخوانی getToken() در JSX */}
+            {userToken && page === "profile-settings" && (
+              <StyledMenuItem
+                sx={{
+                  color: (theme) => theme.palette.error.main,
+                  textTransform: "capitalize",
+                }}
+                onClick={handleOpenDeleteModal}
+              >
+                {t("Delete your account")}
+              </StyledMenuItem>
+            )}
+          </MenuList>
+        </Popover>
+      )}
+      <CustomModal openModal={deleteModal} handleClose={handleClose}>
+        <DeleteAccount
+          isLoading={isLoadingDelete}
+          handleClose={handleClose}
+          deleteUserHandler={deleteUserHandler}
+          accountDeleteStatus={accountDeleteStatus}
+        />
+      </CustomModal>
+    </>
+  );
+};
+
+export default ProfileTabPopover;
+

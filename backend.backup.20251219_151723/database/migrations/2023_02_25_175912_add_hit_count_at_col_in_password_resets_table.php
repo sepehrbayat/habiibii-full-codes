@@ -1,0 +1,52 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddHitCountAtColInPasswordResetsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('password_resets')) {
+            Schema::table('password_resets', function (Blueprint $table) {
+                if (!Schema::hasColumn('password_resets', 'otp_hit_count')) {
+                    $table->tinyInteger('otp_hit_count')->default('0');
+                }
+                if (!Schema::hasColumn('password_resets', 'is_blocked')) {
+                    $table->boolean('is_blocked')->default('0');
+                }
+                if (!Schema::hasColumn('password_resets', 'is_temp_blocked')) {
+                    $table->boolean('is_temp_blocked')->default('0');
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable('password_resets')) {
+            Schema::table('password_resets', function (Blueprint $table) {
+                if (Schema::hasColumn('password_resets', 'otp_hit_count')) {
+                    $table->dropColumn('otp_hit_count');
+                }
+                if (Schema::hasColumn('password_resets', 'is_blocked')) {
+                    $table->dropColumn('is_blocked');
+                }
+                if (Schema::hasColumn('password_resets', 'is_temp_blocked')) {
+                    $table->dropColumn('is_temp_blocked');
+                }
+            });
+        }
+    }
+}

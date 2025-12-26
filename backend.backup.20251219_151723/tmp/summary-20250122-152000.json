@@ -1,0 +1,4 @@
+{
+  "summary": "تمام صفحات View برای Staff و Service Management در Admin Panel ایجاد شدند. صفحات Staff (list, create, edit, details) و صفحات Service (list, create, edit, details) کامل شدند. کنترلرها از قبل ایجاد شده بودند. تمام 8 صفحه view با موفقیت ایجاد شد.",
+  "current_status": "Completed creation of all Admin view files for Staff and Service management. All 8 pages (Staff: list/create/edit/details, Service: list/create/edit/details) have been created successfully. Controllers were already in place. Task completed."
+}

@@ -1,0 +1,5 @@
+{
+  "summary": "Generated full schema dump at docs/schema.sql and updated DB_SCHEMA.md to reference its path; doc remains comprehensive for frontend mapping.",
+  "current_status": "schema.sql available at docs/schema.sql; DB_SCHEMA.md updated; server running and healthy."
+}
+

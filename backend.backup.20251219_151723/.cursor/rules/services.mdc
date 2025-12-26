@@ -1,0 +1,279 @@
+---
+description: Service Layer Rules and Business Logic Patterns
+alwaysApply: true
+---
+
+# Services
+
+## Service Organization
+
+### Location
+- **Path**: `Modules/BeautyBooking/Services/`
+- **Naming**: `Beauty{Feature}Service.php`
+- **Examples**:
+  - `BeautyBookingService.php`
+  - `BeautyCalendarService.php`
+  - `BeautyRankingService.php`
+  - `BeautyBadgeService.php`
+  - `BeautyCommissionService.php`
+
+## Service Responsibilities
+
+### Business Logic
+- **Handle**: All business logic and complex operations
+- **Return**: Data (arrays, objects, models), NOT HTTP responses
+- **Delegate**: Database operations to models
+- **Coordinate**: Multiple models and external services
+
+### Single Responsibility
+- **One service**: Per major feature area
+- **Services can**: Call other services
+- **Services should**: Be testable and reusable
+
+## Service Structure
+
+### Base Service Pattern
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\BeautyBooking\Services;
+
+use Modules\BeautyBooking\Entities\BeautyBooking;
+use Modules\BeautyBooking\Entities\BeautySalon;
+use App\CentralLogics\Helpers;
+
+/**
+ * Beauty Booking Service
+ * سرویس رزرو زیبایی
+ *
+ * Handles all booking-related business logic
+ * مدیریت تمام منطق کسب‌وکار مربوط به رزرو
+ */
+class BeautyBookingService
+{
+    public function __construct(
+        private BeautyBooking $booking,
+        private BeautyCalendarService $calendarService,
+        private BeautyCommissionService $commissionService,
+        private Helpers $helpers
+    ) {}
+}
+```
+
+## Service Methods
+
+### Method Naming
+- **Format**: Action verbs (create, update, delete, calculate, check)
+- **Examples**:
+  - `createBooking()`
+  - `updateBooking()`
+  - `cancelBooking()`
+  - `calculateTotalAmount()`
+  - `checkAvailability()`
+
+### Return Types
+- **Always specify**: Return type in method signature
+- **Types**: Model, Collection, array, bool, float, int, void
+- **Example**:
+  ```php
+  public function createBooking(int $userId, int $salonId, array $bookingData): BeautyBooking
+  {
+      // implementation
+  }
+  ```
+
+## Common Service Patterns
+
+### Create Pattern
+```php
+/**
+ * Create a new booking
+ * ایجاد رزرو جدید
+ *
+ * @param int $userId
+ * @param int $salonId
+ * @param array $bookingData
+ * @return BeautyBooking
+ * @throws \Exception
+ */
+public function createBooking(int $userId, int $salonId, array $bookingData): BeautyBooking
+{
+    // 1. Validate availability
+    if (!$this->calendarService->isTimeSlotAvailable(
+        $salonId,
+        $bookingData['staff_id'] ?? null,
+        $bookingData['booking_date'],
+        $bookingData['booking_time']
+    )) {
+        throw new \Exception('Time slot is not available');
+    }
+    
+    // 2. Calculate amounts
+    $amounts = $this->calculateBookingAmounts($salonId, $bookingData);
+    
+    // 3. Create booking
+    $booking = $this->booking->create([
+        'user_id' => $userId,
+        'salon_id' => $salonId,
+        'service_id' => $bookingData['service_id'],
+        'staff_id' => $bookingData['staff_id'] ?? null,
+        'booking_date' => $bookingData['booking_date'],
+        'booking_time' => $bookingData['booking_time'],
+        'total_amount' => $amounts['total'],
+        'service_fee' => $amounts['service_fee'],
+        'status' => 'pending',
+        'payment_status' => 'unpaid',
+    ]);
+    
+    // 4. Update calendar
+    $this->calendarService->blockTimeSlot($salonId, $bookingData);
+    
+    // 5. Send notification
+    $this->sendBookingNotification($booking);
+    
+    return $booking;
+}
+```
+
+### Update Pattern
+```php
+/**
+ * Update booking status
+ * به‌روزرسانی وضعیت رزرو
+ *
+ * @param BeautyBooking $booking
+ * @param string $status
+ * @return BeautyBooking
+ */
+public function updateBookingStatus(BeautyBooking $booking, string $status): BeautyBooking
+{
+    $oldStatus = $booking->status;
+    
+    $booking->update(['status' => $status]);
+    
+    // Handle status-specific logic
+    if ($status === 'confirmed' && $oldStatus === 'pending') {
+        $this->handleBookingConfirmation($booking);
+    } elseif ($status === 'cancelled') {
+        $this->handleBookingCancellation($booking);
+    }
+    
+    return $booking->fresh();
+}
+```
+
+### Calculation Pattern
+```php
+/**
+ * Calculate booking amounts
+ * محاسبه مبالغ رزرو
+ *
+ * @param int $salonId
+ * @param array $bookingData
+ * @return array
+ */
+public function calculateBookingAmounts(int $salonId, array $bookingData): array
+{
+    $service = BeautyService::findOrFail($bookingData['service_id']);
+    $basePrice = $service->price;
+    
+    // Calculate service fee (1-3% of base price)
+    $serviceFeePercentage = config('beautybooking.service_fee.percentage', 2);
+    $serviceFee = $basePrice * ($serviceFeePercentage / 100);
+    
+    // Calculate tax
+    $taxPercentage = config('beautybooking.tax.percentage', 0);
+    $taxAmount = $basePrice * ($taxPercentage / 100);
+    
+    // Calculate discount (if any)
+    $discount = $this->calculateDiscount($salonId, $bookingData);
+    
+    // Total amount
+    $total = $basePrice + $serviceFee + $taxAmount - $discount;
+    
+    return [
+        'base_price' => $basePrice,
+        'service_fee' => $serviceFee,
+        'tax_amount' => $taxAmount,
+        'discount' => $discount,
+        'total' => $total,
+    ];
+}
+```
+
+## Service Best Practices
+
+### Do's
+- ✅ Keep services focused on business logic
+- ✅ Use dependency injection
+- ✅ Return data, not HTTP responses
+- ✅ Handle exceptions appropriately
+- ✅ Use type hints and return types
+- ✅ Document methods with PHPDoc
+- ✅ Make services testable
+
+### Don'ts
+- ❌ Don't return HTTP responses from services
+- ❌ Don't put database queries directly in services (use models)
+- ❌ Don't mix business logic with HTTP concerns
+- ❌ Don't create services for simple CRUD operations
+- ❌ Don't access request directly (pass data as parameters)
+
+## Service Dependencies
+
+### Injecting Services
+- **Use**: Constructor injection
+- **Type-hint**: All dependencies
+- **Example**:
+  ```php
+  public function __construct(
+      private BeautyBookingService $bookingService,
+      private BeautyCalendarService $calendarService,
+      private BeautyCommissionService $commissionService
+  ) {}
+  ```
+
+### Calling Other Services
+- **Services can**: Call other services
+- **Avoid**: Circular dependencies
+- **Example**:
+  ```php
+  public function createBooking(...): BeautyBooking
+  {
+      // Call calendar service
+      $this->calendarService->checkAvailability(...);
+      
+      // Call commission service
+      $commission = $this->commissionService->calculate(...);
+      
+      // Create booking
+      return $this->booking->create([...]);
+  }
+  ```
+
+## Error Handling in Services
+
+### Throw Exceptions
+- **Use**: Specific exceptions for business logic errors
+- **Message**: User-friendly error messages
+- **Example**:
+  ```php
+  if (!$this->isTimeSlotAvailable(...)) {
+      throw new \Exception(translate('time_slot_not_available'));
+  }
+  ```
+
+### Try-Catch in Services
+- **Use**: For external operations (API calls, file operations)
+- **Log**: Errors appropriately
+- **Example**:
+  ```php
+  try {
+      $result = $this->externalApi->call(...);
+  } catch (\Exception $e) {
+      \Log::error('External API call failed: ' . $e->getMessage());
+      throw new \Exception('Service temporarily unavailable');
+  }
+  ```

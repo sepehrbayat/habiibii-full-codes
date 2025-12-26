@@ -1,0 +1,5 @@
+{
+  "summary": "Added migration to link items to stores (store_id FK with backfill), updated DevTestFixtureSeeder to set store_id on items and login_medium on test users, ran migrations and re-seeded; confirmed reviews has item_id and config API stays 200.",
+  "current_status": "DB migrated and fixtures updated; artisan serve running on 0.0.0.0:8000; config endpoint healthy."
+}
+

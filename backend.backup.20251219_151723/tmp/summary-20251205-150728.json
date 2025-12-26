@@ -1,0 +1,4 @@
+{
+  "summary": "Adjusted booking complete test to set confirmed/paid with past datetime; made BeautyServiceCategory image accessor return placeholder URL safely. Re-ran VendorApiTest: 14 failures remain (service delete soft delete? availability date missing? unauthorized on salon register; holidays needs future date; multiple endpoints failing with 'Salon not found').",
+  "current_status": "VendorApiTest still failing 14 cases: pending fixes for service delete (soft delete), calendar availability date input, salon register auth/token flow, holidays date > now, and repeated 'Salon not found' for finance/badge/packages/giftcards/loyalty stats flows." 
+}

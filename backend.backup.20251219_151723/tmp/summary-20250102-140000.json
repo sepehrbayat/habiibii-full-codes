@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed two critical bugs: (1) Changed static trait method calls in helpers.php to use service instance for proper method resolution. (2) Fixed SQL query in BeautyBookingService to handle NULL service duration using COALESCE and added EXISTS check to prevent invalid bookings. Both fixes prevent fatal errors and edge case failures.",
+  "current_status": "Bug fixes completed. Phase 1 API controller enhancements continue. Next: Review all API controllers for consistency, then move to testing expansion."
+}
+

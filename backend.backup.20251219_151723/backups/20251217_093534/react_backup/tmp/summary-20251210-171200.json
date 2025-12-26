@@ -1,0 +1,5 @@
+{
+  "summary": "Added SEO image fallback to stop /null/null requests: SEO now uses the provided image when valid, otherwise falls back to fav_icon_full_url or /favicon.ico, avoiding null-derived URLs.",
+  "current_status": "SEO meta image now guarded with a safe fallback; remaining 500 errors are backend-side."
+}
+

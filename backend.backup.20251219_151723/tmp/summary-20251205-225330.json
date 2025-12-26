@@ -1,0 +1,4 @@
+{
+  "summary": "Vendor route prefixes loaded in tests; vendor auth/test URLs corrected to match api/v1/beautybooking/vendor; admin/store wallets gained earnings/cash/pending columns; revenue tests now assert commission/service_fee fields; database reseeded and suite rerun, still failing on 26 tests (404s on customer/vendor API contract/booking flows, validation differences, wallet/revenue logic).",
+  "current_status": "Beauty Feature/Unit suite still failing (26 fails); main blockers are API 404s/405s in customer & vendor contract/booking tests and logic mismatches (validation/payment methods, package purchase/redeem, cancellation fee expectations)."
+}

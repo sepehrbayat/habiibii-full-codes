@@ -1,0 +1,5 @@
+{
+  "summary": "Extended smoke tests to cover packages, gift cards, loyalty campaigns, and subscriptions by creating minimal model records instead of running the heavy test-data seeder. Re-ran full phpunit and pest suites against the existing DB: all 19 tests passed (80 assertions).",
+  "current_status": "New smoke coverage in place; all tests green. Git/kluster review still pending because git is not detected in this environment."
+}
+

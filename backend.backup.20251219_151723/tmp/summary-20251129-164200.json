@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed race condition in consultation credit application. When updating a consultation booking to mark credit as applied fails, the code now checks if the booking was already updated by another process. If consultation_credit_amount > 0, the booking is skipped (already processed). If it's still 0, an error is logged and the booking is skipped to prevent double application. This prevents the same consultation credit from being applied multiple times in concurrent requests, since the filter on line 515 checks for consultation_credit_amount = 0.",
+  "current_status": "Race condition fixed. When update fails, the system now checks if the booking was already processed by another request. If yes, it skips the booking. If no, it logs an error and skips it to prevent double application. This ensures consultation credits cannot be applied multiple times even in concurrent request scenarios. All files pass linting."
+}
+

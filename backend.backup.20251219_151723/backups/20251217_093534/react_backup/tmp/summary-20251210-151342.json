@@ -1,0 +1,3 @@
+{
+  "summary": "Reviewed backend completion report. Frontend already wired to new endpoints; no code changes this turn. Next suggested steps: consume unread_count/mark-read in notifications, show new dashboard metrics, handle backend 422 codes (cancellation_window_passed, slot_unavailable with available_slots) and use new wallet transactions endpoint if not already.",
+  "current_status": "Frontend features previously implemented; backend now supports them. Ready for optional refinements to align with new response fields."}

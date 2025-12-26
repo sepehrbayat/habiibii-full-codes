@@ -1,0 +1,5 @@
+{
+  "summary": "Replied with deployment guidance: run migrations in other environments and set business_settings.currency to a valid code; current backend already returns 200 on /api/v1/config with new currencies/addon_settings tables.",
+  "current_status": "Backend serving on 0.0.0.0:8000 with recent migrations applied; config endpoint healthy; no additional actions pending locally."
+}
+

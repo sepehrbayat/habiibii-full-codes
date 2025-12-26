@@ -1,0 +1,4 @@
+{
+  "summary": "Added vendor login page using email/phone + password hitting /api/v1/auth/seller/login, persisting vendor_token/vendor_info via context, wrapping the app with VendorAuthProvider, and adding a logout entry plus vendor auth API helper.",
+  "current_status": "Vendor auth flow wired; plan todos completed; manual tests not run."
+}

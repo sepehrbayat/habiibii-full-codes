@@ -1,0 +1,3 @@
+{
+  "summary": "Diagnosed that requests were hanging because PHP lacked mbstring (Str::limit called mb_strimwidth). Installed php8.4-mbstring, restarted php artisan serve on 127.0.0.1:8001, and verified the homepage now returns HTTP 200 immediately.",
+  "current_status": "Laravel dev server running on 127.0.0.1:8001 with mbstring enabled; site responds normally."}

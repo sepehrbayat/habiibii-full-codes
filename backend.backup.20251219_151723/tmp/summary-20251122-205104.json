@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed two critical bugs in beauty_retail_order payment hooks: 1) Changed payment_status from 'failed' to 'unpaid' in beauty_retail_order_payment_fail() to match valid enum values ['paid', 'unpaid', 'partially_paid']. 2) Fixed transaction_reference storage in beauty_retail_order_payment_success() - changed from non-existent column assignment to JSON storage in notes field, matching the booking payment handler pattern. Both fixes prevent database errors when saving retail orders.",
+  "current_status": "Both bugs fixed. Retail order payment hooks now correctly handle payment status updates and transaction reference storage. No linter errors."
+}
+

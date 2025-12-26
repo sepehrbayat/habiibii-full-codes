@@ -1,0 +1,4 @@
+{
+  "summary": "آپلود و استقرار کامل پروژه‌های Laravel و React روی سرور انجام شد. فایل‌های Laravel و React به سرور آپلود شدند، پیش‌نیازهای سرور نصب شدند، Laravel deploy شد (با skip کردن route cache به دلیل conflict)، React build شد و با PM2 اجرا شد، Apache برای Laravel تنظیم شد. پروژه‌ها آماده استفاده هستند.",
+  "current_status": "پروژه‌ها با موفقیت روی سرور 188.245.192.118 استقرار یافتند. Laravel در مسیر /var/www/6ammart-laravel و React در مسیر /var/www/6ammart-react قرار دارند. Apache برای Laravel و PM2 برای React تنظیم شده‌اند. نیاز به تنظیم .env و دیتابیس در Laravel و بررسی اتصال React به Laravel API."
+}

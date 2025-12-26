@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed duplicate @section('title') declarations in all 6 admin help view files. Removed the second hardcoded Persian title declarations, keeping only the translated version. This prevents Blade from concatenating titles and ensures proper page title rendering.",
+  "current_status": "All help view files now have single @section('title') declarations. Issue resolved in: index.blade.php, salon-approval.blade.php, commission-configuration.blade.php, subscription-management.blade.php, review-moderation.blade.php, report-generation.blade.php."
+}
+

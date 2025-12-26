@@ -1,0 +1,3 @@
+{
+  "summary": "Parse error resolved in pages/beauty/index.js; npm run lint now runs but still reports numerous pre-existing warnings (hook deps, next/image usage, etc.).",
+  "current_status": "Lint still failing due to existing warnings across the app; no further changes made."}

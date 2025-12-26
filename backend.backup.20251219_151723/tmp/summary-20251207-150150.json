@@ -1,0 +1,5 @@
+{
+  "summary": "Added migration to introduce nullable login_medium column on users (with index) to fix backend SQL errors; ran migrations successfully.",
+  "current_status": "Database migrated; artisan serve running on 0.0.0.0:8000; config endpoint remains healthy after schema change."
+}
+

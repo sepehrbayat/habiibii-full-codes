@@ -1,0 +1,3 @@
+{
+  "summary": "Explained 403/500 causes: wishlist and other calls need customer Bearer token plus zoneId header; backend 500 on beauty notifications is server-side. Advised ensuring correct customer token (not vendor), valid zoneId/localStorage module, and Accept: application/json; can gate queries until token/zone present.",
+  "current_status": "Frontend wiring intact; API failures due to missing auth/zone or backend errors; pending backend/config fixes."}

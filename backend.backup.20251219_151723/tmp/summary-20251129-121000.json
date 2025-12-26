@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed undefined variable error in dashboard-beauty.blade.php by adding redirect logic for beauty module in DashboardController. When module_type is 'beauty' and BeautyBooking module is published, the request now redirects to admin.beautybooking.dashboard route which uses BeautyDashboardController that provides all required variables (totalBookings, activeSalons, totalSalons, totalRevenue, pendingReviews, etc.). This follows the same pattern as the rental module redirect.",
+  "current_status": "Dashboard redirect fixed. Beauty module dashboard now properly routes to BeautyDashboardController which provides all required data for the view. The error 'Undefined variable $totalBookings' should be resolved."
+}
+

@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed build error by correcting relative imports in beauty hooks: useGetBookingConversation and useGetPackageStatus now point to ../../../another-formated-api/beautyApi and ../../../utils/beautyResponseNormalizer, resolving module resolution. No lints reported.",
+  "current_status": "Beauty booking build error addressed; booking flow should compile and run with corrected API imports."
+}
+

@@ -1,0 +1,4 @@
+{
+  "summary": "Blocked customer token fallback on vendor routes; MainApi now only sets authorization for vendor endpoints when vendor_token exists, otherwise clears the header.",
+  "current_status": "Vendor auth routing is consistent; next steps are remaining feature todos (packages/gift-cards/loyalty)."
+}

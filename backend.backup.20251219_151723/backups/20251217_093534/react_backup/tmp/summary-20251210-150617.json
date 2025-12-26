@@ -1,0 +1,3 @@
+{
+  "summary": "Provided backend implementation prompt in Farsi outlining new APIs: notifications (list/mark-read, read_at migration), dashboard summary stats, booking conversation POST with file and ascending order, 24h cancellation/reschedule rule with errors and fees, availability validation with slot_unavailable, pagination alignment on list endpoints including top-rated/loyalty, monthly top-rated with pagination, wallet transactions endpoint filtered by beauty, consistent BeautyApiResponse and payment methods.",
+  "current_status": "Frontend changes done; backend prompt prepared for Laravel updates."}

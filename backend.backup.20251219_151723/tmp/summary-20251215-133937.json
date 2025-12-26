@@ -1,0 +1,4 @@
+{
+  "summary": "Raised SSH concurrency limits on new server 193.162.129.214: added /etc/ssh/sshd_config.d/99-custom.conf with MaxStartups 50:30:200, MaxSessions 100, LoginGraceTime 60, MaxAuthTries 6; reloaded ssh service.",
+  "current_status": "SSH now allows higher concurrent sessions; deployment of Laravel/React still in progress." 
+}

@@ -1,0 +1,5 @@
+{
+  "summary": "دو باگ شناسایی شده رفع شدند: 1) Return type اشتباه در calculateConsultationCredit (از float به array تغییر یافت و تمام return statements اصلاح شدند) 2) Missing return statement در ZoneScope::apply (return $builder اضافه شد). تست مربوطه نیز به‌روزرسانی شد.",
+  "current_status": "ماژول BeautyBooking به طور کامل با سیستم اصلی 6amMart یکپارچه شده است. تمام اتصالات بررسی و تأیید شدند. مشکلات wallet transaction types و دو باگ type mismatch رفع شدند. گزارش جامع در BEAUTY_MODULE_INTEGRATION_ANALYSIS_COMPLETE.md ایجاد شد."
+}
+

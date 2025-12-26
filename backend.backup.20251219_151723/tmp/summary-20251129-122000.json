@@ -1,0 +1,4 @@
+{
+  "summary": "Added jQuery availability check before theme.min.js to diagnose the 'Cannot read properties of undefined (reading extend)' error. The error occurs when theme.min.js tries to use $.extend() but jQuery ($) is undefined. This could happen if vendor.min.js fails to load or loads asynchronously. The check will help identify if jQuery is missing when theme.min.js executes.",
+  "current_status": "Added diagnostic check for jQuery availability. If the error persists, it may indicate that vendor.min.js is not loading properly or there's a script loading order issue. Further investigation may be needed to ensure vendor.min.js loads synchronously before theme.min.js."
+}

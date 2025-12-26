@@ -1,0 +1,4 @@
+{
+  "summary": "باگ در BeautySalonController رفع شد. مشکل: استفاده از collect([])->paginate(8) که باعث BadMethodCallException می‌شد چون Collection متد paginate() ندارد. راه‌حل: استفاده از LengthAwarePaginator برای ایجاد paginator خالی که با view سازگار است. Import مورد نیاز اضافه شد.",
+  "current_status": "Fixed bug in BeautySalonController where collect([])->paginate(8) was causing an error. Replaced with LengthAwarePaginator to create an empty paginator that matches the interface expected by the view."
+}

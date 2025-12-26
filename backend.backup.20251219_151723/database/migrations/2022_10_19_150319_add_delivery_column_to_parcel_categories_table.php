@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddDeliveryColumnToParcelCategoriesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('parcel_categories')) {
+            Schema::table('parcel_categories', function (Blueprint $table) {
+                if (!Schema::hasColumn('parcel_categories', 'parcel_per_km_shipping_charge')) {
+                    $table->double('parcel_per_km_shipping_charge', 23, 2)->nullable();
+                }
+                if (!Schema::hasColumn('parcel_categories', 'parcel_minimum_shipping_charge')) {
+                    $table->double('parcel_minimum_shipping_charge', 23, 2)->nullable();
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable('parcel_categories')) {
+            Schema::table('parcel_categories', function (Blueprint $table) {
+                if (Schema::hasColumn('parcel_categories', 'parcel_per_km_shipping_charge')) {
+                    $table->dropColumn('parcel_per_km_shipping_charge');
+                }
+                if (Schema::hasColumn('parcel_categories', 'parcel_minimum_shipping_charge')) {
+                    $table->dropColumn('parcel_minimum_shipping_charge');
+                }
+            });
+        }
+    }
+}

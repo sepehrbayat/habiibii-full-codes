@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed zone ID issue in beauty vendor hamburger menu by adding module switcher button and ensuring zone ID is properly initialized from current module. Added 'Switch Module' button to VendorSideDrawer that opens ModuleSelection modal, allowing users to select modules and zones. Implemented zone ID initialization logic that checks localStorage module data and Redux selectedModule to set zone IDs when missing, preventing 'Zone id required' errors when user is already in beauty zone.",
+  "current_status": "VendorSideDrawer now includes module switcher functionality. Zone ID is automatically initialized from module data when missing. ModuleSelection component syncs properly with parent state. All vendor dashboard pages should now work without zone ID errors when user is in beauty module."
+}
+

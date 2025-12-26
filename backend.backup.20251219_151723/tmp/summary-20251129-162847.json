@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed script placement issue in customer dashboard views. The beauty-confirmation.js script tags were placed after @endsection, causing them to not be rendered in the HTML output. Moved the script tags inside the @section('content') block just before @endsection in both booking-detail.blade.php and bookings.blade.php, ensuring the scripts are properly included in the rendered HTML and confirmation dialogs will work correctly.",
+  "current_status": "Script placement fixed. The beauty-confirmation.js script is now properly included within the Blade content section, ensuring it renders in the HTML output. Confirmation dialogs for data-confirm attributes will now work correctly in customer dashboard views. All files pass linting."
+}
+

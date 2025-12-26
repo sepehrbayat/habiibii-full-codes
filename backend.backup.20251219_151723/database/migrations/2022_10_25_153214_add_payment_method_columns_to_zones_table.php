@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddPaymentMethodColumnsToZonesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('zones')) {
+            Schema::table('zones', function (Blueprint $table) {
+                if (!Schema::hasColumn('zones', 'cash_on_delivery')) {
+                    $table->boolean('cash_on_delivery')->default(false);
+                }
+                if (!Schema::hasColumn('zones', 'digital_payment')) {
+                    $table->boolean('digital_payment')->default(false);
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable('zones')) {
+            Schema::table('zones', function (Blueprint $table) {
+                if (Schema::hasColumn('zones', 'cash_on_delivery')) {
+                    $table->dropColumn('cash_on_delivery');
+                }
+                if (Schema::hasColumn('zones', 'digital_payment')) {
+                    $table->dropColumn('digital_payment');
+                }
+            });
+        }
+    }
+}

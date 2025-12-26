@@ -1,0 +1,5 @@
+{
+  "summary": "Added 'Switch Module' button to customer dashboard hamburger menu in MobileTopMenu component (header drawer menu). The button appears after 'Join Us' dropdown and before 'Theme Mode', allowing users to select modules and zones. Implemented zone ID initialization logic that checks localStorage module data and Redux selectedModule to set zone IDs when missing, preventing 'Zone id required' errors. Cleared Next.js build cache (.next directory) to ensure changes are reflected.",
+  "current_status": "MobileTopMenu now includes 'Switch Module' button with swap icon in the hamburger menu. Zone ID is automatically initialized from module data when missing. ModuleSelection component integrated properly. Next.js cache cleared. Users can now switch modules/zones from the header hamburger menu without zone ID errors."
+}
+

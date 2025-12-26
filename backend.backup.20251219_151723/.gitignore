@@ -1,0 +1,47 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+error_log
+/storage/tmp
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/framework/.gitignore
+!/storage/logs/.gitignore
+.DS_Store
+docker-local/
+*.zip
+*.sql
+
+# Cursor IDE files
+.cursor/
+
+# Autopilot configuration with credentials
+.autopilot.json
+
+# Temporary files and summaries
+tmp/
+
+# Ignore miscellaneous markdown reports (keep canonical READMEs)
+*.md
+!README.md
+!**/README.md
+!**/readme.md
+# Keep existing tracked admin assets readme
+!public/assets/admin/README.md
+!public/assets/admin/ckeditor/skins/moono-lisa/readme.md
+
+
+.cursor/rules/kluster-code-verify.mdc
+.kluster

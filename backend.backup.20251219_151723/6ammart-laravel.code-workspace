@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "6amMart Laravel"
+		}
+	],
+	"settings": {
+		"window.menuBarVisibility": "visible",
+		"window.openFoldersInNewWindow": "on",
+		"window.openFilesInNewWindow": "on",
+		"workbench.editor.enablePreview": false,
+		"workbench.editor.splitInGroupLayout": "horizontal",
+		"workbench.startupEditor": "none"
+	}
+}
+

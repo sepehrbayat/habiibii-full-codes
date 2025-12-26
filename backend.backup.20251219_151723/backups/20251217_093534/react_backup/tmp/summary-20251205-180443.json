@@ -1,0 +1,4 @@
+{
+  "summary": "Normalized vendor subscription plans/purchase payloads, captured working hours during registration/editing, and switched holidays management to replace semantics with better error surfacing.",
+  "current_status": "Beauty vendor frontend aligned with Laravel contracts for subscriptions, working hours, and holidays; all plan todos completed; tests not run."
+}

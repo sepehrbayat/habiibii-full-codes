@@ -1,0 +1,3 @@
+{
+  "summary": "Added rating_count to items via migration 2025_12_09_152000 and ran migrate to resolve dashboard having clause error.",
+  "current_status": "items table now includes rating_count; dashboard top-rated items query should run; watching for any further missing columns."}

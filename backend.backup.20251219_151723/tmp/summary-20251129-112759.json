@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed missing 'admin.' prefix in route names in help index view. All 5 route references updated from 'beautybooking.help.*' to 'admin.beautybooking.help.*' to match RouteServiceProvider configuration. This prevents 'Route not found' errors when clicking help guide links.",
+  "current_status": "All route references in help index view now correctly include 'admin.' prefix. Routes match the RouteServiceProvider configuration where admin routes are prefixed with 'admin.' (line 62). All 5 help guide links will now work correctly."
+}
+

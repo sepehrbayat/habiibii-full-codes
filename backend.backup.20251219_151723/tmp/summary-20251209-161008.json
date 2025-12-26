@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed three data-integrity issues: moved subscription_type enum alteration out of the Schema callback and normalized invalid values before altering; initialized total_sessions and used_sessions in test seeder packages; enforced loyalty point uniqueness with a normalized booking_id generated column so NULLs are handled. kluster auto-review still failed to run (tool reported repo not detected).",
+  "current_status": "BeautyBooking migrations and seeder corrected for enum safety, package session counts, and loyalty point uniqueness; ready for migrations/seeding and further review."
+}
+

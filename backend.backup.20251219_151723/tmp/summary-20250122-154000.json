@@ -1,0 +1,4 @@
+{
+  "summary": "باگ در توابع payment hook رفع شد. مشکل: 4 تابع (beauty_booking_payment_success, beauty_booking_payment_fail, beauty_retail_order_payment_success, beauty_retail_order_payment_fail) بدون بررسی وضعیت ماژول به کلاس‌های BeautyBooking دسترسی داشتند. راه‌حل: افزودن بررسی addon_published_status('BeautyBooking') در ابتدای هر تابع. اگر ماژول غیرفعال باشد، تابع بدون خطا return می‌کند.",
+  "current_status": "Fixed bug in payment hook functions. All 4 functions now check module status before accessing BeautyBooking classes. If module is disabled, functions return early without throwing ClassNotFoundException."
+}

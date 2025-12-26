@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed inverted condition logic in DashboardController dashboard_data() method. The condition `!$request->is('admin/users')` was causing expensive calculations to run on admin/users page (where they should be skipped) and skip calculations on other pages (where they're needed). Fixed by inverting the condition to `$request->is('admin/users', 'admin/users/*')` so calculations are properly skipped on admin/users page and run on all other pages. Also added wildcard pattern to catch sub-routes. Applied fix to both locations: lines 653-661 (calculation skip) and lines 944-950 (data merge).",
+  "current_status": "Condition logic fixed. Expensive calculations (order_stats_calc and user_overview_calc) are now correctly skipped on admin/users page for performance, and run on all other dashboard pages where the data is needed. The array_merge operation now correctly merges calculated data on non-admin/users pages instead of merging empty arrays. Ready for testing."
+}
+

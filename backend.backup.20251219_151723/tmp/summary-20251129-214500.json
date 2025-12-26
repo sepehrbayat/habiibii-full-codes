@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed Beauty module visibility issue. Updated module index view to explicitly check BeautyBooking addon published status. Fixed PHP 8.4 deprecation warning in ModuleRepository by handling null searchValue. Verified both modules exist in database and repository returns both correctly. All caches cleared. Beauty module should now be visible in admin module section.",
+  "current_status": "Fixed Beauty module visibility by adding explicit addon published status check. Fixed PHP 8.4 deprecation warning in ModuleRepository. Both modules (grocery and beauty) are in database and repository returns both. View logic updated to show Beauty module when BeautyBooking addon is published. All caches cleared. User should hard refresh browser to see changes."
+}
+

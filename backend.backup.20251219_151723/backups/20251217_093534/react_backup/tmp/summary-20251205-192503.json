@@ -1,0 +1,4 @@
+{
+  "summary": "Updated onSingleErrorResponse to call handleTokenExpire only for 401 responses, preventing duplicate generic toasts when non-401 errors already handled by handleBeautyError.",
+  "current_status": "Change applied; lint clean for src/api-manage/api-error-response/ErrorResponses.js."
+}

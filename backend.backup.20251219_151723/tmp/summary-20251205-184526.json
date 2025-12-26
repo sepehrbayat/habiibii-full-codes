@@ -1,0 +1,4 @@
+{
+  "summary": "Reran Beauty module Feature/Unit tests after Collision 7 upgrade; still failing (137 errors) because migrate:fresh hits migration 2023_02_27_162252_add_store_expense_columns_to_order_transactions_table.php but base order_transactions table is absent. No code changes made.",
+  "current_status": "Tests blocked until order_transactions (and related base tables) exist in test DB or those migrations/tests are skipped; browser suite still excluded."
+}

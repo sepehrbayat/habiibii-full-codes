@@ -1,0 +1,4 @@
+{
+  "summary": "Aligned vendor API test config with existing DB: phpunit.xml now relies on env DB settings, VENDOR_API_TEST_SETUP.md updated to use existing DB and mark dedicated test DB optional. No schema/test data created.",
+  "current_status": "Tests remain runnable with existing project database; configure DB credentials in .env/.env.testing or phpunit.xml if overriding, then run vendor API suite. Graphiti KB updated (sync warning: server unavailable)."
+}

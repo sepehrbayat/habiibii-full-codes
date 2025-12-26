@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed 500 Internal Server Error on login page caused by Next.js trying to read phpmyadmin symlink during build. Added phpmyadmin to .gitignore and configured next.config.js to exclude it from output file tracing using experimental.outputFileTracingExcludes. The symlink points to /usr/share/phpmyadmin which Next.js cannot access during build process.",
+  "current_status": "phpmyadmin symlink excluded from Next.js build process. Login page should now load without 500 error. Next.js dev server started in background to test the fix."
+}
+

@@ -1,0 +1,4 @@
+{
+  "summary": "تست ماژول زیبایی با استفاده از automated browser انجام شد. صفحه اصلی (/beauty) و صفحه ایجاد رزرو (/beauty/booking/create) با موفقیت load شدند. دو مشکل جزئی پیدا شد: 1) Route mismatch بین /beautybooking و /beauty 2) DNS resolution error برای ip-api.com. API endpoints همه کار می‌کنند.",
+  "current_status": "ماژول زیبایی به طور کلی کار می‌کند. Frontend pages load می‌شوند و navigation کار می‌کند. مشکلات پیدا شده جزئی هستند و نیاز به بررسی بیشتر دارند."
+}

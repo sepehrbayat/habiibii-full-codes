@@ -1,0 +1,3 @@
+{
+  "summary": "Fixed staff calendar booking link base to avoid UrlGenerationException by using plain URL base instead of route with missing id.",
+  "current_status": "Staff calendar page should load without route parameter error; booking links build by appending id."}

@@ -1,0 +1,5 @@
+{
+  "summary": "Drafted execution plan to run Beauty module tests: upgrade Collision to 7.x, fix strict_types placement in VendorApiAuthenticationTest, exclude Dusk/browser tests when running module Feature/Unit tests on existing DB, and verify/skip DB-heavy tests if base tables are missing. Awaiting approval; no code changes performed.",
+  "current_status": "Plan pending approval; repository unchanged."
+}
+

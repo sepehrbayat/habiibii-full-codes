@@ -1,0 +1,4 @@
+{
+  "summary": "Implemented BeautyBooking admin updates: service relations display on list/details, new admin staff calendar/events, enhanced salon list badges/featured indicators, and sidebar links for relations/plans/staff calendar.",
+  "current_status": "BeautyBooking admin enhancements completed; pending automated code review rerun due to tool git detection error."
+}

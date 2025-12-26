@@ -1,0 +1,4 @@
+{
+  "summary": "در حال ایجاد صفحات View برای Staff Management در Admin Panel. صفحه list.blade.php ایجاد شد. صفحات create, edit, details برای Staff و تمام صفحات Service (list, create, edit, details) باید ایجاد شوند. کنترلرهای Admin برای Staff و Service قبلاً ایجاد شده‌اند.",
+  "current_status": "Working on creating Admin view files for Staff and Service management. Staff list page completed. Remaining: Staff create/edit/details pages, and all Service pages (list/create/edit/details). Controllers already exist."
+}

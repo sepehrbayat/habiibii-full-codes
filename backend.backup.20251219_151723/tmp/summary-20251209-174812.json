@@ -1,0 +1,4 @@
+{
+  "summary": "Investigated 404 on /login/admin; confirmed login route uses dynamic tab from DataSetting and returns 404 when the db value differs.",
+  "current_status": "App running on 127.0.0.1:9001; no code changes made; admin login URL likely mismatched in DataSetting table."
+}

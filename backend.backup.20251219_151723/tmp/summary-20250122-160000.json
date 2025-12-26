@@ -1,0 +1,4 @@
+{
+  "summary": "خلاصه کامل کارهای انجام شده: ✅ تمام صفحات Staff و Service Management در Admin ایجاد شد (8 صفحه view). ✅ صفحات disbursement و conversations برای Salon Details ایجاد شد. ✅ باگ paginator در conversations رفع شد. ✅ باگ payment hooks در helpers.php رفع شد (4 تابع). در حال کار: هماهنگ‌سازی Dashboard Admin با Rental Dashboard. باقی‌مانده: هماهنگ‌سازی سایر صفحات لیست و جزئیات.",
+  "current_status": "Summary of completed work: ✅ All Staff and Service admin pages created (8 views). ✅ Salon disbursement and conversations pages created. ✅ Fixed paginator bug in conversations. ✅ Fixed payment hooks bug in helpers.php (4 functions). Currently working: Aligning Admin Dashboard with Rental Dashboard. Remaining: Aligning other list and details pages."
+}

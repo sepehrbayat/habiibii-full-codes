@@ -1,0 +1,5 @@
+{
+  "summary": "باگ در تست consultation credit calculation رفع شد. مشکل: consultation booking بدون consultation_credit_percentage ایجاد می‌شد (default 0.0) و calculateConsultationCredit با فیلتر consultation_credit_percentage > 0 آن را پیدا نمی‌کرد. همچنین service_type 'consultation' بود که باید 'pre_consultation' باشد. رفع: consultation_credit_percentage = 50.00 و service_type = 'pre_consultation' برای consultation service و booking تنظیم شد.",
+  "current_status": "تست اکنون باید به درستی کار کند. consultation booking با consultation_credit_percentage > 0 ایجاد می‌شود و توسط calculateConsultationCredit پیدا می‌شود."
+}
+

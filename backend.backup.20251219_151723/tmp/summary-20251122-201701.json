@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed variable shadowing bug in beauty_retail_order_payment_success() and beauty_retail_order_payment_fail() functions. The parameter $data (an object) was being reassigned to an array for notification data on lines 700 and 758, causing runtime errors in catch blocks when accessing $data->attribute_id. Fixed by renaming the notification data array to $notificationData in both functions, preserving the original $data object parameter.",
+  "current_status": "Bug fixed. Both payment hook functions now correctly preserve the $data object parameter, allowing safe access to $data->attribute_id in catch blocks. No linter errors."
+}
+

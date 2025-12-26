@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed TypeError: count() error in admin sidebar when adding modules. The issue was that config('addon_admin_routes') could return null if an exception occurred in AppServiceProvider, and PHP 8.4 requires Countable|array for count(). Fixed by adding null check in blade template and ensuring AppServiceProvider always sets config to an array even on exceptions. Also verified Beauty module exists in database (id: 2, status: 1) and should be visible in module list.",
+  "current_status": "Fixed count() TypeError in _sidebar_settings.blade.php by adding null safety check. Improved AppServiceProvider error handling to always set config values to arrays. Beauty module exists in database and should be visible. Caches cleared. User should refresh browser to see changes."
+}
+

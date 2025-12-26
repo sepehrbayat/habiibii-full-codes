@@ -1,0 +1,3 @@
+{
+  "summary": "Created master admin role id=1 and reset/created admin@example.com and admin@admin.com with password 12345678; login URLs already fixed earlier.",
+  "current_status": "Admin accounts now exist with role_id 1; server running on 127.0.0.1:9001; user should log in via /login/admin using provided credentials."}

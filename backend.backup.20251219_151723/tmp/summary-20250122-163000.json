@@ -1,0 +1,4 @@
+{
+  "summary": "کارهای انجام شده در این جلسه: ✅ Dashboard Controller به‌روزرسانی شد با zone filtering، statistics type filtering، AJAX response handler، و helper methods. ✅ 5 partial view ایجاد شد (booking-statistics، top-customers، top-salons، by-booking-status، sale-chart). ✅ Dashboard view با Rental هماهنگ شد. ✅ Routes برای AJAX updates اضافه شد. ✅ JavaScript file برای AJAX handlers ایجاد شد. Dashboard Admin اکنون با Rental Dashboard هماهنگ است.",
+  "current_status": "Completed tasks: ✅ Dashboard Controller updated with zone filtering, statistics type filtering, AJAX handler, and helper methods. ✅ 5 partial views created. ✅ Dashboard view aligned with Rental. ✅ AJAX routes added. ✅ JavaScript file created. Admin Dashboard is now aligned with Rental Dashboard."
+}

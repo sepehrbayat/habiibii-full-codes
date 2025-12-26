@@ -1,0 +1,3 @@
+{
+  "summary": "Fixed account menu gating for beauty: IDs 11-16 (bookings, packages, gift cards, loyalty, consultations, retail orders) now hide when selected module is not beauty. No lint issues.",
+  "current_status": "Beauty menu filtering consistent across profile/account; build remains clean."}

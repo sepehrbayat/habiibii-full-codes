@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TC001",
+    "title": "verify_salon_search_functionality",
+    "description": "Test the GET /api/v1/beautybooking/salons/search endpoint to ensure it returns correct salon search results based on filters like category, location, rating, and availability, and respects the ranking algorithm."
+  },
+  {
+    "id": "TC002",
+    "title": "validate_booking_creation_and_lifecycle",
+    "description": "Test the POST /api/v1/beautybooking/bookings endpoint for creating bookings and verify the complete booking lifecycle including confirmation, cancellation, completion, and no-show handling."
+  },
+  {
+    "id": "TC003",
+    "title": "check_advanced_calendar_availability",
+    "description": "Test the GET /api/v1/beautybooking/calendar/availability endpoint to verify staff availability considering working hours, holidays, breaks, and manual calendar blocks."
+  },
+  {
+    "id": "TC004",
+    "title": "test_automatic_badge_assignment",
+    "description": "Test the GET /api/v1/beautybooking/badges endpoint to verify automatic badge assignment for salons based on rating, bookings, cancellation rate, and subscription status."
+  },
+  {
+    "id": "TC005",
+    "title": "validate_revenue_model_calculations",
+    "description": "Test financial endpoints such as GET /api/v1/beautybooking/finance/revenue to ensure commissions, fees, subscriptions, and other revenue streams are calculated and reported accurately."
+  },
+  {
+    "id": "TC006",
+    "title": "verify_customer_gift_card_redemption",
+    "description": "Test the POST /api/v1/beautybooking/gift-cards/redeem endpoint to ensure customers can redeem gift cards correctly and the wallet balance updates accordingly."
+  },
+  {
+    "id": "TC007",
+    "title": "test_vendor_staff_management_apis",
+    "description": "Test vendor authenticated endpoints POST /api/v1/beautybooking/staff, PUT /api/v1/beautybooking/staff/{id}, and DELETE /api/v1/beautybooking/staff/{id} for adding, updating, and deleting staff members."
+  },
+  {
+    "id": "TC008",
+    "title": "validate_search_ranking_algorithm",
+    "description": "Test the search and ranking algorithm by verifying that GET /api/v1/beautybooking/salons/search returns results ordered correctly based on location, rating, activity, featured status, returning customer rate, and availability."
+  },
+  {
+    "id": "TC009",
+    "title": "verify_real_time_notifications_delivery",
+    "description": "Test the real-time notification system to ensure booking status updates, reminders, and promotions are delivered timely and accurately to customers, vendors, and admins."
+  },
+  {
+    "id": "TC010",
+    "title": "test_loyalty_points_and_campaigns_endpoints",
+    "description": "Test GET /api/v1/beautybooking/loyalty/points and GET /api/v1/beautybooking/loyalty/campaigns endpoints to verify correct retrieval of loyalty points and active campaigns for customers."
+  }
+]

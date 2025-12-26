@@ -1,0 +1,4 @@
+{
+  "summary": "مشکل Error Code -300 حل شد. مشکل اصلی از Laravel API بود که خطای 500 می‌داد به دلیل null currency در ConfigController. کد اصلاح شد تا null check کند. همچنین جدول currencies ایجاد شد و migration اجرا شد. API حالا باید کار کند.",
+  "current_status": "مشکل Laravel API حل شد. ConfigController اصلاح شد تا null currency را handle کند. جدول currencies ایجاد شد. API باید حالا پاسخ صحیح بدهد و React App می‌تواند config را دریافت کند."
+}

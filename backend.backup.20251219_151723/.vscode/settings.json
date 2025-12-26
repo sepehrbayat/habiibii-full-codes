@@ -1,0 +1,10 @@
+{
+    "application.experimental.rendererProfiling": true,
+    "telemetry.feedback.enabled": true,
+    "window.autoDetectColorScheme": false,
+    "window.menuBarVisibility": "visible",
+    "window.openFoldersInNewWindow": "on",
+    "window.openFilesInNewWindow": "on",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.splitInGroupLayout": "horizontal"
+}

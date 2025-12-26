@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed backend 500s on /api/v1/config by installing php-xml, adding missing tables (currencies, addon_settings), seeding default currency setting, and hardening ConfigController with defaults for missing business settings; endpoint now returns 200.",
+  "current_status": "Artisan serve running on 0.0.0.0:8000; database migrated with new currencies and addon_settings tables; config API healthy; git-based code review skipped (repo not detected)."
+}
+

@@ -1,0 +1,5 @@
+{
+  "summary": "Provided login info for seeded test customers (john@customer.com / jane@customer.com with password 12345678) created by DevTestFixtureSeeder; server remains on 0.0.0.0:8000.",
+  "current_status": "Backend up with latest migrations and dev fixtures; use seeded customer credentials to log into Flutter client against http://127.0.0.1:8000."
+}
+

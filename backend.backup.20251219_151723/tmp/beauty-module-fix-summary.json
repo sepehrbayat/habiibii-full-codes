@@ -1,0 +1,65 @@
+{
+  "issue": "Beauty Module Visibility Issue",
+  "status": "FIXED",
+  "date": "2025-01-28",
+  "root_cause": {
+    "function": "addon_published_status()",
+    "file": "app/helpers.php",
+    "line": 243,
+    "problem": "Used relative path 'Modules/{$module_name}/Addon/info.php' which fails in web context",
+    "why_it_failed": {
+      "cli_context": {
+        "working_directory": "/home/sepehr/Projects/6ammart-laravel/",
+        "result": "Path works correctly"
+      },
+      "web_context": {
+        "working_directory": "/home/sepehr/Projects/6ammart-laravel/public/",
+        "result": "Path fails - file not found, function returns 0"
+      }
+    },
+    "impact": {
+      "symptom": "Beauty module not visible in admin dashboard dropdown",
+      "reason": "addon_published_status('BeautyBooking') returned 0, causing shouldShow logic to filter it out",
+      "affected_logic": "resources/views/layouts/admin/partials/_header.blade.php line 260"
+    }
+  },
+  "solution": {
+    "change": "Use base_path() for absolute path resolution",
+    "code_before": "include(\"Modules/{$module_name}/Addon/info.php\");",
+    "code_after": "$info_path = base_path(\"Modules/{$module_name}/Addon/info.php\");\nif (file_exists($info_path)) {\n    $full_data = include($info_path);\n    ...\n}",
+    "files_modified": [
+      "app/helpers.php"
+    ]
+  },
+  "verification": {
+    "test_route": "http://localhost:8000/test-beauty-module",
+    "before_fix": {
+      "addon_status": 0,
+      "has_beauty_in_html": false
+    },
+    "after_fix": {
+      "addon_status": 1,
+      "has_beauty_in_html": true,
+      "beauty_count_in_html": 1
+    }
+  },
+  "lessons_learned": [
+    "Always use absolute paths in helper functions that may be called from different contexts",
+    "Use base_path(), app_path(), resource_path() for paths relative to project root",
+    "Test functions in both CLI and Web contexts - they may behave differently",
+    "Current working directory differs between CLI (project root) and Web (public/)"
+  ],
+  "related_files": [
+    "app/helpers.php",
+    "resources/views/layouts/admin/partials/_header.blade.php",
+    "routes/test-beauty-module.php",
+    "tmp/beauty-module-visibility-fix-root-cause.md"
+  ],
+  "diagnostic_tools": [
+    "tmp/advanced-beauty-module-diagnostic.php",
+    "tmp/browser-console-test.js",
+    "tmp/browser-diagnostic-test.html",
+    "routes/test-beauty-module.php"
+  ]
+}
+

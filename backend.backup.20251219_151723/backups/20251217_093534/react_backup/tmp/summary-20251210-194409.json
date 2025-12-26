@@ -1,0 +1,5 @@
+{
+  "summary": "Added 'Switch Module' button to customer dashboard hamburger menu (SideDrawer component). The button opens ModuleSelection modal allowing users to select modules and zones. Implemented zone ID initialization logic that checks localStorage module data and Redux selectedModule to set zone IDs when missing, preventing 'Zone id required' errors. Both customer and vendor dashboards now have module/zone switching functionality.",
+  "current_status": "Customer SideDrawer now includes module switcher button at the top of the menu. Zone ID is automatically initialized from module data when missing. ModuleSelection component works properly for both customer and vendor dashboards. Users can now switch modules/zones from the hamburger menu without zone ID errors."
+}
+

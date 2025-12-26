@@ -1,0 +1,4 @@
+{
+  "summary": "در حال ایجاد صفحات View برای Service Management در Admin Panel. صفحه list.blade.php ایجاد شد. صفحات create, edit, details باقی مانده. صفحات Staff (list, create, edit, details) قبلاً کامل شدند.",
+  "current_status": "Working on creating Admin view files for Service management. Service list page completed. Remaining: Service create/edit/details pages. Staff pages (list/create/edit/details) are already completed."
+}

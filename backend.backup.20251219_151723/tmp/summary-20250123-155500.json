@@ -1,0 +1,4 @@
+{
+  "summary": "Introduced BeautyApiResponse trait and refactored all customer API controllers plus most vendor controllers (booking, calendar, retail, service, staff) to use shared success/error helpers with standardized pagination outputs.",
+  "current_status": "API response standardization in progress; vendor subscription/vendor profile controllers remain to convert before closing the todo."
+}

@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed consultation credit calculation inconsistency in BeautyBookingService.php. The method was capping credit against totalBasePrice (which includes additional services) while calculating credit from consultation booking totals (which don't include additional services). Changed to use basePrice instead of totalBasePrice, ensuring consultation credit only applies to the main service price, not to additional services. Updated method signature, call site, and documentation accordingly.",
+  "current_status": "Consultation credit calculation bug fixed. Credit now correctly applies only to base service price, not to additional services. All linting checks passed."
+}

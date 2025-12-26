@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed wallet transaction amounts: both desktop and mobile history now show debit values when present, falling back to credit + bonus otherwise. This prevents $0 display for debit-only transactions.",
+  "current_status": "Wallet transaction history shows correct amounts; dev server still running in background."
+}
+

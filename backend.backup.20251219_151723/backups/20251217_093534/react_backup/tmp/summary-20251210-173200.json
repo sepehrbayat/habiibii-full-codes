@@ -1,0 +1,5 @@
+{
+  "summary": "Stopped premature availability checks in BookingForm: removed auto check on service/staff change to prevent “Please fill in salon, service, and date” toasts; AvailabilityCalendar now controls availability lookups.",
+  "current_status": "Booking flow no longer throws early validation toast; backend 500s still unresolved server-side."
+}
+

@@ -1,0 +1,5 @@
+{
+  "summary": "Added new seeder to provide multiple salons/clinics for customer testing. Seeder: Modules/BeautyBooking/Database/Seeders/BeautyCustomerChoicesSeeder.php. It creates 5 verified stores/salons/clinics, services, and staff, linked to beauty module/vendor/zone. Ran seeder successfully.",
+  "current_status": "Database populated with multiple salons/clinics for user choice; no lints. Demo customer seeder remains available (john@customer.com)."
+}
+

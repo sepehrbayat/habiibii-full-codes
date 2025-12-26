@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed lockForUpdate()->update() pattern issue in BeautyBookingService.php. The code was using lockForUpdate() directly chained with update(), which has undefined lock acquisition behavior. Changed to proper pattern: first fetch the record with lockForUpdate()->first() to acquire the lock, then update it separately using the model instance. This ensures the FOR UPDATE lock is properly acquired before the update operation executes within the transaction.",
+  "current_status": "LockForUpdate pattern bug fixed. The code now properly acquires FOR UPDATE locks before updating records, preventing race conditions. All linting checks passed."
+}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Beauty Module Browser Diagnostic Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1e1e1e; color: #d4d4d4; }
+        .test { margin: 10px 0; padding: 10px; background: #252526; border-left: 3px solid #007acc; }
+        .pass { border-left-color: #4ec9b0; }
+        .fail { border-left-color: #f48771; }
+        .warning { border-left-color: #dcdcaa; }
+        h1 { color: #4ec9b0; }
+        h2 { color: #569cd6; }
+        code { background: #3c3c3c; padding: 2px 6px; border-radius: 3px; }
+        button { background: #007acc; color: white; border: none; padding: 10px 20px; cursor: pointer; margin: 5px; }
+        button:hover { background: #005a9e; }
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Beauty Module Browser Diagnostic Test</h1>
+    <p>Run this test in your browser console on the admin dashboard page.</p>
+    
+    <div class="test">
+        <h2>Instructions:</h2>
+        <ol>
+            <li>Open your admin dashboard: <code>http://localhost:8000/backoffice</code></li>
+            <li>Open DevTools (F12) → Console tab</li>
+            <li>Copy and paste the JavaScript code below into the console</li>
+            <li>Press Enter to run the test</li>
+        </ol>
+    </div>
+
+    <h2>JavaScript Test Code:</h2>
+    <textarea id="testCode" style="width: 100%; height: 400px; font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 10px;">
+(function() {
+    console.log('╔════════════════════════════════════════════════════════════════╗');
+    console.log('║  Beauty Module Browser Diagnostic Test                      ║');
+    console.log('╚════════════════════════════════════════════════════════════════╝\n');
+    
+    const results = { passed: [], failed: [], warnings: [] };
+    
+    // Test 1: Check if Beauty module element exists in DOM
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('TEST 1: DOM Element Check');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    
+    const beautyByDataAttribute = document.querySelectorAll('[data-module-type="beauty"]');
+    const beautyByModuleId = document.querySelectorAll('[data-module-id="2"]');
+    const beautyByText = Array.from(document.querySelectorAll('*')).filter(el => 
+        el.textContent && el.textContent.includes('Beauty Booking')
+    );
+    
+    console.log('Elements with data-module-type="beauty":', beautyByDataAttribute.length);
+    console.log('Elements with data-module-id="2":', beautyByModuleId.length);
+    console.log('Elements containing "Beauty Booking" text:', beautyByText.length);
+    
+    if (beautyByDataAttribute.length > 0) {
+        console.log('✓ Beauty module element EXISTS in DOM');
+        results.passed.push('Beauty module element in DOM');
+        
+        beautyByDataAttribute.forEach((el, idx) => {
+            console.log(`\n  Element [${idx + 1}]:`);
+            console.log('    - Tag:', el.tagName);
+            console.log('    - Classes:', el.className);
+            console.log('    - Display:', window.getComputedStyle(el).display);
+            console.log('    - Visibility:', window.getComputedStyle(el).visibility);
+            console.log('    - Opacity:', window.getComputedStyle(el).opacity);
+            console.log('    - Parent display:', window.getComputedStyle(el.parentElement).display);
+            
+            // Check if hidden
+            const isHidden = window.getComputedStyle(el).display === 'none' ||
+                           window.getComputedStyle(el).visibility === 'hidden' ||
+                           window.getComputedStyle(el).opacity === '0';
+            
+            if (isHidden) {
+                console.log('    ⚠️ Element is HIDDEN by CSS!');
+                results.warnings.push('Beauty module element is hidden by CSS');
+            } else {
+                console.log('    ✓ Element is VISIBLE');
+            }
+        });
+    } else {
+        console.log('✗ Beauty module element NOT FOUND in DOM');
+        results.failed.push('Beauty module element missing from DOM');
+    }
+    
+    // Test 2: Check HTML source
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('TEST 2: HTML Source Check');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    
+    const htmlSource = document.documentElement.outerHTML;
+    const hasBeautyInSource = htmlSource.includes('data-module-type="beauty"') ||
+                             htmlSource.includes('Beauty Booking') ||
+                             htmlSource.includes('data-module-id="2"');
+    
+    console.log('HTML source contains beauty module:', hasBeautyInSource ? 'YES ✓' : 'NO ✗');
+    
+    if (hasBeautyInSource && beautyByDataAttribute.length === 0) {
+        console.log('⚠️ WARNING: Beauty module is in HTML source but NOT in DOM!');
+        console.log('   This means JavaScript removed it after page load.');
+        results.warnings.push('Beauty module removed by JavaScript after page load');
+    } else if (!hasBeautyInSource) {
+        console.log('✗ Beauty module NOT in HTML source');
+        console.log('   This means server is not sending it (cache issue)');
+        results.failed.push('Beauty module not in HTML source');
+    }
+    
+    // Test 3: Check modules section
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('TEST 3: Modules Section Check');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    
+    const modulesSection = document.querySelector('.__nav-module-items');
+    if (modulesSection) {
+        console.log('✓ Modules section found');
+        const moduleLinks = modulesSection.querySelectorAll('a.set-module');
+        console.log('Module links count:', moduleLinks.length);
+        
+        moduleLinks.forEach((link, idx) => {
+            const moduleId = link.getAttribute('data-module-id');
+            const moduleType = link.getAttribute('data-module-type');
+            const moduleName = link.textContent.trim();
+            console.log(`  [${idx + 1}] ID: ${moduleId}, Type: ${moduleType}, Name: ${moduleName}`);
+        });
+        
+        if (moduleLinks.length < 2) {
+            console.log('⚠️ WARNING: Expected 2 modules, found', moduleLinks.length);
+            results.warnings.push(`Only ${moduleLinks.length} module(s) found`);
+        }
+    } else {
+        console.log('✗ Modules section NOT found');
+        results.failed.push('Modules section missing');
+    }
+    
+    // Test 4: Check Network Response
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('TEST 4: Network Response Check');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('⚠️ MANUAL CHECK REQUIRED:');
+    console.log('  1. Go to Network tab in DevTools');
+    console.log('  2. Find the main HTML request (backoffice or page URL)');
+    console.log('  3. Click on it → Response tab');
+    console.log('  4. Search for: data-module-type="beauty"');
+    console.log('  5. If found: Server is sending it correctly');
+    console.log('  6. If not found: Server cache issue');
+    
+    // Test 5: Check for JavaScript errors
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('TEST 5: JavaScript Error Check');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('⚠️ MANUAL CHECK REQUIRED:');
+    console.log('  Check Console tab for errors (red messages)');
+    console.log('  Common issues:');
+    console.log('    - "$ is not a function" → jQuery not loaded');
+    console.log('    - "Cannot read properties" → JavaScript error');
+    console.log('    - "Route not found" → Route generation error');
+    
+    // Test 6: Check for event listeners that might hide modules
+    console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('TEST 6: Event Listener Check');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    
+    if (modulesSection) {
+        const listeners = getEventListeners ? getEventListeners(modulesSection) : null;
+        if (listeners) {
+            console.log('Event listeners on modules section:', Object.keys(listeners).length);
+            Object.keys(listeners).forEach(event => {
+                console.log(`  - ${event}: ${listeners[event].length} listener(s)`);
+            });
+        } else {
+            console.log('⚠️ getEventListeners not available (Chrome DevTools only)');
+        }
+    }
+    
+    // Summary
+    console.log('\n╔════════════════════════════════════════════════════════════════╗');
+    console.log('║  TEST SUMMARY                                                  ║');
+    console.log('╚════════════════════════════════════════════════════════════════╝\n');
+    
+    console.log('✓ PASSED:', results.passed.length, 'tests');
+    results.passed.forEach(test => console.log('  -', test));
+    
+    if (results.warnings.length > 0) {
+        console.log('\n⚠️ WARNINGS:', results.warnings.length, 'issues');
+        results.warnings.forEach(warning => console.log('  -', warning));
+    }
+    
+    if (results.failed.length > 0) {
+        console.log('\n✗ FAILED:', results.failed.length, 'tests');
+        results.failed.forEach(test => console.log('  -', test));
+        console.log('\n❌ ISSUE FOUND:', results.failed[0]);
+    } else {
+        console.log('\n✓ All DOM tests passed!');
+        if (results.warnings.length > 0) {
+            console.log('\n⚠️ But there are warnings - check them above.');
+        }
+    }
+    
+    // Return results for further inspection
+    return results;
+})();
+    </textarea>
+    
+    <div style="margin: 20px 0;">
+        <button onclick="copyCode()">Copy Test Code</button>
+        <button onclick="runTest()">Run Test (if on dashboard page)</button>
+    </div>
+    
+    <div id="results"></div>
+    
+    <script>
+        function copyCode() {
+            const textarea = document.getElementById('testCode');
+            textarea.select();
+            document.execCommand('copy');
+            alert('Code copied! Paste it in your browser console on the admin dashboard page.');
+        }
+        
+        function runTest() {
+            alert('This test must be run in the browser console on the admin dashboard page.\n\nPlease:\n1. Go to http://localhost:8000/backoffice\n2. Open DevTools (F12)\n3. Go to Console tab\n4. Copy and paste the code from the textarea above');
+        }
+    </script>
+</body>
+</html>
+

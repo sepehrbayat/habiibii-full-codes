@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed two bugs: 1) Changed theme.min.js loading from dynamic appendChild (which doesn't guarantee execution order) to a safer approach using script element with async=false and defer=false, appended to head instead of body. Added proper error handling and jQuery availability checks to prevent race conditions. 2) Fixed sidebar help link active state check from 'backoffice/beautybooking/help*' to 'admin/beautybooking/help*' to match the actual route path registered via RouteServiceProvider with 'admin' prefix.",
+  "current_status": "Both bugs fixed. Theme.min.js now loads with proper jQuery dependency checking and synchronous-like execution order. Sidebar help link will now correctly show active state when viewing help pages at /admin/beautybooking/help/*."
+}

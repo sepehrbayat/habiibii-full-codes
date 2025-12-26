@@ -1,0 +1,3 @@
+{
+  "summary": "Added migration to append store_id to wishlists and ran migrate to fix dashboard 1054 on wishlists.store_id.",
+  "current_status": "wishlists now has store_id; dashboard query for popular stores should proceed; other missing columns may still surface."}

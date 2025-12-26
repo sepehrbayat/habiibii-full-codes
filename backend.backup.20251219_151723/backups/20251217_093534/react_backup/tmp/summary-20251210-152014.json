@@ -1,0 +1,3 @@
+{
+  "summary": "Added header bell badge using backend notifications (unread count, mark-all-read on click) and navigation to notifications page. Enhanced notifications list: per-card click marks read and deep-links to booking when booking_id/reference present. Dashboard already consumes backend summary. Wallet transactions now use beauty wallet endpoint (already accepted earlier). Lints clean.",
+  "current_status": "Frontend aligned with new backend notifications and click-through; all todos remain completed."}

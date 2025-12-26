@@ -1,0 +1,3 @@
+{
+  "summary": "npm run lint now runs but fails due to parsing error in pages/beauty/index.js at 30:27 (Unexpected token). Many pre-existing lint warnings remain.",
+  "current_status": "Dependencies installed with legacy peer deps; lint blocked by pages/beauty/index.js parse error and numerous existing warnings."}

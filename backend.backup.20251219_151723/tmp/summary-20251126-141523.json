@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed AuthServiceProvider to conditionally register BeautyBooking policies only when module is published. Previously, policies were hardcoded in the \$policies property array, causing ClassNotFoundException when module was disabled. Changed to register policies conditionally in boot() method using addon_published_status() check before calling registerPolicies().",
+  "current_status": "AuthServiceProvider bug fixed. Policies are now registered conditionally only when BeautyBooking module is published, preventing ClassNotFoundException when module is disabled. All linting checks passed."
+}

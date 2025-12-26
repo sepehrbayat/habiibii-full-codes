@@ -1,0 +1,3 @@
+{
+  "summary": "Added standalone user login page at /login using AuthModal (SSR disabled) and wired header sign-in/profile redirects to the new page instead of the old modal; removed unused sign-in modal state.",
+  "current_status": "Login page available at /login; header buttons route there; backend still not started."}

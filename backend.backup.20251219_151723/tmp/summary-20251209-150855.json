@@ -1,0 +1,4 @@
+{
+  "summary": "Updated module_type detection to force settings sidebar on admin/settings and set beauty module context by URL to avoid cross-tab interference.",
+  "current_status": "Beauty Booking fixes in progress; settings/tab isolation addressed, remaining module features pending."
+}

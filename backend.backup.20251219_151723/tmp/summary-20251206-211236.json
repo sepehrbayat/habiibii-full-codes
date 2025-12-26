@@ -1,0 +1,5 @@
+{
+  "summary": "Composer deps updated to add Pest and adjust phpunit; phpunit.xml now forces MySQL testing connection; added Pest bootstrap and BeautyBooking DB tests; test run failed due to MySQL auth (root@localhost, no password).",
+  "current_status": "verify-run pending; need beautybooking_test DB and valid MySQL credentials/.env.testing to rerun php artisan test and pest. Code review tool still not run because git repo detection failed."
+}
+

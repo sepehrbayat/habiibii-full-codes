@@ -1,0 +1,4 @@
+{
+  "summary": "Ran VendorApiTest with existing DB; migrate:fresh fails due to missing base tables. Added hasTable/hasColumn guards to legacy migrations (modules, customer_addresses, orders*, order_transactions, parcel_categories) to avoid duplicate/missing column crashes. Tests still fail because banners/orders tables are absent in DB.",
+  "current_status": "Vendor API tests blocked: migrate:fresh hits missing tables (e.g., banners, orders). Migration guards added; need base schema or dedicated test DB with required tables to run suite." 
+}

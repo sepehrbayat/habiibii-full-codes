@@ -1,0 +1,3 @@
+{
+  "summary": "Bug 1: removed hook-level onError handlers in useManageHolidays and usePurchaseSubscription to avoid duplicate toasts when call-level onError is provided. Bug 2: refactored AvailabilityCalendar to track checked dates via ref and adjusted effect deps; lint now clean.",
+  "current_status": "Beauty vendor hooks and AvailabilityCalendar updated; scoped lint passes; global lint warnings elsewhere remain unchanged."}

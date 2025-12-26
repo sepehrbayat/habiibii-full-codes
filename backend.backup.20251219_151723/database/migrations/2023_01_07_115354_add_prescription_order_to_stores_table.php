@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddPrescriptionOrderToStoresTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('stores')) {
+            Schema::table('stores', function (Blueprint $table) {
+                if (!Schema::hasColumn('stores', 'prescription_order')) {
+                    $table->boolean('prescription_order')->default(false);
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable('stores')) {
+            Schema::table('stores', function (Blueprint $table) {
+                if (Schema::hasColumn('stores', 'prescription_order')) {
+                    $table->dropColumn('prescription_order');
+                }
+            });
+        }
+    }
+}

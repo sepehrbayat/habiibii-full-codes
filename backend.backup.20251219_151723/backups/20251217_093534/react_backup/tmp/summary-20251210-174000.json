@@ -1,0 +1,5 @@
+{
+  "summary": "Adjusted BookingForm step validation: now shows specific toasts (“Please choose a date” / “Please choose a time slot”) and blocks progressing if either is missing. This should stop the incorrect generic message when time is selected.",
+  "current_status": "Date/time validation clarified; time slot selection works. Backend 500s remain server-side."
+}
+

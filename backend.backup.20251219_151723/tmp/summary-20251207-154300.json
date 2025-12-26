@@ -1,0 +1,5 @@
+{
+  "summary": "Documented current DB schema in docs/DB_SCHEMA.md with key tables/columns and dump commands for full accuracy.",
+  "current_status": "DB schema documented; server running on 0.0.0.0:8000 with healthy config endpoint."
+}
+

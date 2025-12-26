@@ -1,0 +1,4 @@
+{
+  "summary": "Checked remote server ports and firewall. UFW allows 22/80/443/3000/8080 etc.; ss/netstat show Apache listening on 80/443/8080/8083 and Next.js via PM2 listening on 0.0.0.0:3000. Curl from server to 188.245.192.118:80 and :3000 returns 200 (Next.js). Apache vhosts include 6ammart.conf (ProxyPass to 3000) and habiibii.com conf that redirects to https and Cloudflare terminates DNS. nginx not installed.",
+  "current_status": "Services running: Apache active, PM2 next-server online on port 3000; firewall open. Cloudflare fronts habiibii.com (188.114.x.x), so only 80/443 proxied; ports like 3000 not reachable via Cloudflare." 
+}

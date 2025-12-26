@@ -1,0 +1,4 @@
+{
+  "summary": "No code changes. Identified remaining PHPUnit deprecation warning; recommended silencing with --dont-report-useless-tests or updating phpunit.xml, or upgrading PHPUnit per guidance.",
+  "current_status": "VendorApi tests all passing (44 tests, 189 assertions); one deprecation warning remains to address." 
+}

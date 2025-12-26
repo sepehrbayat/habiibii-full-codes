@@ -1,0 +1,5 @@
+{
+  "summary": "Added demo seed for customer john@customer.com that populates bookings (upcoming, completed, cancelled), review, package and usage, gift card, loyalty points, wallet transactions, notification, plus required salon/service/staff/vendor/zone. Seeder: Modules/BeautyBooking/Database/Seeders/BeautyCustomerDemoSeeder.php. Ran seeder successfully.",
+  "current_status": "Demo data is seeded; john@customer.com (pwd 12345678) now has representative beauty data to exercise customer dashboard features. No lints."
+}
+

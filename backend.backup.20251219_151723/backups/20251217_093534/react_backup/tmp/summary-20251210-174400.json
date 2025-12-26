@@ -1,0 +1,5 @@
+{
+  "summary": "Hardened schedule validation: now checks dayjs validity for booking_date and presence of booking_time before advancing, preventing false “Please choose a date” when a valid date/time is picked.",
+  "current_status": "Date/time validation tightened; time slot selection persists. Backend 500s still outstanding."
+}
+

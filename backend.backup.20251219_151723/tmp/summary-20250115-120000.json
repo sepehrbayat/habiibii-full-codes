@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed 4 critical bugs in the BeautyBooking module: (1) Updated all 17 export controllers to use $request->input('type') instead of $request->type for proper query parameter reading, (2) Changed vendor dashboard image from rental/image_car.png to grocery.svg to remove dependency on Rental module, (3) Verified dashboard controller correctly handles empty arrays on admin/users page by initializing them before merging, (4) Fixed all 26 route calls in views to use array_merge(['type' => 'excel'], request()->query()) instead of malformed ['type' => 'excel', request()->getQueryString()] pattern.",
+  "current_status": "All 4 bugs have been successfully fixed. Export functionality now correctly reads type parameter from query string, vendor dashboard uses appropriate asset, dashboard controller safely handles admin/users page, and all export route links properly merge query parameters."
+}

@@ -1,0 +1,4 @@
+{
+  "summary": "Attempted to run npm run lint (only test-like script available) but it failed: 'next' command not found because node_modules are missing.",
+  "current_status": "Tests did not run successfully; need dependencies installed (npm install/yarn) so next lint can execute."
+}

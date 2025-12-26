@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed review submission attachment handling by requiring only validated attachment arrays to trigger FormData upload and restricting single-file uploads to File/Blob types to avoid non-file values being appended.",
+  "current_status": "All planned beauty module alignment tasks are complete; latest fix hardens review FormData branching. Manual QA still recommended."
+}
+

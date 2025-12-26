@@ -1,0 +1,211 @@
+---
+description: Booking System Business Logic Rules
+alwaysApply: true
+---
+
+# Business Logic - Booking System
+
+## Booking Flow
+
+### Complete Flow
+1. **Category Selection**: Customer selects service category
+2. **Salon Selection**: Customer selects salon (with ranking)
+3. **Service Selection**: Customer selects service
+4. **Staff/Time Selection**: Customer selects staff (optional) and time slot
+5. **Availability Check**: System checks if time slot is available
+6. **Price Calculation**: System calculates total amount
+7. **Payment**: Customer pays (online or cash on arrival)
+8. **Confirmation**: Salon confirms or rejects booking
+9. **Notification**: All parties receive notifications
+
+## Availability Checking
+
+### Rules
+- **Always check**: Before creating booking
+- **Check**: Salon working hours
+- **Check**: Staff availability (if staff selected)
+- **Check**: Existing bookings (no overlap)
+- **Check**: Calendar blocks (holidays, breaks, manual blocks)
+- **Check**: Service duration (ensure enough time)
+
+### Implementation
+```php
+public function isTimeSlotAvailable(
+    int $salonId,
+    ?int $staffId,
+    string $date,
+    string $time,
+    int $durationMinutes
+): bool {
+    // 1. Check salon working hours
+    if (!$this->isWithinWorkingHours($salonId, $date, $time)) {
+        return false;
+    }
+    
+    // 2. Check if date is holiday
+    if ($this->isHoliday($salonId, $date)) {
+        return false;
+    }
+    
+    // 3. Check existing bookings
+    if ($this->hasOverlappingBooking($salonId, $staffId, $date, $time, $durationMinutes)) {
+        return false;
+    }
+    
+    // 4. Check calendar blocks
+    if ($this->isBlocked($salonId, $staffId, $date, $time, $durationMinutes)) {
+        return false;
+    }
+    
+    return true;
+}
+```
+
+## Price Calculation
+
+### Components
+1. **Base Price**: Service price
+2. **Service Fee**: 1-3% of base price (from customer)
+3. **Tax**: Configurable tax percentage
+4. **Discount**: Coupon or package discount
+5. **Total**: Base + Service Fee + Tax - Discount
+
+### Calculation
+```php
+public function calculateBookingAmounts(int $salonId, array $bookingData): array
+{
+    $service = BeautyService::findOrFail($bookingData['service_id']);
+    $basePrice = $service->price;
+    
+    // Service fee (1-3% of base price)
+    $serviceFeePercentage = config('beautybooking.service_fee.percentage', 2);
+    $serviceFee = $basePrice * ($serviceFeePercentage / 100);
+    
+    // Tax
+    $taxPercentage = config('beautybooking.tax.percentage', 0);
+    $taxAmount = $basePrice * ($taxPercentage / 100);
+    
+    // Discount (coupon or package)
+    $discount = $this->calculateDiscount($salonId, $bookingData);
+    
+    // Total
+    $total = $basePrice + $serviceFee + $taxAmount - $discount;
+    
+    return [
+        'base_price' => $basePrice,
+        'service_fee' => $serviceFee,
+        'tax_amount' => $taxAmount,
+        'discount' => $discount,
+        'total' => $total,
+    ];
+}
+```
+
+## Booking Status Management
+
+### Status Flow
+- **pending**: Initial status after creation
+- **confirmed**: Salon confirmed the booking
+- **completed**: Service completed
+- **cancelled**: Booking cancelled
+- **no_show**: Customer didn't show up
+
+### Status Transitions
+- `pending` → `confirmed` (by salon)
+- `pending` → `cancelled` (by customer or salon)
+- `confirmed` → `completed` (after service)
+- `confirmed` → `cancelled` (by customer or salon)
+- `confirmed` → `no_show` (if customer doesn't show)
+
+### Rules
+- **Customer can cancel**: Up to 24 hours before booking
+- **Salon can cancel**: Anytime (with notification)
+- **Late cancellation**: Customer pays cancellation fee
+- **No-show**: Full amount charged
+
+## Cancellation Rules
+
+### Customer Cancellation
+- **More than 24 hours**: No fee
+- **Less than 24 hours**: 50% fee
+- **Less than 2 hours**: 100% fee (full amount)
+
+### Salon Cancellation
+- **Anytime**: No fee to customer
+- **Must notify**: Customer immediately
+- **Refund**: Full refund if paid
+
+### Cancellation Fee Calculation
+```php
+public function calculateCancellationFee(BeautyBooking $booking): float
+{
+    $hoursUntilBooking = now()->diffInHours($booking->booking_date_time);
+    
+    if ($hoursUntilBooking >= 24) {
+        return 0; // No fee
+    } elseif ($hoursUntilBooking >= 2) {
+        return $booking->total_amount * 0.5; // 50% fee
+    } else {
+        return $booking->total_amount; // 100% fee
+    }
+}
+```
+
+## Payment Processing
+
+### Payment Methods
+- **Online Payment**: Digital payment gateway
+- **Wallet**: Customer wallet balance
+- **Cash on Arrival**: Pay at salon
+- **Partial Payment**: Wallet + Online
+
+### Payment Flow
+1. **Calculate Amount**: Total booking amount
+2. **Check Wallet**: If wallet payment, check balance
+3. **Process Payment**: Based on payment method
+4. **Update Status**: Set payment_status to 'paid'
+5. **Create Transaction**: Record in beauty_transactions
+6. **Send Notification**: Confirm payment
+
+### Implementation
+```php
+public function processPayment(BeautyBooking $booking, string $paymentMethod): bool
+{
+    switch ($paymentMethod) {
+        case 'wallet':
+            return $this->processWalletPayment($booking);
+        case 'digital_payment':
+            return $this->processDigitalPayment($booking);
+        case 'cash_payment':
+            return $this->processCashPayment($booking);
+        default:
+            throw new \Exception('Invalid payment method');
+    }
+}
+```
+
+## Calendar Updates
+
+### After Booking Creation
+- **Block Time Slot**: Mark time as booked
+- **Update Staff Calendar**: If staff assigned
+- **Update Salon Calendar**: Update salon availability
+
+### After Booking Cancellation
+- **Free Time Slot**: Mark time as available
+- **Update Staff Calendar**: Free staff time
+- **Update Salon Calendar**: Update salon availability
+
+## Notifications
+
+### Booking Events
+- **Created**: Notify salon of new booking
+- **Confirmed**: Notify customer of confirmation
+- **Cancelled**: Notify both parties
+- **Reminder**: 24 hours before booking
+- **Completed**: Notify customer to review
+
+### Notification Implementation
+- **Use**: `BeautyPushNotification` trait
+- **Method**: `sendBookingNotification($booking, $event)`
+- **Channels**: Push notification, Email, SMS (optional)

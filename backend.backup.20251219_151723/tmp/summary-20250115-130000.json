@@ -1,0 +1,5 @@
+{
+  "summary": "Fixed 2 critical bugs related to missing status() controller methods: (1) Added status() method to admin BeautySalonController to toggle is_featured field, (2) Added status() method to admin BeautyRetailController to toggle status field, (3) Added status() method to admin BeautyLoyaltyController to toggle is_active field, (4) Added status() method to vendor BeautyRetailController with vendor ownership check to toggle status field, (5) Added status() method to vendor BeautyLoyaltyController with vendor ownership check to toggle is_active field. All methods follow the same pattern as BeautyCategoryController and include proper authorization checks for vendor controllers.",
+  "current_status": "All missing status() methods have been successfully added to both admin and vendor controllers. Routes are now properly connected to their corresponding controller methods, preventing fatal 'Call to undefined method' errors when users access status toggle routes."
+}
+

@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddToColStoresTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        if (Schema::hasTable('stores')) {
+            Schema::table('stores', function (Blueprint $table) {
+                if (!Schema::hasColumn('stores', 'pickup_zone_id')) {
+                    $table->json('pickup_zone_id')->nullable();
+                }
+                if (!Schema::hasColumn('stores', 'comment')) {
+                    $table->text('comment')->nullable();
+                }
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable('stores')) {
+            Schema::table('stores', function (Blueprint $table) {
+                $drops = [];
+                foreach (['pickup_zone_id', 'comment'] as $col) {
+                    if (Schema::hasColumn('stores', $col)) {
+                        $drops[] = $col;
+                    }
+                }
+                if ($drops) {
+                    $table->dropColumn($drops);
+                }
+            });
+        }
+    }
+}

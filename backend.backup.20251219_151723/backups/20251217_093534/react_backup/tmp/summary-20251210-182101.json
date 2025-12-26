@@ -1,0 +1,5 @@
+{
+  "summary": "Persisted Beauty module selection across refresh by syncing stored modules/zones into layout, stored zone IDs when choosing a module, ensured Beauty navigation routes back to Beauty home, and added a Change Module button in the Beauty nav to return to module selection.",
+  "current_status": "Beauty module now retains selection and zone IDs on refresh, shows Beauty-only nav with back-to-module selector; backend API 500s remain unresolved."
+}
+

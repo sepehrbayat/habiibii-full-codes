@@ -1,0 +1,4 @@
+{
+  "summary": "Fixed user login modal showing empty content by defaulting to manual login when config centralize_login is unavailable and re-running login type detection when config loads.",
+  "current_status": "React dev server running; user login modal now renders SignIn content even before config loads; backend still not started."
+}

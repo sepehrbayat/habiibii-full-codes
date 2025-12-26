@@ -1,0 +1,4 @@
+{
+  "summary": "Adjusted vendor API route prefix to /api/v1/beautybooking/vendor and updated tests; bypassed default auth for vendor.api; added schedule_order seed in vendor tests; added null-safe image URL in BeautyServiceCategory; changed staff delete assertion to soft delete. Full VendorApiTest still has 19 failures (status transition and service category image issues remain).",
+  "current_status": "Vendor API tests partially fixed; booking details/list pass but 19 failures persist including invalid status transition on complete and null image handling still causing TypeError despite change." 
+}

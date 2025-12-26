@@ -1,0 +1,3 @@
+{
+  "summary": "Consolidated getVendorToken to re-export the context implementation from helper-functions/getToken.js, removing duplicate logic and ensuring a single source of truth for vendor auth token retrieval.",
+  "current_status": "getVendorToken now delegates to vendor-auth-context; lint clean for updated file."}
