@@ -35,11 +35,13 @@ backend.backup*/
 frontend.backup*/
 
 # Laravel
-vendor/
-!6amMart*/*/Routes/**/vendor/
+# Note: vendor/ included for complete deployment-ready repository
 .env
+.env.*
+!.env.example
 storage/logs/*.log
-bootstrap/cache/
+bootstrap/cache/*.php
+!bootstrap/cache/.gitkeep
 
 # OS
 .DS_Store
