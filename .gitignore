@@ -1,0 +1,51 @@
+# Node modules - MUST exclude
+**/node_modules/
+node_modules/
+frontend/node_modules/
+
+# Build outputs
+**/.next/
+.next/
+**/build/
+build/
+dist/
+out/
+
+# Flutter
+**/.dart_tool/
+.dart_tool/
+*.dill
+*.dill.track.dill
+**/*.cache.dill*
+
+# Compiled binaries
+*.apk
+*.so
+*.ipa
+*.app
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Backups
+*.backup*
+backend.backup*/
+frontend.backup*/
+
+# Laravel
+vendor/
+.env
+storage/logs/*.log
+bootstrap/cache/
+
+# OS
+.DS_Store
+Thumbs.db
+.autopilot.json
+.qodo/
+
+# Temp
+tmp/
+temp/
