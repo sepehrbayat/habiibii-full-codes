@@ -29,10 +29,9 @@ out/
 *.tar.gz
 *.rar
 
-# Backups
-*.backup*
-backend.backup*/
-frontend.backup*/
+# Backups - Now included for complete project history
+# backend.backup*/
+# frontend.backup*/
 
 # Laravel
 # Note: vendor/ included for complete deployment-ready repository
@@ -64,12 +63,12 @@ __pycache__/
 *.swo
 *~
 
-# Database dumps (contain secrets)
-*.sql
-habiibii.sql
-backend/habiibii.sql
-backend/database/**/*.sql
-backend/installation/backup/*.sql
+# Database dumps - now included for development setup
+# *.sql
+# habiibii.sql
+# backend/habiibii.sql
+# backend/database/**/*.sql
+# backend/installation/backup/*.sql
 
 # Config files with sensitive data
 backend/config/
