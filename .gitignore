@@ -36,6 +36,7 @@ frontend.backup*/
 
 # Laravel
 vendor/
+!6amMart*/*/Routes/**/vendor/
 .env
 storage/logs/*.log
 bootstrap/cache/
@@ -49,3 +50,25 @@ Thumbs.db
 # Temp
 tmp/
 temp/
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE & Editor
+.cursor/
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Database dumps (contain secrets)
+*.sql
+habiibii.sql
+backend/habiibii.sql
+backend/database/**/*.sql
+backend/installation/backup/*.sql
+
+# Config files with sensitive data
+backend/config/
+backend/storage/oauth-*.key
